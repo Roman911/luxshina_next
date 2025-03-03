@@ -31,7 +31,7 @@ export const SubmitFloat: FC<SubmitFloatProps> = ({ element, btnTitle, setElemen
 
 	return <button
 		onClick={() => handleClick()}
-		className="absolute z-[100] -right-28 bg-teal-300 py-1 px-4 text-black text-sm before:content[' '] before:bg-teal-300 before:w-3 before:h-3 before:absolute before:-left-1.5 before:rotate-45 before:inset-y-1/2 before:-translate-y-2/4"
+		className="absolute z-[100] -right-28 text-white bg-primary py-1 px-4 text-black text-sm before:content[' '] before:bg-primary before:w-3 before:h-3 before:absolute before:-left-1.5 before:rotate-45 before:inset-y-1/2 before:-translate-y-2/4"
 		style={{
 			top: (
 				element.getBoundingClientRect().top - document.body.getBoundingClientRect().top - offset

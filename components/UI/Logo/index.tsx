@@ -1,15 +1,18 @@
 import { FC } from 'react';
 import Image from 'next/image';
 import { Link } from '@/i18n/routing';
-import logo from '@/public/logo.svg';
 
-const Logo: FC = () => {
+interface Props {
+	isFooter?: boolean
+}
+
+const Logo: FC<Props> = ({ isFooter }) => {
 	return (
 		<Link href='/' className='logo'>
 			<Image
-				src={ logo }
+				src={ `/logo${isFooter ? '-footer' : ''}.svg` }
 				alt="logo"
-				width={ 243 }
+				width={ isFooter ? 226 : 243 }
 				height={ 50 }
 				priority
 			/>

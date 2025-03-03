@@ -16,7 +16,8 @@ import { appointmentCargo, appointmentIndustrial, customTireSeason, others, type
 import { baseDataAPI } from '@/services/baseDataService';
 import ByCar from '@/components/Catalog/FilterAlt/ByCar';
 import { SelectFromTo } from '@/components/Catalog/FilterAlt/SelectFromTo';
-import FilterBtn from '@/components/Catalog/FilterByCar/FilterBtn';
+import { Button } from '@heroui/button';
+import * as Icons from '@/components/UI/Icons';
 
 const cargoTypes = [ '3', '4', '5', '6' ];
 const industrialTypes = [ '9', '10', '11' ];
@@ -82,16 +83,16 @@ const FilterAlt: FC<Props> = ({ locale, filterData, section }) => {
 
 	return (
 		<div>
-			<FilterBtn openFilter={ onOpen } title={ t('filters') }/>
+			<Button variant='light' onPress={ onOpen } className='font-bold lg:hidden text-medium' startContent={ <Icons.FilterIcon className='fill-black' /> } >{ t('filters') }</Button>
 			<div className='hidden md:block'>
-				<div
+				{ section !== Section.Battery && <div
 					className='filter lg:h-auto w-[calc(100%-70px)] lg:w-64 mr-6 pt-4 lg:pt-0 bg-white lg:bg-transparent'>
 					<SwitchTabs section={ section }/>
-				</div>
+				</div> }
 				<div
 					className='relative pb-32 lg:pb-4 px-4 pt-4 bg-white border border-gray-200 z-10 overflow-y-auto md:overflow-y-visible'>
-					<SubmitFloat element={ element } btnTitle={ t('to apply') } setElement={ setElement } offset={ 300 }/>
-					<SwitchTabsByParams subsection={ subsection }/>
+					<SubmitFloat element={ element } btnTitle={ t('to apply') } setElement={ setElement } offset={ Section.Battery ? 294 : 340 }/>
+					{ section !== Section.Battery && <SwitchTabsByParams subsection={ subsection }/> }
 					{ subsection === Subsection.ByParams && <>
 						{ section === Section.Tires && <>
 							{ renderSelect(
@@ -295,6 +296,30 @@ const FilterAlt: FC<Props> = ({ locale, filterData, section }) => {
 					)}
 					<SelectFromTo name='price' nameMin='minPrice' nameMax='maxPrice' from={ 200 } to={ 10000 }
 												title={ `${ t('price range') } (грн)` } btnTitle={ t('to apply') }/>
+					{section === Section.Battery && <>
+						<SelectFromTo name='sirina' nameMin='minShirina' nameMax='maxShirina' from={0} to={600} title={`${t('width')} (см)`}
+													btnTitle={t('to apply')} />
+						<SelectFromTo name='visota' nameMin='minVisota' nameMax='maxVisota' from={0} to={190} title={`${t('height')} (см)`}
+													btnTitle={t('to apply')} />
+						<SelectFromTo name='dovzina' nameMin='minDovzina' nameMax='maxDovzina' from={0} to={600}
+													title={`Довжина (см)`} btnTitle={t('to apply')} />
+						{renderSelect(
+							'napruga',
+							'high-voltage',
+							'gray',
+							dataAkum?.napruga.map(item => ({value: item.value, label: item.value, p: item.p})),
+							false,
+							filter?.napruga,
+						)}
+						{renderSelect(
+							'poliarnist',
+							'polarity',
+							'white',
+							dataAkum?.poliarnist.map(item => ({value: item.value, label: item.value, p: item.p})),
+							false,
+							filter?.poliarnist,
+						)}
+					</>}
 					{ section === Section.Tires && <>
 						{ renderSelect(
 							'li',
@@ -353,7 +378,7 @@ const FilterAlt: FC<Props> = ({ locale, filterData, section }) => {
 							</div>
 							<div
 								className='relative pb-32 lg:pb-4 px-4 pt-4 bg-white border border-gray-200 z-10 overflow-y-auto md:overflow-y-visible'>
-								<SwitchTabsByParams subsection={ subsection }/>
+								{ section !== Section.Battery && <SwitchTabsByParams subsection={ subsection }/> }
 								{ subsection === Subsection.ByParams && <>
 									{ section === Section.Tires && <>
 										{ renderSelect(
@@ -378,11 +403,7 @@ const FilterAlt: FC<Props> = ({ locale, filterData, section }) => {
 											'radius',
 											'diameter',
 											'gray',
-											filterData?.tyre_diameter?.map(item => ({
-												value: item.value,
-												label: `R${ item.value }`,
-												p: item.p
-											})),
+											filterData?.tyre_diameter?.map(item => ({ value: item.value, label: `R${ item.value }`, p: item.p })),
 											'R14',
 											filter?.radius,
 											true,
@@ -402,11 +423,7 @@ const FilterAlt: FC<Props> = ({ locale, filterData, section }) => {
 											'radius',
 											'diameter',
 											'gray',
-											filterData?.disc_diameter?.map(item => ({
-												value: item.value,
-												label: `R${ item.value }`,
-												p: item.p
-											})),
+											filterData?.disc_diameter?.map(item => ({ value: item.value, label: `R${ item.value }`, p: item.p })),
 											false,
 											filter?.radius,
 											true,
@@ -414,6 +431,51 @@ const FilterAlt: FC<Props> = ({ locale, filterData, section }) => {
 									</> }
 								</> }
 								{ subsection === 'byCars' && <ByCar data={ data }/> }
+								{section === Section.Battery && <>
+									{renderSelect(
+										'jemnist',
+										'capacity',
+										'gray',
+										dataAkum?.jemnist.map(item => ({value: item.value, label: item.value, p: item.p})),
+										false,
+										filter?.jemnist,
+										true,
+									)}
+									{renderSelect(
+										'puskovii_strum',
+										'starting current',
+										'gray',
+										dataAkum?.['puskovii-strum'].map(item => ({value: item.value, label: item.value, p: item.p})),
+										false,
+										filter?.puskovii_strum,
+										true,
+									)}
+									{renderSelect(
+										'tip_elektrolitu',
+										'type of electrolyte',
+										'gray',
+										dataAkum?.['tip-elektrolitu'].map(item => ({value: item.value, label: item.value, p: item.p})),
+										false,
+										filter?.tip_elektrolitu,
+									)}
+									{renderSelect(
+										'tip_korpusu',
+										'body type',
+										'white',
+										dataAkum?.['tip-korpusu'].map(item => ({value: item.value, label: item.value, p: item.p})),
+										false,
+										filter?.tip_korpusu,
+									)}
+									{renderSelect(
+										'brand',
+										'brand',
+										'white',
+										dataAkum?.brand_akum?.map(item => ({value: item.value, label: item.label})),
+										false,
+										filter?.brand && Number(filter.brand),
+										true,
+									)}
+								</>}
 								{ section === Section.Tires && <>
 									{ !appointmentCargoShow && !appointmentIndustrialShow && renderSelect(
 										'sezon',
@@ -478,10 +540,7 @@ const FilterAlt: FC<Props> = ({ locale, filterData, section }) => {
 										'typedisk',
 										'type',
 										'gray',
-										typeDisc.map(item => ({
-											value: item.value,
-											label: locale === Language.UK ? item.name_ua : item.name
-										})),
+										typeDisc.map(item => ({ value: item.value, label: locale === Language.UK ? item.name_ua : item.name })),
 										false,
 										filter?.typedisk,
 									) }
@@ -504,6 +563,49 @@ const FilterAlt: FC<Props> = ({ locale, filterData, section }) => {
 										true,
 									) }
 								</> }
+								{section === Section.Tires && renderSelect(
+									'country',
+									'country',
+									'white',
+									country?.map(item => ({value: item.value, label: item.label})),
+									false,
+									filter?.country,
+									true,
+								)}
+								{section === Section.Tires && renderSelect(
+									'year',
+									'year',
+									'gray',
+									data?.tyre_year?.map(item => ({value: item.value, label: item.label})),
+									false,
+									filter?.year && (filter.year),
+								)}
+								<SelectFromTo name='price' nameMin='minPrice' nameMax='maxPrice' from={ 200 } to={ 10000 }
+															title={ `${ t('price range') } (грн)` } btnTitle={ t('to apply') }/>
+								{section === Section.Battery && <>
+									<SelectFromTo name='sirina' nameMin='minShirina' nameMax='maxShirina' from={0} to={600} title={`${t('width')} (см)`}
+																btnTitle={t('to apply')} />
+									<SelectFromTo name='visota' nameMin='minVisota' nameMax='maxVisota' from={0} to={190} title={`${t('height')} (см)`}
+																btnTitle={t('to apply')} />
+									<SelectFromTo name='dovzina' nameMin='minDovzina' nameMax='maxDovzina' from={0} to={600}
+																title={`Довжина (см)`} btnTitle={t('to apply')} />
+									{renderSelect(
+										'napruga',
+										'high-voltage',
+										'gray',
+										dataAkum?.napruga.map(item => ({value: item.value, label: item.value, p: item.p})),
+										false,
+										filter?.napruga,
+									)}
+									{renderSelect(
+										'poliarnist',
+										'polarity',
+										'white',
+										dataAkum?.poliarnist.map(item => ({value: item.value, label: item.value, p: item.p})),
+										false,
+										filter?.poliarnist,
+									)}
+								</>}
 								{ section === Section.Tires && <>
 									{ renderSelect(
 										'li',
@@ -536,10 +638,7 @@ const FilterAlt: FC<Props> = ({ locale, filterData, section }) => {
 										'other',
 										'other',
 										'white',
-										others.map(item => ({
-											value: item.value,
-											label: locale === Language.UK ? item.name_ua : item.name
-										})),
+										others.map(item => ({ value: item.value, label: locale === Language.UK ? item.name_ua : item.name })),
 										false,
 										null,
 										false,
@@ -553,8 +652,6 @@ const FilterAlt: FC<Props> = ({ locale, filterData, section }) => {
 										}
 									) }
 								</> }
-								<SelectFromTo name='price' nameMin='minPrice' nameMax='maxPrice' from={ 200 } to={ 10000 }
-															title={ `${ t('price range') } (грн)` } btnTitle={ t('to apply') }/>
 							</div>
 						</>
 					) }

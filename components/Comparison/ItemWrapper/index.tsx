@@ -49,8 +49,9 @@ export const ItemWrapper: FC<ItemWrapperProps> = (
 			<div className='divide-y divide-[#D0D4D9] text-center'>
 				<Characteristics name={ name } item={ item } />
 				<div className='pt-8 pb-14'>
-					<Link href='/cart' onClick={ () => onClickAction(item.best_offer.id, tab) }>
+					<Link href='/cart'>
 						<Button
+							onPress={() => onClickAction(item.best_offer.id, tab)}
 							radius='full'
 							color='primary'
 							size='lg'

@@ -2,7 +2,6 @@
 import { FC } from 'react';
 import dynamic from "next/dynamic";
 import "yet-another-react-lightbox/plugins/thumbnails.css";
-import { Photo } from '@/models/product';
 import { Banner } from '@/models/banners';
 
 const Lightbox = dynamic(() => import("./LightboxComponent"), { ssr: false });
@@ -28,16 +27,18 @@ const Carousel: FC<Props> = ({ sliderData }) => {
 	});
 
 	return (
-		<Lightbox
-			index={0}
-			slides={slides}
-			carousel={{
-				padding: 0,
-				spacing: 0,
-				imageFit: "cover",
-			}}
-			inline={ inline }
-		/>
+		<div className='mt-24'>
+			<Lightbox
+				index={0}
+				slides={slides}
+				carousel={{
+					padding: 0,
+					spacing: 0,
+					imageFit: "cover",
+				}}
+				inline={ inline }
+			/>
+		</div>
 	)
 };
 

@@ -61,10 +61,11 @@
   "Filters": {
     "all season": "Всесезонні",
     "appointment": "Призначення",
+    "battery": "Акумулятори",
     "brand": "Бренд",
     "buses": "Буси",
     "buy": "Купити",
-    "capacity": "ємність",
+    "capacity": "Ємність",
     "car brand": "Марка авто",
     "car type": "Тип автомобіля",
     "cargo": "Вантажні",
@@ -89,6 +90,7 @@
     "height": "Висота",
     "high-voltage": "напруга",
     "homologation": "Омологація",
+    "length": "Довжина",
     "light": "Легкові",
     "load index": "Індекс навантаження",
     "no options message": "Збігів не знайдено",
@@ -97,6 +99,7 @@
     "modification": "Модифікація",
     "motorcycles": "Мотоцикли",
     "other": "Інше",
+    "polarity": "Полярність",
     "price": "Ціна",
     "price range": "Діапазон цін",
     "profile height": "Висота профілю",
@@ -105,7 +108,7 @@
     "season": "Сезон",
     "special equipment": "Спецтехніка",
     "speed index": "Індекс швидкості",
-    "starting current": "пусковий струм",
+    "starting current": "Пусковий струм",
     "strengthening": "Посилення",
     "summer": "Літні",
     "suvs": "Позашляховики",
@@ -115,17 +118,25 @@
     "type size": "Типорозмір",
     "width": "Ширина",
     "winter": "Зимові",
-    "year": "Рік"
+    "year": "Рік",
+    "type of electrolyte": "Тип електроліту",
+    "body type": "Тип корпусу"
   },
   "Footer": {
+    "accumulators": "Акумулятори",
     "all rights reserved": "Всі права захищені",
+    "auto goods": "Автотовари",
     "battery": "Акумулятори",
     "brands": "Бренди",
+    "cargo tires": "Вантажні шини",
+    "cardiscs": "Автодиски",
+    "cartires": "Автошини",
     "contacts": "Контакти",
     "delivery": "Доставка",
     "delivery points": "Пункти видачі",
     "disks": "Диски",
     "information": "Інформація",
+    "motorcycle tires": "Мотошини",
     "tire calculator": "Шинний калькулятор",
     "tires": "Шини"
   },
@@ -190,7 +201,8 @@
     "tire calculator": "Шинний калькулятор",
     "tires": "Шини",
     "free": "Безкоштовний",
-    "free in ukraine": "Безкоштовно по Україні"
+    "free in ukraine": "Безкоштовно по Україні",
+    "show all": "Показати всі"
   },
   "QuickOrder": {
     "quick order": "Швидке замовлення",
@@ -263,5 +275,9 @@
     "luxshina tm": "LuxShina TM",
     "fast delivery in ukraine": "Швидка доставка по Україні",
     "delivery": "(Нова пошта, Meest)"
+  },
+  "Cart": {
+    "total payable": "Разом до сплати",
+    "place an order": "Оформити замовлення"
   }
 }

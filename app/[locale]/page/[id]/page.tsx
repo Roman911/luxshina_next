@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
 import DOMPurify from 'isomorphic-dompurify';
-import Layout from '@/components/Layout';
-import { Breadcrumbs } from '@/components/UI';
-import Title from '@/components/Lib/Title';
+import LayoutWrapper from '@/components/Layout/LayoutWrapper';
+import Breadcrumbs from '@/components/UI/Breadcrumbs';
+import Title from '@/components/UI/Title';
 import type { Pages } from '@/models/alias';
 import { Language, LanguageCode } from '@/models/language';
 
@@ -54,10 +54,10 @@ export default async function Pages({ params }: { params: Promise<{ locale: Lang
 	};
 
 	return (
-		<Layout>
+		<LayoutWrapper>
 			<Breadcrumbs path={ path } />
 			<Title title={ alias[id].description[lang].meta_h1 && '' } />
 			<HtmlContent htmlString={ alias[id].description?.[lang].content && '' } />
-		</Layout>
+		</LayoutWrapper>
 	)
 };

@@ -1,6 +1,6 @@
 'use client'
 import { FC, useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 import { twMerge } from 'tailwind-merge';
 import { useTranslations } from 'next-intl';
 import { baseDataAPI } from '@/services/baseDataService';
@@ -21,9 +21,10 @@ interface FilterActiveProps {
 
 const FilterActive: FC<FilterActiveProps> = ({ locale, className, slug }) => {
 	const router = useRouter();
+	const { section } = useParams();
 	const t = useTranslations('Filters');
 	const [ searchParams, setSearchParams ] = useState<IFilter | undefined>(undefined);
-	const { filter, section } = useAppSelector(state => state.filterReducer);
+	const { filter } = useAppSelector(state => state.filterReducer);
 	const dispatch = useAppDispatch();
 	const { data } = baseDataAPI.useFetchBaseDataQuery('');
 	const { data: manufModels } = baseDataAPI.useFetchManufModelsQuery(`${ filter.brand }`);

@@ -38,7 +38,7 @@ async function getProducts({ page, searchParams }: { page: number | null, search
 			'Access-Control-Allow-Credentials': 'true',
 			'content-type': 'application/json',
 		},
-		body: JSON.stringify({ start: page ? page * pageItem : 0, length: 12 }),
+		body: JSON.stringify({ start: page ? (page - 1) * pageItem : 0, length: 12 }),
 	});
 	return await res.json();
 }
@@ -59,7 +59,7 @@ export default async function Catalog({ params }: { params: Promise<{ locale: La
 	const value = slug?.find(item => item.startsWith('p-'));
 	const page = value ? parseInt(value.split('-')[1], 10) : null;
 	const filterData = await getFilterData(
-		`?typeproduct=${section === Section.Tires ? 1 : 3}`,
+		`?typeproduct=${section === Section.Disks ? 3 : section === Section.Battery ? 4 : 1}`,
 	);
 	const paramsUrl = transformUrl({ section, slug });
 	const found = slug?.find(item => item.startsWith('order-'))?.split('-')[1] as keyof typeof sort;
@@ -71,7 +71,7 @@ export default async function Catalog({ params }: { params: Promise<{ locale: La
 			<HeaderCatalog section={ section } slug={ slug } />
 			<div className='py-5 lg:flex lg:gap-6'>
 				<FilterAlt locale={ locale } filterData={ filterData } section={ section } />
-				<div className='flex-1 -mt-8 lg:-mt-12'>
+				<div className='flex-1 -mt-10 lg:-mt-12'>
 					<FilterByCar />
 					<SelectionByCar />
 					<FilterActive locale={ locale } className='hidden lg:flex' slug={ slug } />
@@ -80,7 +80,7 @@ export default async function Catalog({ params }: { params: Promise<{ locale: La
 						data={ products.data }
 					/> : <NoResult noResultText='no result' /> }
 					{ products.result && products.data.total_count > pageItem && <div className='mt-10 flex justify-center'>
-						<Pagination initialPage={ page || 1 } total={ Math.floor(products.data.total_count/pageItem) } />
+						<Pagination initialPage={ page || 1 } total={ Math.ceil(products.data.total_count/pageItem) } />
 					</div> }
 				</div>
 			</div>

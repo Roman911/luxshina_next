@@ -41,7 +41,7 @@ export default function CatalogMap() {
 							className='transition-transform duration-300 group-hover:scale-125'
 						/>
 						<div
-							className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-2xl font-bold group-hover:text-teal-300 group-hover:underline'>
+							className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-2xl font-bold group-hover:text-primary group-hover:underline'>
 							{ t(item.title) }
 						</div>
 					</Link>

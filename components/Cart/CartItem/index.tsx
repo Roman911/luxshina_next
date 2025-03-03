@@ -19,7 +19,7 @@ interface CartItemProps {
 	country_ru: string
 	year: number
 	locale: string
-	offerQuantity: number,
+	offerQuantity: number
 	removeProduct: (id: number) => void
 	setQuantity: (id: number, quantity: number) => void
 }

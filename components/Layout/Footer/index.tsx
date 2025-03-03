@@ -7,6 +7,7 @@ import { AliasAll, AliasItem } from '@/models/alias';
 import { Language, LanguageCode } from '@/models/language';
 import { SettingsProps } from '@/models/settings';
 import Phones from '@/components/UI/Phones';
+import Logo from '@/components/UI/Logo';
 
 type IconType = 'telegram' | 'facebook' | 'viber';
 
@@ -47,7 +48,8 @@ const Footer: FC<Props> = ({ alias, settings }) => {
 	return <footer className='bg-black'>
 		<div className='container mx-auto py-16 px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4'>
 			<div>
-				<div className='flex gap-x-5'>
+				<Logo isFooter={ true } />
+				<div className='flex gap-x-5 mt-8'>
 					{ social.links.map((item, index) => {
 						return <a
 							key={ index }

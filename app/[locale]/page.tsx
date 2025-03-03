@@ -8,6 +8,7 @@ import ProductList from '@/components/ProductList';
 import TextSeo from '@/components/UI/TextSeo';
 import Carousel from '@/components/Home/Carousel';
 import OurAdvantages from '@/components/Home/OurAdvantages';
+import PopularSizesBlock from '@/components/Home/PopularSizesBlock';
 
 async function getSettings() {
 	const res = await fetch(`${ process.env.SERVER_URL }/baseData/settings`, {
@@ -41,6 +42,16 @@ async function getSliderData() {
 	return await res.json();
 }
 
+async function getFeatureParams() {
+	const res = await fetch(`${ process.env.SERVER_URL }/api/getFeatureParams`, {
+		method: 'GET',
+		headers: {
+			'Access-Control-Allow-Credentials': 'true',
+		}
+	});
+	return await res.json();
+}
+
 export async function generateMetadata({ params }: { params: Promise<{ locale: Language }> }): Promise<Metadata> {
 	const { locale } = await params;
 	const lang = locale === Language.UK ? LanguageCode.UA : Language.RU;
@@ -59,6 +70,7 @@ export default async function Home({ params }: { params: Promise<{ locale: Langu
 	const response = await getSettings();
 	const products = await getProducts();
 	const sliderData = await getSliderData();
+	const featureParams = await getFeatureParams();
 
 	return (
 		<main>
@@ -71,6 +83,7 @@ export default async function Home({ params }: { params: Promise<{ locale: Langu
 				/> : <NoResult noResultText='no result'/> }
 				<Carousel sliderData={ sliderData } />
 				<OurAdvantages />
+				<PopularSizesBlock locale={ locale } settings={ response } featureParams={ featureParams } />
 				<TextSeo description={ response[lang].description }/>
 			</LayoutWrapper>
 		</main>

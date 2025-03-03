@@ -1,10 +1,11 @@
 'use client'
-import { useParams } from 'next/navigation';
 import { FC } from 'react';
+import { useLocale, useTranslations } from 'next-intl';
 import { Link } from '@/i18n/routing';
 import CartItem from './CartItem';
 import type { ProductsProps } from '@/models/products';
 import { Language } from '@/models/language';
+import { Button } from '@heroui/button';
 
 const totalQuantityLabel = {
 	1: {
@@ -29,7 +30,9 @@ interface CarProps {
 }
 
 const CartComponent: FC<CarProps> = ({ data, cartItems, removeProduct, setQuantity }) => {
-	const { locale } = useParams<{ locale: Language.UK | Language.RU }>();
+	const locale = useLocale();
+	const lang = locale === Language.UK ? Language.UK : Language.RU;
+	const t = useTranslations('Cart');
 	const items = data?.data.products.map(item => {
 		const id = item.best_offer.id;
 		const price = item.best_offer.price;
@@ -72,21 +75,25 @@ const CartComponent: FC<CarProps> = ({ data, cartItems, removeProduct, setQuanti
 					{ ' ' }
 					{
 						totalQuantity === 1
-							? totalQuantityLabel[1][locale]
+							? totalQuantityLabel[1][lang]
 							: (totalQuantity && totalQuantity > 1 && totalQuantity < 5)
-								? totalQuantityLabel[2][locale]
-								: totalQuantityLabel[3][locale]
+								? totalQuantityLabel[2][lang]
+								: totalQuantityLabel[3][lang]
 					}
 				</div>
 				<div>{ totalQuantityPrice } ₴</div>
 			</div>
 			<div className='font-bold mt-4 flex justify-between'>
-				<div>{ locale === Language.UK ? 'Разом до сплати:' : 'Итого к оплате:' }</div>
+				<div>{ t('total payable') }:</div>
 				<div>{ totalQuantityPrice } ₴</div>
 			</div>
-			<Link className='btn primary w-full mt-6' href='/order'>
-				{ locale === Language.UK ? 'Оформити замовлення' : 'Оформить заказ' }
-			</Link>
+			<div className='mt-6'>
+				<Link href='/order'>
+					<Button color='primary' size='lg' radius='full' className='w-full uppercase font-bold'>
+						{ t('place an order') }
+					</Button>
+				</Link>
+			</div>
 		</div>
 	</div>
 };

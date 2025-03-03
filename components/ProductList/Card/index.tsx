@@ -1,5 +1,5 @@
 'use client';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { FC, useMemo } from 'react';
 import Image from 'next/image';
 import { useLocale, useTranslations } from 'next-intl';
@@ -21,6 +21,7 @@ import { countryCodeTransform } from '@/lib/countryCodetransform';
 import CountryInfo from '@/components/UI/CountryInfo';
 import * as Icons from '@/components/UI/Icons';
 
+const regex = /\/(auto-goods|services)/;
 const cargo = [ '3', '4', '5', '6', '9', '10', '11' ];
 
 interface Props {
@@ -30,13 +31,16 @@ interface Props {
 const ProductCard: FC<Props> = ({ item }) => {
 	const locale = useLocale();
 	const router = useRouter();
+	const pathname = usePathname();
 	const dispatch = useAppDispatch();
 	const t = useTranslations('Main');
 	const { default_photo, full_name, sku, min_price, season, vehicle_type, page_url, best_offer, group } = item;
 	const cartStorage = useMemo(() => getFromStorage('reducerCart'), []);
-	const section = item.vehicle_type ? Section.Tires : Section.Disks;
+	const section = item.vehicle_type ? Section.Tires : item.diameter ? Section.Disks : Section.Battery;
 	const sectionNew = section === Section.Tires ? cargo.includes(item.vehicle_type) ? 'cargo' : 'tires' : section;
 	const countryCode = countryCodeTransform(best_offer.country);
+	const hasMatch = regex.test(pathname);
+	const url = hasMatch ? `#` : `/${page_url}`;
 
 	const handleClick = () => {
 		if(!cartStorage?.find((item: { id: number, quantity: number }) => item.id === best_offer.id)) {
@@ -56,7 +60,7 @@ const ProductCard: FC<Props> = ({ item }) => {
 			<CardBody>
 				<div className='relative min-h-72 sm:min-h-52 text-center'>
 					<IconsBlock season={ season } vehicle_type={ vehicle_type }/>
-					<ActionsBlock sectionNew={ sectionNew } group={ group } className='hidden group-hover:flex'/>
+					{ !hasMatch && <ActionsBlock sectionNew={ sectionNew } group={ group } className='hidden group-hover:flex'/> }
 					<Image
 						className='mx-auto'
 						src={ default_photo || (locale === Language.UK ? noPhoto : noPhotoRu) }
@@ -65,22 +69,22 @@ const ProductCard: FC<Props> = ({ item }) => {
 						height={ 220 }
 					/>
 				</div>
-				<Link href={ `/${ page_url }` }
+				<Link href={ url }
 							className='font-bold my-2.5 min-h-12 after:absolute after:inset-0'>{ full_name }</Link>
 				<div className='text-sm text-gray-500 my-2.5'>
 					<span>Артикул: </span><span>{ sku }</span>
 				</div>
-				<div className='my-3.5'>
+				{ section !== Section.Battery && <div className='my-3.5'>
 					<CountryInfo
 						country={ locale === Language.UK ? best_offer.country : best_offer.country_ru }
 						countryCode={ countryCode }
 						year={ best_offer.year }
 					/>
-				</div>
+				</div> }
 				<Rating commentsCount={ undefined } commentsAvgRate={ 0 }/>
 			</CardBody>
 			<CardFooter>
-				<div className='mt-6 w-full flex justify-between'>
+				<div className='w-full flex justify-between'>
 					<div>
 						<div className='flex items-end mb-0.5'>
 							<div className='text-sm font-medium mb-0.5 mr-1'>{ t('from') }</div>

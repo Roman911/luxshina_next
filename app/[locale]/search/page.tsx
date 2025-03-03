@@ -21,7 +21,7 @@ export default function Search() {
 	const { data, isLoading } = baseDataAPI.useFetchProductsQuery({
 		id: `?name=${ search }`,
 		length: itemsProduct,
-		start: paginateCount * itemsProduct
+		start: paginateCount > 0 ? (paginateCount -1) * itemsProduct : 0
 	});
 
 	const path = [
@@ -54,7 +54,7 @@ export default function Search() {
 			<Pagination
 				size='lg'
 				initialPage={ paginateCount + 1 }
-				total={ Math.floor(data?.data.total_count / itemsProduct) }
+				total={ Math.ceil(data?.data.total_count / itemsProduct) }
 				variant='bordered'
 				onChange={ onchange }
 				classNames={ { cursor: 'text-black' } }

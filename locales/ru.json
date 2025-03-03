@@ -61,10 +61,11 @@
   "Filters": {
     "all season": "Всесезонные",
     "appointment": "Назначение",
+    "battery": "Аккумуляторы",
     "brand": "Бренд",
     "buses": "Бусы",
     "buy": "Купить",
-    "capacity": "емкость",
+    "capacity": "Емкость",
     "car brand": "Марка авто",
     "car type": "Тип автомобиля",
     "cargo": "Грузовые",
@@ -89,6 +90,7 @@
     "height": "Высота",
     "high-voltage": "напряжение",
     "homologation": "Омологация",
+    "length": "Длина",
     "light": "Легковые",
     "load index": "Индекс нагрузки",
     "main characteristics": "Основные характеристики",
@@ -96,6 +98,7 @@
     "modification": "Модификация",
     "motorcycles": "Мотоциклы",
     "other": "Другое",
+    "polarity": "Полярность",
     "price": "Цена",
     "price range": "Диапазон цен",
     "profile height": "Высота профиля",
@@ -104,6 +107,7 @@
     "season": "Сезон",
     "special equipment": "Спецтехника",
     "speed index": "Индекс скорости",
+    "starting current": "Пусковой ток",
     "strengthening": "Усиление",
     "summer": "Летние",
     "suvs": "Внедорожники",
@@ -114,17 +118,24 @@
     "width": "Ширина",
     "winter": "Зимние",
     "year": "Год",
-    "starting current": "пусковой ток"
+    "type of electrolyte": "Тип электролита",
+    "body type": "Тип корпусу"
   },
   "Footer": {
+    "accumulators": "Аккумуляторы",
     "all rights reserved": "Все права защищены",
+    "auto goods": "Автотовары",
     "battery": "Аккумуляторы",
     "brands": "Бренды",
+    "cargo tires": "Грузовые шины",
+    "cardiscs": "Автодиски",
+    "cartires": "Автошины",
     "contacts": "Контакты",
     "delivery": "Доставка",
     "delivery points": "Пункты выдачи",
     "disks": "Диски",
     "information": "Информация",
+    "motorcycle tires": "Мотошины",
     "tire calculator": "Шинный калькулятор",
     "tires": "Шины"
   },
@@ -189,7 +200,8 @@
     "tire calculator": "Шинный калькулятор",
     "tires": "Шины",
     "free": "Бесплатный",
-    "free in ukraine": "Бесплатно по Украине"
+    "free in ukraine": "Бесплатно по Украине",
+    "show all": "Показать все"
   },
   "QuickOrder": {
     "quick order": "Быстрый заказ",
@@ -262,5 +274,9 @@
     "luxshina tm": "LuxShina TM",
     "fast delivery in ukraine": "Быстрая доставка по Украине",
     "delivery": "(Новая почта, Meest)"
+  },
+  "Cart": {
+    "total payable": "Итого к оплате",
+    "place an order": "Оформить заказ"
   }
 }

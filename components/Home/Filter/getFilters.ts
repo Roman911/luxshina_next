@@ -2,51 +2,6 @@ import { Section } from '@/models/section';
 import { BaseDataProps, Options } from '@/models/baseData';
 import { Language } from '@/models/language';
 
-const typeOptions = [
-	{
-		// label: 'light',
-		label: 'Легкові',
-		label_ru: 'Легковые',
-		value: '1',
-	},
-	{
-		// label: 'suvs',
-		label: 'Позашляховики',
-		label_ru: 'Внедорожники',
-		value: '2',
-	},
-	{
-		// label: 'buses',
-		label: 'Буси',
-		label_ru: 'Бусы',
-		value: '8',
-	},
-	{
-		// label: 'cargo',
-		label: 'Вантажні',
-		label_ru: 'Грузовые',
-		value: '3',
-	},
-	{
-		// label: 'special equipment',
-		label: 'Спецтехніка',
-		label_ru: 'Спецтехника',
-		value: '9',
-	},
-	{
-		// label: 'motorcycles',
-		label: 'Мотоцикли',
-		label_ru: 'Мотоциклы',
-		value: '7',
-	},
-];
-
-const customTireSeason = [
-	{ value: '1', name: 'Летние', name_ua: 'Літні'},
-	{ value: '3', name: 'Всесезонные', name_ua: 'Всесезонні'},
-	{ value: '2', name: 'Зимние', name_ua: 'Зимові'},
-];
-
 interface Props {
 	locale: string
 	section: Section

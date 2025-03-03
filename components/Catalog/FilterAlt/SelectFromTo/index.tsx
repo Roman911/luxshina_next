@@ -68,7 +68,7 @@ export const SelectFromTo: FC<SelectFromTo> = ({ nameMin, nameMax, from, to, tit
 				/>
 			</div>
 		</div>
-		<Button color='primary' radius='full' onPress={ handleClick } className='max-w-full w-full uppercase mt-4 mb-4'>
+		<Button color='primary' size='lg' radius='full' onPress={ handleClick } className='max-w-full w-full uppercase font-bold mt-4 mb-4'>
 			{ btnTitle }
 		</Button>
 	</div>
