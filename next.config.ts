@@ -12,6 +12,7 @@ const nextConfig: NextConfig = {
 		additionalData: `$var: red;`,
 	},
 	images: {
+		formats: ['image/webp'],
 		remotePatterns: [
 			{
 				protocol: 'https',
@@ -21,7 +22,7 @@ const nextConfig: NextConfig = {
 			{
 				protocol: 'https',
 				hostname: 'admin.luxshina.ua',
-				pathname: '/tyre/**',
+				pathname: '**',
 			},
 		],
 	},

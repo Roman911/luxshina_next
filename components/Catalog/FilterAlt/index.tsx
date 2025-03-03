@@ -34,8 +34,10 @@ const FilterAlt: FC<Props> = ({ locale, filterData, section }) => {
 	const { filter, subsection } = useAppSelector(state => state.filterReducer);
 	const appointmentCargoShow = filter.vehicle_type && cargoTypes.includes(filter.vehicle_type);
 	const appointmentIndustrialShow = filter.vehicle_type && industrialTypes.includes(filter.vehicle_type);
+	const { data: dataAkum } = baseDataAPI.useFetchDataAkumQuery('');
 	const { data } = baseDataAPI.useFetchBaseDataQuery('');
 	const { isOpen, onOpen, onOpenChange } = useDisclosure();
+	const country = locale === Language.UK ? data?.country : data?.country_ru;
 
 	const onChange = (name: string, value: number | string | undefined | null, element: HTMLElement) => {
 		if(name === 'brand') {
@@ -142,6 +144,51 @@ const FilterAlt: FC<Props> = ({ locale, filterData, section }) => {
 						</> }
 					</> }
 					{ subsection === 'byCars' && <ByCar data={ data }/> }
+					{section === Section.Battery && <>
+						{renderSelect(
+							'jemnist',
+							'capacity',
+							'gray',
+							dataAkum?.jemnist.map(item => ({value: item.value, label: item.value, p: item.p})),
+							false,
+							filter?.jemnist,
+							true,
+						)}
+						{renderSelect(
+							'puskovii_strum',
+							'starting current',
+							'gray',
+							dataAkum?.['puskovii-strum'].map(item => ({value: item.value, label: item.value, p: item.p})),
+							false,
+							filter?.puskovii_strum,
+							true,
+						)}
+						{renderSelect(
+							'tip_elektrolitu',
+							'type of electrolyte',
+							'gray',
+							dataAkum?.['tip-elektrolitu'].map(item => ({value: item.value, label: item.value, p: item.p})),
+							false,
+							filter?.tip_elektrolitu,
+						)}
+						{renderSelect(
+							'tip_korpusu',
+							'body type',
+							'white',
+							dataAkum?.['tip-korpusu'].map(item => ({value: item.value, label: item.value, p: item.p})),
+							false,
+							filter?.tip_korpusu,
+						)}
+						{renderSelect(
+							'brand',
+							'brand',
+							'white',
+							dataAkum?.brand_akum?.map(item => ({value: item.value, label: item.label})),
+							false,
+							filter?.brand && Number(filter.brand),
+							true,
+						)}
+					</>}
 					{ section === Section.Tires && <>
 						{ !appointmentCargoShow && !appointmentIndustrialShow && renderSelect(
 							'sezon',
@@ -229,6 +276,25 @@ const FilterAlt: FC<Props> = ({ locale, filterData, section }) => {
 							true,
 						) }
 					</> }
+					{section === Section.Tires && renderSelect(
+						'country',
+						'country',
+						'white',
+						country?.map(item => ({value: item.value, label: item.label})),
+						false,
+						filter?.country,
+						true,
+					)}
+					{section === Section.Tires && renderSelect(
+						'year',
+						'year',
+						'gray',
+						data?.tyre_year?.map(item => ({value: item.value, label: item.label})),
+						false,
+						filter?.year && (filter.year),
+					)}
+					<SelectFromTo name='price' nameMin='minPrice' nameMax='maxPrice' from={ 200 } to={ 10000 }
+												title={ `${ t('price range') } (грн)` } btnTitle={ t('to apply') }/>
 					{ section === Section.Tires && <>
 						{ renderSelect(
 							'li',
@@ -275,8 +341,6 @@ const FilterAlt: FC<Props> = ({ locale, filterData, section }) => {
 							}
 						) }
 					</> }
-					<SelectFromTo name='price' nameMin='minPrice' nameMax='maxPrice' from={ 200 } to={ 10000 }
-												title={ `${ t('price range') } (грн)` } btnTitle={ t('to apply') }/>
 				</div>
 			</div>
 			<Drawer isOpen={ isOpen } placement='left' onOpenChange={ onOpenChange }>
