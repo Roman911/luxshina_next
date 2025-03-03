@@ -4,8 +4,8 @@ import { useTranslations } from 'next-intl';
 import { twMerge } from 'tailwind-merge';
 import { Link } from '@/i18n/routing';
 import { useClickOutside } from '@/hooks/clickOutside';
-import CarTireFilter from '../CarTireFilter';
-import CarDiskFilter from '../CarDiskFilter';
+import CarTireFilter from '../../Menu/CarTireFilter';
+import CarDiskFilter from '../../Menu/CarDiskFilter';
 import * as Icons from '@/components/UI/Icons';
 import { links } from '../../links';
 
