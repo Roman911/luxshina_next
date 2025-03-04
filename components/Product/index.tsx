@@ -104,8 +104,9 @@ const ProductComponent: FC<Props> = ({ idProduct, locale, data, section, setting
 						<div className='flex-1 md:ml-6 xl:ml-10'>
 							<h1 className='text-2xl font-bold mt-8 md:mt-0'>{ full_name }</h1>
 							<div className='flex mt-5 items-center'>
-								<div
-									className='text-[15px] text-gray-700 bg-gray-300 rounded-2 py-1 md:py-1 px-3 mr-5'>Артикул: { offer_group.sku }</div>
+								<div className='text-[15px] text-gray-500 bg-blue-50 rounded-full py-1 md:py-2 px-3 mr-5'>
+									Артикул: { offer_group?.sku }
+								</div>
 								<Rating
 									commentsCount={ review ? (review.length > 0 ? review.length : undefined) : undefined }
 									commentsAvgRate={ averageScore || 0 }
@@ -136,10 +137,10 @@ const ProductComponent: FC<Props> = ({ idProduct, locale, data, section, setting
 												type="checkbox"
 												onChange={ () => handleClick(item.offer_id) }
 												checked={ item.offer_id === offerId }
-												className='appearance-none h-6 w-6 bg-white rounded-full border border-zinc-400 hover:border-teal-600 checked:border-teal-600 transition-all duration-200 peer'
+												className='appearance-none h-6 w-6 bg-white rounded-full border border-zinc-400 hover:border-primary checked:border-primary transition-all duration-200 peer'
 											/>
 											<div
-												className='h-4 w-4 absolute inset-1 rounded-full peer-checked:border-teal-600 peer-checked:bg-teal-600'
+												className='h-4 w-4 absolute inset-1 rounded-full peer-checked:border-primary peer-checked:bg-primary'
 											/>
 											<label className='flex ml-1.5 md:ml-7 flex-col justify-center font-medium cursor-pointer'>
 												{ item.quantity } шт.
@@ -164,12 +165,14 @@ const ProductComponent: FC<Props> = ({ idProduct, locale, data, section, setting
 					<Quantity id={ 0 } quantity={ quantity } offerQuantity={ (Number(offer?.quantity) || 0) }
 										price={ offer?.price } onChange={ onChange } setQuantity={ onSetQuantity }/>
 					<DeliveryCalculation offer_id={ offerId }/>
-					<div className='buttons-buy md:justify-self-end mt-8 md:0'>
+					<div className='buttons-buy md:justify-self-end flex flex-col gap-4 mt-8 md:0'>
 						{ cartItems.find(item => item.id === offerId) ?
-							<Link href={ `/cart` } className='btn bg-success uppercase text-white w-full md:w-72'>
-								<span className='ml-2.5'>{ locale === Language.UK ? 'Перейти до кошика' : 'Перейти в корзину' }</span>
+							<Link href={ `/cart` }>
+								<Button color='success' size='lg' radius='full' className='uppercase font-bold w-full md:w-72'>
+									{ t('go to cart') }
+								</Button>
 							</Link> :
-							<Button onPress={ onSubmit } color='primary' radius='full' size='lg' className='uppercase w-full md:w-72'>
+							<Button onPress={ onSubmit } color='primary' radius='full' size='lg' className='uppercase font-bold w-full md:w-72'>
 								{ t('buy') }
 							</Button>
 						}

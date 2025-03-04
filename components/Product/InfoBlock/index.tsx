@@ -4,13 +4,14 @@ import * as Icons from '../../UI/Icons';
 import { Language, LanguageCode } from '@/models/language';
 // import Contacts from '@/components/Layout/Header/TopLine/Contacts';
 import { SettingsProps } from '@/models/settings';
+import OurAdvantages from '@/components/Home/OurAdvantages';
 
 const InfoBlock = ({ settings }: { settings: SettingsProps }) => {
 	const locale = useLocale();
 	const t = useTranslations('InfoBlock');
 
 	return <div className='lg:w-80'>
-		<div className=' bg-white rounded px-5 py-7'>
+		<div className=' bg-white rounded-2xl px-5 py-7'>
 			{/*<Contacts isInfo={ true } settings={ settings }/>*/}
 			<div className='flex items-center gap-x-2.5 mt-2'>
 				<Icons.EmailIcon className='fill-black'/>
@@ -37,6 +38,7 @@ const InfoBlock = ({ settings }: { settings: SettingsProps }) => {
 				<span className='group-hover:underline'>{ t('warranty and returns') }</span>
 			</Link>
 		</div>
+		<OurAdvantages size='small'/>
 	</div>
 };
 

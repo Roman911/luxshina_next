@@ -86,8 +86,10 @@ const QuickOrder: FC<Props> = (
 	return (
 		<>
 			<Button
+				size='lg'
+				radius='full'
 				onPress={ onOpen }
-				className='bg-white mt-2.5 w-full md:w-72 hover:bg-white hover:shadow uppercase'
+				className='bg-white w-full md:w-72 hover:bg-white hover:shadow uppercase font-bold'
 			>
 				{ t('quick order') }
 			</Button>

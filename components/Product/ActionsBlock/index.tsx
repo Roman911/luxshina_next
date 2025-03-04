@@ -19,6 +19,7 @@ import { addToast } from '@heroui/toast';
 import { useAppDispatch, useAppSelector } from '@/hooks/redux';
 import { addToStorage, getFromStorage, removeFromStorage } from '@/lib/localeStorage';
 import { addBookmarks, removeBookmarks } from '@/store/slices/bookmarksSlice';
+import comparisonReducer, { addComparison, removeComparison } from '@/store/slices/comparisonSlice';
 import * as Icons from '../../UI/Icons';
 import CallbackModal from '@/components/Product/ActionsBlock/CallbackModal';
 import AddAskModal from '@/components/Product/ActionsBlock/AddAskModal';
@@ -47,12 +48,20 @@ const ActionsBlock: FC<ActionsBlockProps> = ({ id, className, section, quantity,
 	const url = process.env.ACCESS_ORIGIN + pathname;
 	const dispatch = useAppDispatch();
 	const { bookmarksItems } = useAppSelector(state => state.bookmarksReducer);
+	const { comparisonItems } = useAppSelector(state => state.comparisonReducer);
 	const isBookmarks = bookmarksItems.some(item => item.id === id);
+	const isComparison = comparisonItems.some(item => item.id === id);
 
 	// Toggle bookmarks
 	const handleClickBookmarks = () => {
 		dispatch(isBookmarks ? removeBookmarks(id) : addBookmarks({ id, section }));
 		updateStorage('reducerBookmarks', id, section, isBookmarks);
+	};
+
+	// Toggle comparison
+	const handleClickComparison = () => {
+		dispatch(isComparison ? removeComparison(id) : addComparison({ id, section }));
+		updateStorage('reducerComparison', id, section, isComparison);
 	};
 
 	const handleClick = () => {
@@ -123,6 +132,10 @@ const ActionsBlock: FC<ActionsBlockProps> = ({ id, className, section, quantity,
 			<Button onPress={ handleClickBookmarks } isIconOnly aria-label='mail' className='bg-[#E4E9F2] rounded-full group'>
 				<Icons.HeartIcon
 					className={ twMerge('stroke-black group-hover:stroke-primary', isBookmarks && 'fill-primary stroke-primary') }/>
+			</Button>
+			<Button onPress={ handleClickComparison } isIconOnly aria-label='mail' className='bg-[#E4E9F2] rounded-full group'>
+				<Icons.LibraIcon
+					className={ twMerge('fill-black group-hover:stroke-primary', isComparison && 'fill-primary') }/>
 			</Button>
 		</div>
 	)
