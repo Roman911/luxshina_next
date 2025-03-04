@@ -12,9 +12,10 @@ import { twMerge } from 'tailwind-merge';
 interface Props {
 	isTopLine: boolean
 	settings: SettingsProps
+	isInfo?: boolean
 }
 
-const Contacts: FC<Props> = ({ isTopLine, settings }) => {
+const Contacts: FC<Props> = ({ isTopLine, settings, isInfo }) => {
 	const t = useTranslations('Main');
 	const locale = useLocale();
 	const lang = locale === Language.UK ? LanguageCode.UA : Language.RU;
@@ -30,10 +31,10 @@ const Contacts: FC<Props> = ({ isTopLine, settings }) => {
 		<Dropdown>
 			<DropdownTrigger>
 				<Button variant='light'>
-					<div className={ twMerge('pt-2 pb-1 pl-2 pr-1', isTopLine && 'bg-primary rounded-full') }>
-						<Icons.PhoneIcon className={ twMerge(isTopLine ? 'fill-white' : 'fill-black') } />
+					<div className={ twMerge('pt-2 pb-1 pl-2 pr-1', isTopLine && 'bg-primary rounded-full', isInfo && 'p-0') }>
+						<Icons.PhoneIcon className={ twMerge('fill-black', isTopLine && 'fill-white', isInfo && 'fill-primary') } />
 					</div>
-					{ !isTopLine && <>
+					{ !isTopLine && !isInfo && <>
 						<div className='font-bold hidden lg:block'>
 							<a href={`tel:${telephones[0].url}`}>
 								{telephones[0].phone}
@@ -42,6 +43,7 @@ const Contacts: FC<Props> = ({ isTopLine, settings }) => {
 						<div className='hidden lg:block'>({ t('free') })</div>
 					</>
 					}
+					{ isInfo && <div className='uppercase font-bold text-medium'>{ t('phones') }</div> }
 					<Icons.ChevronDownIcon className={twMerge('h-4 w-4 stroke-black', isTopLine && 'stroke-white')} />
 				</Button>
 			</DropdownTrigger>

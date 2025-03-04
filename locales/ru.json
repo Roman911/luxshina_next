@@ -53,7 +53,8 @@
   "InfoBlock": {
     "delivery": "Доставка",
     "payment": "Оплата",
-    "warranty and returns": "Гарантія та повернення"
+    "warranty and returns": "Гарантія та повернення",
+    "order by number": "Заказывайте по номерам"
   },
   "Favorites": {
     "favorites": "Избранное"
@@ -202,7 +203,8 @@
     "free": "Бесплатный",
     "free in ukraine": "Бесплатно по Украине",
     "show all": "Показать все",
-    "go to cart": "Перейти до кошика"
+    "go to cart": "Перейти до кошика",
+    "phones": "Телефоны"
   },
   "QuickOrder": {
     "quick order": "Быстрый заказ",
