@@ -19,7 +19,7 @@ import { addToast } from '@heroui/toast';
 import { useAppDispatch, useAppSelector } from '@/hooks/redux';
 import { addToStorage, getFromStorage, removeFromStorage } from '@/lib/localeStorage';
 import { addBookmarks, removeBookmarks } from '@/store/slices/bookmarksSlice';
-import comparisonReducer, { addComparison, removeComparison } from '@/store/slices/comparisonSlice';
+import { addComparison, removeComparison } from '@/store/slices/comparisonSlice';
 import * as Icons from '../../UI/Icons';
 import CallbackModal from '@/components/Product/ActionsBlock/CallbackModal';
 import AddAskModal from '@/components/Product/ActionsBlock/AddAskModal';
