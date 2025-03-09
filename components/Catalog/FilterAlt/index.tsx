@@ -29,7 +29,7 @@ interface Props {
 }
 
 const FilterAlt: FC<Props> = ({ locale, filterData, section }) => {
-	const t = useTranslations('Filters')
+	const t = useTranslations('Filters');
 	const [ element, setElement ] = useState<HTMLElement | null>(null);
 	const dispatch = useAppDispatch();
 	const { filter, subsection } = useAppSelector(state => state.filterReducer);

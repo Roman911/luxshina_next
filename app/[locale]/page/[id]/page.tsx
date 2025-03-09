@@ -56,8 +56,8 @@ export default async function Pages({ params }: { params: Promise<{ locale: Lang
 	return (
 		<LayoutWrapper>
 			<Breadcrumbs path={ path } />
-			<Title title={ alias[id].description[lang].meta_h1 && '' } />
-			<HtmlContent htmlString={ alias[id].description?.[lang].content && '' } />
+			<Title title={ alias[id].description[lang].meta_h1 || '' } />
+			<HtmlContent htmlString={ alias[id].description?.[lang].content || '' } />
 		</LayoutWrapper>
 	)
 };
