@@ -75,7 +75,7 @@ const HeaderMain: FC<Props> = ({ settings }) => {
 					</button>
 					{ filterIsOpen === 'tires' &&
 						<div className='mt-4 grid grid-cols-2 gap-2'>
-							<CarTireFilter closeFilter={ closeFilter } />
+							<CarTireFilter />
 						</div>
 					}
 				</NavbarMenuItem>
@@ -93,7 +93,7 @@ const HeaderMain: FC<Props> = ({ settings }) => {
 					</button>
 					{ filterIsOpen === 'disks' &&
 						<div className='mt-5 grid grid-cols-2 gap-2'>
-							<CarDiskFilter closeFilter={ closeFilter } />
+							<CarDiskFilter />
 						</div>
 					}
 				</NavbarMenuItem>
