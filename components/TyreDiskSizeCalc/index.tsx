@@ -1,13 +1,11 @@
 'use client'
-import { FC, useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { useLocale } from 'next-intl';
 import Iframe from 'react-iframe';
 import { Language } from '@/models/language';
 
-interface Props {
-	locale: string
-}
-
-const TyreDiskSizeCalcComponent: FC<Props> = ({ locale }) => {
+const TyreDiskSizeCalcComponent = () => {
+	const locale = useLocale();
 	const [ height, setHeight ] = useState('0px');
 
 	const changeHeight = useCallback(() => {

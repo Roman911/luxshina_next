@@ -1,11 +1,17 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import Select from '../Select';
 import type { FilterProps } from '@/models/filterHomePage';
 import { Button } from '@heroui/button';
 
 const DisksFilter: FC<FilterProps> = ({ filters, onChange, onSubmit }) => {
+	const [ isLoading, setIsLoading ] = useState(false);
 	const t = useTranslations('HeaderFilter');
+
+	const onClick = () => {
+		setIsLoading(true);
+		onSubmit();
+	}
 
 	return <>
 		<div className='grid grid-cols-1 md:grid-cols-3 gap-2.5 md:mt-7'>
@@ -21,7 +27,7 @@ const DisksFilter: FC<FilterProps> = ({ filters, onChange, onSubmit }) => {
 			})}
 		</div>
 		<div className='mt-4 md:mt-10'>
-			<Button onPress={ onSubmit } radius='full' size='lg' className='w-full md:w-72 uppercase font-bold bg-white text-black'>
+			<Button isLoading={ isLoading } onPress={ onClick } radius='full' size='lg' className='w-full md:w-72 uppercase font-bold bg-white text-black'>
 				{t('choose disks')}
 			</Button>
 		</div>

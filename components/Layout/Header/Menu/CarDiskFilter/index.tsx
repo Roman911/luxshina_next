@@ -1,15 +1,10 @@
-import { FC } from 'react';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/routing';
 import LinkComponent from '../LinkComponent';
 import Title from '../Title';
 import { brandsLinks, carBrandsLinks, diameterLinks, typeDiskLinks } from './links';
 
-interface Props {
-	closeFilter: () => void
-}
-
-const CarDiskFilter: FC<Props> = ({ closeFilter }) => {
+const CarDiskFilter = () => {
 	const t = useTranslations('HeaderFilter');
 
 	return <>
@@ -22,7 +17,6 @@ const CarDiskFilter: FC<Props> = ({ closeFilter }) => {
 					label={ t(item.label) }
 					mt={ item.mt }
 					border={ false }
-					onClick={ closeFilter }
 				/>
 			}) }
 		</div>
@@ -35,13 +29,11 @@ const CarDiskFilter: FC<Props> = ({ closeFilter }) => {
 						href={ item.href }
 						label={ item.label }
 						border={ false }
-						onClick={ closeFilter }
 					/>
 				}) }
 			</div>
 			<Link
 				href='/catalog/disks'
-				onClick={ closeFilter }
 				className='text-primary font-bold hover:underline'
 			>
 				{ t('all brands') }
@@ -56,13 +48,11 @@ const CarDiskFilter: FC<Props> = ({ closeFilter }) => {
 						href={ item.href }
 						label={ item.label }
 						border={ false }
-						onClick={ closeFilter }
 					/>
 				}) }
 			</div>
 			<Link
 				href='/catalog/disks'
-				onClick={ closeFilter }
 				className='text-primary font-bold hover:underline'
 			>
 				{ t('all car brands') }
@@ -78,7 +68,6 @@ const CarDiskFilter: FC<Props> = ({ closeFilter }) => {
 							href={ item.href }
 							border={ item.border }
 							label={ item.label }
-							onClick={ closeFilter }
 						/>
 					}) }
 				</div>

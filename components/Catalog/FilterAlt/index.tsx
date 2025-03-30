@@ -1,9 +1,10 @@
 'use client'
 import { FC, useState } from 'react';
 import { useTranslations } from 'next-intl';
+import { Checkbox, CheckboxGroup } from '@heroui/checkbox';
+import { Drawer, DrawerContent } from '@heroui/drawer';
 import { useAppDispatch, useAppSelector } from '@/hooks/redux';
 import { setParams } from '@/store/slices/filterSlice';
-import { Drawer, DrawerContent } from '@heroui/drawer';
 import { useDisclosure } from '@heroui/modal';
 import SwitchTabs from './SwitchTabs';
 import SwitchTabsByParams from './SwitchTabsByParams';
@@ -13,11 +14,14 @@ import type { BaseDataProps, Options } from '@/models/baseData';
 import { SubmitFloat } from '@/components/Catalog/FilterAlt/SubmitFloat';
 import { Language } from '@/models/language';
 import { appointmentCargo, appointmentIndustrial, customTireSeason, others, typeDisc } from './customParamForSelector';
-import { baseDataAPI } from '@/services/baseDataService';
 import ByCar from '@/components/Catalog/FilterAlt/ByCar';
 import { SelectFromTo } from '@/components/Catalog/FilterAlt/SelectFromTo';
 import { Button } from '@heroui/button';
 import * as Icons from '@/components/UI/Icons';
+import MyCheckboxGroup from '@/components/Catalog/FilterAlt/CheckboxGroup';
+import { setProgress } from '@/store/slices/progressSlice';
+import { Link } from '@/i18n/routing';
+import type { AkumProps } from '@/models/akumData';
 
 const cargoTypes = [ '3', '4', '5', '6' ];
 const industrialTypes = [ '9', '10', '11' ];
@@ -26,19 +30,20 @@ interface Props {
 	locale: Language
 	filterData: BaseDataProps | undefined
 	section: Section
+	slug: string[]
+	filters: BaseDataProps | undefined
+	filtersAkum: AkumProps | undefined
 }
 
-const FilterAlt: FC<Props> = ({ locale, filterData, section }) => {
+const FilterAlt: FC<Props> = ({ locale, filterData, section, slug, filters, filtersAkum }) => {
 	const t = useTranslations('Filters');
 	const [ element, setElement ] = useState<HTMLElement | null>(null);
 	const dispatch = useAppDispatch();
 	const { filter, subsection } = useAppSelector(state => state.filterReducer);
 	const appointmentCargoShow = filter.vehicle_type && cargoTypes.includes(filter.vehicle_type);
 	const appointmentIndustrialShow = filter.vehicle_type && industrialTypes.includes(filter.vehicle_type);
-	const { data: dataAkum } = baseDataAPI.useFetchDataAkumQuery('');
-	const { data } = baseDataAPI.useFetchBaseDataQuery('');
 	const { isOpen, onOpen, onOpenChange } = useDisclosure();
-	const country = locale === Language.UK ? data?.country : data?.country_ru;
+	const country = locale === Language.UK ? filters?.country : filters?.country_ru;
 
 	const onChange = (name: string, value: number | string | undefined | null, element: HTMLElement) => {
 		if(name === 'brand') {
@@ -83,7 +88,8 @@ const FilterAlt: FC<Props> = ({ locale, filterData, section }) => {
 
 	return (
 		<div>
-			<Button variant='light' onPress={ onOpen } className='font-bold lg:hidden text-medium' startContent={ <Icons.FilterIcon className='fill-black' /> } >{ t('filters') }</Button>
+			<Button variant='light' onPress={ onOpen } className='font-bold lg:hidden text-medium'
+							startContent={ <Icons.FilterIcon className='fill-black'/> }>{ t('filters') }</Button>
 			<div className='hidden md:block'>
 				{ section !== Section.Battery && <div
 					className='filter lg:h-auto w-[calc(100%-70px)] lg:w-64 mr-6 pt-4 lg:pt-0 bg-white lg:bg-transparent'>
@@ -91,7 +97,8 @@ const FilterAlt: FC<Props> = ({ locale, filterData, section }) => {
 				</div> }
 				<div
 					className='relative pb-32 lg:pb-4 px-4 pt-4 bg-white border border-gray-200 z-10 overflow-y-auto md:overflow-y-visible'>
-					<SubmitFloat element={ element } btnTitle={ t('to apply') } setElement={ setElement } offset={ Section.Battery ? 294 : 340 }/>
+					<SubmitFloat element={ element } btnTitle={ t('to apply') } setElement={ setElement }
+											 offset={ Section.Battery ? 294 : 340 }/>
 					{ section !== Section.Battery && <SwitchTabsByParams subsection={ subsection }/> }
 					{ subsection === Subsection.ByParams && <>
 						{ section === Section.Tires && <>
@@ -144,227 +151,259 @@ const FilterAlt: FC<Props> = ({ locale, filterData, section }) => {
 							) }
 						</> }
 					</> }
-					{ subsection === 'byCars' && <ByCar data={ data }/> }
-					{section === Section.Battery && <>
-						{renderSelect(
+					{ subsection === 'byCars' && <ByCar data={ filters }/> }
+					{ section === Section.Battery && <>
+						{ renderSelect(
 							'jemnist',
 							'capacity',
 							'gray',
-							dataAkum?.jemnist.map(item => ({value: item.value, label: item.value, p: item.p})),
+							filtersAkum?.jemnist.map(item => ({ value: item.value, label: item.value, p: item.p })),
 							false,
 							filter?.jemnist,
 							true,
-						)}
-						{renderSelect(
+						) }
+						{ renderSelect(
 							'puskovii_strum',
 							'starting current',
 							'gray',
-							dataAkum?.['puskovii-strum'].map(item => ({value: item.value, label: item.value, p: item.p})),
+							filtersAkum?.['puskovii-strum'].map(item => ({ value: item.value, label: item.value, p: item.p })),
 							false,
 							filter?.puskovii_strum,
 							true,
-						)}
-						{renderSelect(
+						) }
+						{ renderSelect(
 							'tip_elektrolitu',
 							'type of electrolyte',
 							'gray',
-							dataAkum?.['tip-elektrolitu'].map(item => ({value: item.value, label: item.value, p: item.p})),
+							filtersAkum?.['tip-elektrolitu'].map(item => ({ value: item.value, label: item.value, p: item.p })),
 							false,
 							filter?.tip_elektrolitu,
-						)}
-						{renderSelect(
-							'tip_korpusu',
-							'body type',
-							'white',
-							dataAkum?.['tip-korpusu'].map(item => ({value: item.value, label: item.value, p: item.p})),
-							false,
-							filter?.tip_korpusu,
-						)}
-						{renderSelect(
-							'brand',
-							'brand',
-							'white',
-							dataAkum?.brand_akum?.map(item => ({value: item.value, label: item.label})),
-							false,
-							filter?.brand && Number(filter.brand),
-							true,
-						)}
-					</>}
+						) }
+						<MyCheckboxGroup
+							checkboxKey='elt-'
+							label={ t('body type') }
+							slug={ slug }
+							section={ section }
+							options={ filtersAkum?.['tip-korpusu'].map(item => ({ value: item.value, label: item.value })) || [] }
+						/>
+						<MyCheckboxGroup
+							checkboxKey='b-'
+							label={ t('brand') }
+							slug={ slug }
+							section={ section }
+							options={ filtersAkum?.brand_akum?.map(item => ({ value: `${ item.value }`, label: item.label })) || [] }
+						/>
+					</> }
 					{ section === Section.Tires && <>
-						{ !appointmentCargoShow && !appointmentIndustrialShow && renderSelect(
-							'sezon',
-							'season',
-							'white',
-							customTireSeason.map(item => ({
+						{ !appointmentCargoShow && !appointmentIndustrialShow && <>
+							<MyCheckboxGroup
+								checkboxKey='s-'
+								label={ t('season') }
+								slug={ slug }
+								section={ section }
+								options={ customTireSeason.map(item => ({
+									value: item.value,
+									label: locale === Language.UK ? item.name_ua : item.name
+								})) }
+							/>
+							{ slug && slug.includes('s-2') &&
+								<Link
+									className='ml-8 mt-2 flex'
+									onClick={ () => dispatch(setProgress(true)) }
+									href={ `/catalog/${ section }/${ slug ? slug.filter(item => !/^stud-\d+$/.test(item)).join('/') : '' }/${ slug?.includes('stud-1') ? '' : 'stud-1' }` }>
+									<Checkbox className="-z-10" radius="none" size="lg" isSelected={ slug?.includes('stud-1') }>
+										Шип
+									</Checkbox>
+								</Link> }
+						</> }
+						{ appointmentCargoShow && <MyCheckboxGroup
+							checkboxKey='vt-'
+							label={ t('appointment') }
+							slug={ slug }
+							section={ section }
+							options={ appointmentCargo.map(item => ({
 								value: item.value,
 								label: locale === Language.UK ? item.name_ua : item.name
-							})),
-							false,
-							filter?.sezon,
-							false,
-							filter?.only_studded
-						) }
-						{ appointmentCargoShow && renderSelect(
-							'vehicle_type',
-							'appointment',
-							'white',
-							appointmentCargo.map(item => ({
+							})) }
+						/> }
+						{ appointmentIndustrialShow && <MyCheckboxGroup
+							checkboxKey='vt-'
+							label={ t('appointment') }
+							slug={ slug }
+							section={ section }
+							options={ appointmentIndustrial.map(item => ({
 								value: item.value,
 								label: locale === Language.UK ? item.name_ua : item.name
-							})),
-							false,
-							filter?.vehicle_type,
-						) }
-						{ appointmentIndustrialShow && renderSelect(
-							'vehicle_type',
-							'appointment',
-							'white',
-							appointmentIndustrial.map(item => ({
-								value: item.value,
-								label: locale === Language.UK ? item.name_ua : item.name
-							})),
-							false,
-							filter?.vehicle_type,
-						) }
-						{ renderSelect(
-							'brand',
-							'brand',
-							'white',
-							data?.brand?.map(item => ({ value: item.value, label: item.label })),
-							false,
-							filter?.brand && Number(filter.brand),
-							true,
-						) }
+							})) }
+						/> }
+						<MyCheckboxGroup
+							checkboxKey='b-'
+							label={ t('brand') }
+							slug={ slug }
+							section={ section }
+							options={ filters?.brand?.map(item => ({ value: `${ item.value }`, label: item.label })) || [] }
+						/>
 					</> }
 					{ section === Section.Disks && <>
-						{ renderSelect(
-							'krepeg',
-							'fasteners',
-							'white',
-							data?.krip?.map(item => ({ value: item.value, label: item.value, p: item.p })),
-							false,
-							filter?.krepeg,
-							true,
-						) }
+						<MyCheckboxGroup
+							checkboxKey='kr-'
+							label={ t('fasteners') }
+							slug={ slug }
+							section={ section }
+							options={ filters?.krip?.map(item => ({ value: item.value, label: item.value })) || [] }
+						/>
 						<SelectFromTo name='et' nameMin='etMin' nameMax='etMax' minus={ true } from={ -140 } to={ 500 }
 													title={ `ET(${ t('departure') })` } btnTitle={ t('to apply') }/>
 						<SelectFromTo name='dia' nameMin='diaMin' nameMax='diaMax' from={ 46 } to={ 500 } title='DIA'
 													btnTitle={ t('to apply') }/>
-						{ renderSelect(
-							'typedisk',
-							'type',
-							'gray',
-							typeDisc.map(item => ({ value: item.value, label: locale === Language.UK ? item.name_ua : item.name })),
-							false,
-							filter?.typedisk,
-						) }
-						{ renderSelect(
-							'colir',
-							'color',
-							'white',
-							data?.colir_abbr?.map(item => ({ value: item.value, label: item.value, p: item.p })),
-							false,
-							filter?.colir,
-							true,
-						) }
-						{ renderSelect(
-							'brand',
-							'brand',
-							'white',
-							data?.brand_disc?.map(item => ({ value: item.value, label: item.label })),
-							false,
-							filter?.brand && Number(filter.brand),
-							true,
-						) }
+						<MyCheckboxGroup
+							checkboxKey='td-'
+							label={ t('type') }
+							slug={ slug }
+							section={ section }
+							options={ typeDisc.map(item => ({
+								value: item.value,
+								label: locale === Language.UK ? item.name_ua : item.name
+							})) }
+						/>
+						<MyCheckboxGroup
+							checkboxKey='clr-'
+							label={ t('color') }
+							slug={ slug }
+							section={ section }
+							options={ filters?.colir_abbr?.map(item => ({ value: item.value, label: item.value })) || [] }
+						/>
+						<MyCheckboxGroup
+							checkboxKey='b-'
+							label={ t('brand') }
+							slug={ slug }
+							section={ section }
+							options={ filters?.brand_disc?.map(item => ({ value: `${ item.value }`, label: item.label })) || [] }
+						/>
 					</> }
-					{section === Section.Tires && renderSelect(
-						'country',
-						'country',
-						'white',
-						country?.map(item => ({value: item.value, label: item.label})),
-						false,
-						filter?.country,
-						true,
-					)}
-					{section === Section.Tires && renderSelect(
-						'year',
-						'year',
-						'gray',
-						data?.tyre_year?.map(item => ({value: item.value, label: item.label})),
-						false,
-						filter?.year && (filter.year),
-					)}
+					{ section === Section.Tires && <>
+						<MyCheckboxGroup
+							checkboxKey='ctr-'
+							label={ t('country') }
+							slug={ slug }
+							section={ section }
+							options={ country?.map(item => ({ value: item.value, label: item.label })) || [] }
+						/>
+						<MyCheckboxGroup
+							checkboxKey='y-'
+							label={ t('year') }
+							slug={ slug }
+							section={ section }
+							options={ filters?.tyre_year?.map(item => ({
+								value: `${ item.value }`,
+								label: `${ item.label }`
+							})) || [] }
+						/>
+					</> }
 					<SelectFromTo name='price' nameMin='minPrice' nameMax='maxPrice' from={ 200 } to={ 10000 }
 												title={ `${ t('price range') } (грн)` } btnTitle={ t('to apply') }/>
-					{section === Section.Battery && <>
-						<SelectFromTo name='sirina' nameMin='minShirina' nameMax='maxShirina' from={0} to={600} title={`${t('width')} (см)`}
-													btnTitle={t('to apply')} />
-						<SelectFromTo name='visota' nameMin='minVisota' nameMax='maxVisota' from={0} to={190} title={`${t('height')} (см)`}
-													btnTitle={t('to apply')} />
-						<SelectFromTo name='dovzina' nameMin='minDovzina' nameMax='maxDovzina' from={0} to={600}
-													title={`Довжина (см)`} btnTitle={t('to apply')} />
-						{renderSelect(
-							'napruga',
-							'high-voltage',
-							'gray',
-							dataAkum?.napruga.map(item => ({value: item.value, label: item.value, p: item.p})),
-							false,
-							filter?.napruga,
-						)}
-						{renderSelect(
-							'poliarnist',
-							'polarity',
-							'white',
-							dataAkum?.poliarnist.map(item => ({value: item.value, label: item.value, p: item.p})),
-							false,
-							filter?.poliarnist,
-						)}
-					</>}
+					{ section === Section.Battery && <>
+						<SelectFromTo name='sirina' nameMin='minShirina' nameMax='maxShirina' from={ 0 } to={ 600 }
+													title={ `${ t('width') } (см)` }
+													btnTitle={ t('to apply') }/>
+						<SelectFromTo name='visota' nameMin='minVisota' nameMax='maxVisota' from={ 0 } to={ 190 }
+													title={ `${ t('height') } (см)` }
+													btnTitle={ t('to apply') }/>
+						<SelectFromTo name='dovzina' nameMin='minDovzina' nameMax='maxDovzina' from={ 0 } to={ 600 }
+													title={ `Довжина (см)` } btnTitle={ t('to apply') }/>
+						<MyCheckboxGroup
+							checkboxKey='am-'
+							label={ t('high-voltage') }
+							slug={ slug }
+							section={ section }
+							options={ filtersAkum?.napruga.map(item => ({ value: item.value, label: item.value })) || [] }
+						/>
+						<MyCheckboxGroup
+							checkboxKey='pl-'
+							label={ t('polarity') }
+							slug={ slug }
+							section={ section }
+							options={ filtersAkum?.poliarnist.map(item => ({
+								value: item.value,
+								label: item.value,
+								p: item.p
+							})) || [] }
+						/>
+					</> }
 					{ section === Section.Tires && <>
-						{ renderSelect(
-							'li',
-							'load index',
-							'white',
-							data?.load.map(item => ({ value: item.value, label: item.value })),
-							false,
-							filter?.li,
-							true,
-						) }
-						{ renderSelect(
-							'si',
-							'speed index',
-							'white',
-							data?.speed.map(item => ({ value: item.value, label: item.value })),
-							false,
-							filter?.si,
-							true,
-						) }
-						{ renderSelect(
-							'omolog',
-							'homologation',
-							'white',
-							data?.omolog.map(item => ({ value: item.value, label: item.value })),
-							false,
-							filter?.omolog,
-							true,
-						) }
-						{ renderSelect(
-							'other',
-							'other',
-							'white',
-							others.map(item => ({ value: item.value, label: locale === Language.UK ? item.name_ua : item.name })),
-							false,
-							null,
-							false,
-							null,
-							{
-								only_c: filter?.only_c ?? null,
-								only_xl: filter?.only_xl ?? null,
-								only_owl: filter?.only_owl ?? null,
-								only_run_flat: filter?.only_run_flat ?? null,
-								only_off_road: filter?.only_off_road ?? null,
-							}
-						) }
+						<MyCheckboxGroup
+							checkboxKey='li-'
+							label={ t('load index') }
+							slug={ slug }
+							section={ section }
+							options={ filters?.load.map(item => ({ value: item.value, label: item.value })) || [] }
+						/>
+						<MyCheckboxGroup
+							checkboxKey='si-'
+							label={ t('speed index') }
+							slug={ slug }
+							section={ section }
+							options={ filters?.speed.map(item => ({ value: item.value, label: item.value })) || [] }
+						/>
+						<MyCheckboxGroup
+							checkboxKey='hm-'
+							label={ t('homologation') }
+							slug={ slug }
+							section={ section }
+							options={ filters?.omolog.map(item => ({ value: item.value, label: item.value })) || [] }
+						/>
+						<CheckboxGroup
+							defaultValue={ [slug?.includes('oc-1') ? 'oc-1' : '', slug?.includes('xl-1') ? 'xl-1' : '', slug?.includes('owl-1') ? 'owl-1' : '', slug?.includes('rf-1') ? 'rf-1' : '', slug?.includes('ofr-1') ? 'ofr-1' : ''] }
+							label={ t('other') }
+							classNames={ { label: 'mt-4 font-bold text-black' } }
+							orientation='vertical'
+						>
+							<Link
+								className='w-full flex mt-2'
+								onClick={ () => dispatch(setProgress(true)) }
+								href={ `/catalog/${ section }/${slug ? slug.includes('oc-1') ? slug.filter(i => i !== 'oc-1').join('/') : `${slug.join('/')}/oc-1` : '/oc-1'}` }
+							>
+								<Checkbox className='-z-10' radius='none' size='lg' value='oc-1'>
+									C
+								</Checkbox>
+							</Link>
+							<Link
+								className='w-full flex mt-2'
+								onClick={ () => dispatch(setProgress(true)) }
+								href={ `/catalog/${ section }/${slug ? slug.includes('xl-1') ? slug.filter(i => i !== 'xl-1').join('/') : `${slug.join('/')}/xl-1` : '/xl-1'}` }
+							>
+								<Checkbox className='-z-10' radius='none' size='lg' value='xl-1'>
+									XL
+								</Checkbox>
+							</Link>
+							<Link
+								className='w-full flex mt-2'
+								onClick={ () => dispatch(setProgress(true)) }
+								href={ `/catalog/${ section }/${slug ? slug.includes('owl-1') ? slug.filter(i => i !== 'owl-1').join('/') : `${slug.join('/')}/owl-1` : '/owl-1'}` }
+							>
+								<Checkbox className='-z-10' radius='none' size='lg' value='owl-1'>
+									{ locale === Language.UK ? 'OWL (белые буквы)' : 'OWL (білі букви)' }
+								</Checkbox>
+							</Link>
+							<Link
+								className='w-full flex mt-2'
+								onClick={ () => dispatch(setProgress(true)) }
+								href={ `/catalog/${ section }/${slug ? slug.includes('rf-1') ? slug.filter(i => i !== 'rf-1').join('/') : `${slug.join('/')}/rf-1` : '/rf-1'}` }
+							>
+								<Checkbox className='-z-10' radius='none' size='lg' value='rf-1'>
+									RunFlat
+								</Checkbox>
+							</Link>
+							<Link
+								className='w-full flex mt-2'
+								onClick={ () => dispatch(setProgress(true)) }
+								href={ `/catalog/${ section }/${slug ? slug.includes('ofr-1') ? slug.filter(i => i !== 'ofr-1').join('/') : `${slug.join('/')}/ofr-1` : '/ofr-1'}` }
+							>
+								<Checkbox className='-z-10' radius='none' size='lg' value='ofr-1'>
+									Off-Road 4x4
+								</Checkbox>
+							</Link>
+						</CheckboxGroup>
 					</> }
 				</div>
 			</div>
@@ -403,7 +442,11 @@ const FilterAlt: FC<Props> = ({ locale, filterData, section }) => {
 											'radius',
 											'diameter',
 											'gray',
-											filterData?.tyre_diameter?.map(item => ({ value: item.value, label: `R${ item.value }`, p: item.p })),
+											filterData?.tyre_diameter?.map(item => ({
+												value: item.value,
+												label: `R${ item.value }`,
+												p: item.p
+											})),
 											'R14',
 											filter?.radius,
 											true,
@@ -423,59 +466,63 @@ const FilterAlt: FC<Props> = ({ locale, filterData, section }) => {
 											'radius',
 											'diameter',
 											'gray',
-											filterData?.disc_diameter?.map(item => ({ value: item.value, label: `R${ item.value }`, p: item.p })),
+											filterData?.disc_diameter?.map(item => ({
+												value: item.value,
+												label: `R${ item.value }`,
+												p: item.p
+											})),
 											false,
 											filter?.radius,
 											true,
 										) }
 									</> }
 								</> }
-								{ subsection === 'byCars' && <ByCar data={ data }/> }
-								{section === Section.Battery && <>
-									{renderSelect(
+								{ subsection === 'byCars' && <ByCar data={ filters }/> }
+								{ section === Section.Battery && <>
+									{ renderSelect(
 										'jemnist',
 										'capacity',
 										'gray',
-										dataAkum?.jemnist.map(item => ({value: item.value, label: item.value, p: item.p})),
+										filtersAkum?.jemnist.map(item => ({ value: item.value, label: item.value, p: item.p })),
 										false,
 										filter?.jemnist,
 										true,
-									)}
-									{renderSelect(
+									) }
+									{ renderSelect(
 										'puskovii_strum',
 										'starting current',
 										'gray',
-										dataAkum?.['puskovii-strum'].map(item => ({value: item.value, label: item.value, p: item.p})),
+										filtersAkum?.['puskovii-strum'].map(item => ({ value: item.value, label: item.value, p: item.p })),
 										false,
 										filter?.puskovii_strum,
 										true,
-									)}
-									{renderSelect(
+									) }
+									{ renderSelect(
 										'tip_elektrolitu',
 										'type of electrolyte',
 										'gray',
-										dataAkum?.['tip-elektrolitu'].map(item => ({value: item.value, label: item.value, p: item.p})),
+										filtersAkum?.['tip-elektrolitu'].map(item => ({ value: item.value, label: item.value, p: item.p })),
 										false,
 										filter?.tip_elektrolitu,
-									)}
-									{renderSelect(
+									) }
+									{ renderSelect(
 										'tip_korpusu',
 										'body type',
 										'white',
-										dataAkum?.['tip-korpusu'].map(item => ({value: item.value, label: item.value, p: item.p})),
+										filtersAkum?.['tip-korpusu'].map(item => ({ value: item.value, label: item.value, p: item.p })),
 										false,
 										filter?.tip_korpusu,
-									)}
-									{renderSelect(
+									) }
+									{ renderSelect(
 										'brand',
 										'brand',
 										'white',
-										dataAkum?.brand_akum?.map(item => ({value: item.value, label: item.label})),
+										filtersAkum?.brand_akum?.map(item => ({ value: item.value, label: item.label })),
 										false,
 										filter?.brand && Number(filter.brand),
 										true,
-									)}
-								</>}
+									) }
+								</> }
 								{ section === Section.Tires && <>
 									{ !appointmentCargoShow && !appointmentIndustrialShow && renderSelect(
 										'sezon',
@@ -516,7 +563,7 @@ const FilterAlt: FC<Props> = ({ locale, filterData, section }) => {
 										'brand',
 										'brand',
 										'white',
-										data?.brand?.map(item => ({ value: item.value, label: item.label })),
+										filters?.brand?.map(item => ({ value: item.value, label: item.label })),
 										false,
 										filter?.brand && Number(filter.brand),
 										true,
@@ -527,7 +574,7 @@ const FilterAlt: FC<Props> = ({ locale, filterData, section }) => {
 										'krepeg',
 										'fasteners',
 										'white',
-										data?.krip?.map(item => ({ value: item.value, label: item.value, p: item.p })),
+										filters?.krip?.map(item => ({ value: item.value, label: item.value, p: item.p })),
 										false,
 										filter?.krepeg,
 										true,
@@ -540,7 +587,10 @@ const FilterAlt: FC<Props> = ({ locale, filterData, section }) => {
 										'typedisk',
 										'type',
 										'gray',
-										typeDisc.map(item => ({ value: item.value, label: locale === Language.UK ? item.name_ua : item.name })),
+										typeDisc.map(item => ({
+											value: item.value,
+											label: locale === Language.UK ? item.name_ua : item.name
+										})),
 										false,
 										filter?.typedisk,
 									) }
@@ -548,7 +598,7 @@ const FilterAlt: FC<Props> = ({ locale, filterData, section }) => {
 										'colir',
 										'color',
 										'white',
-										data?.colir_abbr?.map(item => ({ value: item.value, label: item.value, p: item.p })),
+										filters?.colir_abbr?.map(item => ({ value: item.value, label: item.value, p: item.p })),
 										false,
 										filter?.colir,
 										true,
@@ -557,61 +607,63 @@ const FilterAlt: FC<Props> = ({ locale, filterData, section }) => {
 										'brand',
 										'brand',
 										'white',
-										data?.brand_disc?.map(item => ({ value: item.value, label: item.label })),
+										filters?.brand_disc?.map(item => ({ value: item.value, label: item.label })),
 										false,
 										filter?.brand && Number(filter.brand),
 										true,
 									) }
 								</> }
-								{section === Section.Tires && renderSelect(
+								{ section === Section.Tires && renderSelect(
 									'country',
 									'country',
 									'white',
-									country?.map(item => ({value: item.value, label: item.label})),
+									country?.map(item => ({ value: item.value, label: item.label })),
 									false,
 									filter?.country,
 									true,
-								)}
-								{section === Section.Tires && renderSelect(
+								) }
+								{ section === Section.Tires && renderSelect(
 									'year',
 									'year',
 									'gray',
-									data?.tyre_year?.map(item => ({value: item.value, label: item.label})),
+									filters?.tyre_year?.map(item => ({ value: item.value, label: item.label })),
 									false,
 									filter?.year && (filter.year),
-								)}
+								) }
 								<SelectFromTo name='price' nameMin='minPrice' nameMax='maxPrice' from={ 200 } to={ 10000 }
 															title={ `${ t('price range') } (грн)` } btnTitle={ t('to apply') }/>
-								{section === Section.Battery && <>
-									<SelectFromTo name='sirina' nameMin='minShirina' nameMax='maxShirina' from={0} to={600} title={`${t('width')} (см)`}
-																btnTitle={t('to apply')} />
-									<SelectFromTo name='visota' nameMin='minVisota' nameMax='maxVisota' from={0} to={190} title={`${t('height')} (см)`}
-																btnTitle={t('to apply')} />
-									<SelectFromTo name='dovzina' nameMin='minDovzina' nameMax='maxDovzina' from={0} to={600}
-																title={`Довжина (см)`} btnTitle={t('to apply')} />
-									{renderSelect(
+								{ section === Section.Battery && <>
+									<SelectFromTo name='sirina' nameMin='minShirina' nameMax='maxShirina' from={ 0 } to={ 600 }
+																title={ `${ t('width') } (см)` }
+																btnTitle={ t('to apply') }/>
+									<SelectFromTo name='visota' nameMin='minVisota' nameMax='maxVisota' from={ 0 } to={ 190 }
+																title={ `${ t('height') } (см)` }
+																btnTitle={ t('to apply') }/>
+									<SelectFromTo name='dovzina' nameMin='minDovzina' nameMax='maxDovzina' from={ 0 } to={ 600 }
+																title={ `Довжина (см)` } btnTitle={ t('to apply') }/>
+									{ renderSelect(
 										'napruga',
 										'high-voltage',
 										'gray',
-										dataAkum?.napruga.map(item => ({value: item.value, label: item.value, p: item.p})),
+										filtersAkum?.napruga.map(item => ({ value: item.value, label: item.value, p: item.p })),
 										false,
 										filter?.napruga,
-									)}
-									{renderSelect(
+									) }
+									{ renderSelect(
 										'poliarnist',
 										'polarity',
 										'white',
-										dataAkum?.poliarnist.map(item => ({value: item.value, label: item.value, p: item.p})),
+										filtersAkum?.poliarnist.map(item => ({ value: item.value, label: item.value, p: item.p })),
 										false,
 										filter?.poliarnist,
-									)}
-								</>}
+									) }
+								</> }
 								{ section === Section.Tires && <>
 									{ renderSelect(
 										'li',
 										'load index',
 										'white',
-										data?.load.map(item => ({ value: item.value, label: item.value })),
+										filters?.load.map(item => ({ value: item.value, label: item.value })),
 										false,
 										filter?.li,
 										true,
@@ -620,7 +672,7 @@ const FilterAlt: FC<Props> = ({ locale, filterData, section }) => {
 										'si',
 										'speed index',
 										'white',
-										data?.speed.map(item => ({ value: item.value, label: item.value })),
+										filters?.speed.map(item => ({ value: item.value, label: item.value })),
 										false,
 										filter?.si,
 										true,
@@ -629,7 +681,7 @@ const FilterAlt: FC<Props> = ({ locale, filterData, section }) => {
 										'omolog',
 										'homologation',
 										'white',
-										data?.omolog.map(item => ({ value: item.value, label: item.value })),
+										filters?.omolog.map(item => ({ value: item.value, label: item.value })),
 										false,
 										filter?.omolog,
 										true,
@@ -638,7 +690,10 @@ const FilterAlt: FC<Props> = ({ locale, filterData, section }) => {
 										'other',
 										'other',
 										'white',
-										others.map(item => ({ value: item.value, label: locale === Language.UK ? item.name_ua : item.name })),
+										others.map(item => ({
+											value: item.value,
+											label: locale === Language.UK ? item.name_ua : item.name
+										})),
 										false,
 										null,
 										false,

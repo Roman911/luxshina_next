@@ -1,21 +1,43 @@
 'use client'
-import { FC } from 'react';
-import { useParams, useRouter } from 'next/navigation';
-import { Pagination } from '@heroui/pagination';
-import { Language } from '@/models/language';
+import { FC, Key } from 'react';
+import { Link } from '@/i18n/routing';
+import { Pagination, PaginationItemType, PaginationItemValue } from '@heroui/pagination';
+import { twMerge } from 'tailwind-merge';
+import { Section } from '@/models/section';
 
 interface Props {
 	initialPage: number
 	total: number
+	slug: string[]
+	section: Section
 }
 
-const MyPagination: FC<Props> = ({ initialPage, total }) => {
-	const { locale, section, slug } = useParams<{ locale: Language, section: string, slug: string[] }>();
+const MyPagination: FC<Props> = ({ initialPage, total, section, slug }) => {
 	const params = slug ? slug.filter(item => !item.startsWith('p-')).join('/') : '';
-	const router = useRouter();
 
-	const onchange = (page: number) => {
-		router.push(`/${locale}/catalog/${section}/p-${page}/${params}`)
+	const renderItem = (
+		{ key, value, isActive, className}:
+		{ key?: Key, value: PaginationItemValue, isActive: boolean, className: string }
+	) => {
+		if (value === PaginationItemType.DOTS) {
+			return (
+				<button key={key} className={twMerge('border-none shadow-none', className)}>
+					...
+				</button>
+			);
+		}
+
+		return <Link key={key} href={ `/catalog/${section}/p-${value}/${params}` }>
+			<button
+				className={twMerge(
+					className,
+					'border',
+					isActive && "text-white bg-primary font-bold",
+				)}
+			>
+				{value}
+			</button>
+		</Link>
 	}
 
 	return (
@@ -24,7 +46,7 @@ const MyPagination: FC<Props> = ({ initialPage, total }) => {
 			initialPage={ initialPage }
 			total={ total }
 			variant='bordered'
-			onChange={ onchange }
+			renderItem={renderItem}
 			classNames={{ cursor: 'text-black' }}
 		/>
 	)

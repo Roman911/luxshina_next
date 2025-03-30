@@ -24,11 +24,17 @@ const icons: IconsMap = {
 
 const TiresFilter: FC<FilterProps> = ({ filters, onChange, onSubmit }) => {
 	const [ season, setSeason ] = useState<null | number>(null);
+	const [ isLoading, setIsLoading ] = useState(false);
 	const t = useTranslations('HeaderFilter');
 
 	const handleClick = (value: number) => {
 		setSeason(value);
 		onChange('sezon', value);
+	}
+
+	const onClick = () => {
+		setIsLoading(true);
+		onSubmit();
 	}
 
 	return <>
@@ -66,7 +72,7 @@ const TiresFilter: FC<FilterProps> = ({ filters, onChange, onSubmit }) => {
 			</button>
 		</div>
 		<div className='mt-4 md:mt-10'>
-			<Button onPress={ onSubmit } radius='full' size='lg' className='w-full md:w-72 uppercase font-bold bg-white text-black'>
+			<Button isLoading={ isLoading } onPress={ onClick } radius='full' size='lg' className='w-full md:w-72 uppercase font-bold bg-white text-black'>
 				{ t('choose tires') }
 			</Button>
 		</div>

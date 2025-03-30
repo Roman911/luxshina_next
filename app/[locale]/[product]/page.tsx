@@ -1,3 +1,4 @@
+import { redirect } from 'next/navigation';
 import { Section } from '@/models/filter';
 import { ProductProps } from '@/models/product';
 import Breadcrumbs from '@/components/UI/Breadcrumbs';
@@ -6,7 +7,8 @@ import { Language, LanguageCode } from '@/models/language';
 import LayoutWrapper from '@/components/Layout/LayoutWrapper';
 import TextSeo from '@/components/UI/TextSeo';
 import type { Metadata } from 'next';
-import SimilarProducts from '@/components/SimilarProducts';
+import ProductList from '@/components/ProductList';
+import NoResult from '@/components/UI/NoResult';
 
 async function getSettings() {
 	const res = await fetch(`${ process.env.SERVER_URL }/baseData/settings`, {
@@ -24,6 +26,23 @@ async function getProduct(id: string): Promise<ProductProps> {
 		headers: {
 			'Access-Control-Allow-Credentials': 'true',
 		}
+	});
+
+	if (!res.ok) {
+		redirect('/404');
+	} else {
+		return await res.json();
+	}
+}
+
+async function getProducts( searchParams: string ) {
+	const res = await fetch(`${process.env.SERVER_URL}/api/getProducts?${searchParams}`, {
+		method: 'POST',
+		headers: {
+			'Access-Control-Allow-Credentials': 'true',
+			'content-type': 'application/json',
+		},
+		body: JSON.stringify({ length: 4 }),
 	});
 	return await res.json();
 }
@@ -48,7 +67,10 @@ export default async function Product({ params }: { params: Promise<{ locale: La
 	const idProduct = match ? match[1] : '';
 	const productResponse = await getProduct(idProduct);
 	const settings = await getSettings();
-	const section = /dia/.test(product) ? Section.Disks : Section.Tires;
+	const section = /dia/.test(product) ? Section.Disks : /ah/.test(product)? Section.Battery : Section.Tires;
+	const tiresParams = productResponse?.data.offer_group;
+	const searchParams = section === Section.Tires ? `radius=${tiresParams?.diameter}&height=${tiresParams?.height}&width=${tiresParams?.width}` : section === Section.Disks ? '?typeproduct=3& ' : '';
+	const products = await getProducts(searchParams);
 
 	const path = [
 		{
@@ -73,7 +95,10 @@ export default async function Product({ params }: { params: Promise<{ locale: La
 				section={ section }
 				settings={ settings }
 			/>
-			<SimilarProducts offerGroup={ productResponse.data.offer_group } />
+			{ products.result ? <ProductList
+				classnames='grid-cols-1 md:grid-cols-2 lg:grid-cols-4'
+				data={ products.data }
+			/> : <NoResult noResultText='no result' /> }
 			<TextSeo description={ settings[lang].description }/>
 		</LayoutWrapper>
 	)

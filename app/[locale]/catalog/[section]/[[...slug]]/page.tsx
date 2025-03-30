@@ -43,6 +43,26 @@ async function getProducts({ page, searchParams }: { page: number | null, search
 	return await res.json();
 }
 
+async function getFilters() {
+	const res = await fetch(`${process.env.SERVER_URL}/baseData`, {
+		method: 'GET',
+		headers: {
+			'Access-Control-Allow-Credentials': 'true',
+		}
+	});
+	return await res.json();
+}
+
+async function getFiltersAkum() {
+	const res = await fetch(`${process.env.SERVER_URL}/api/baseDataAkum`, {
+		method: 'GET',
+		headers: {
+			'Access-Control-Allow-Credentials': 'true',
+		}
+	});
+	return await res.json();
+}
+
 export async function generateMetadata({ params }: { params: Promise<{ locale: Language }> }): Promise<Metadata> {
 	const { locale } = await params;
 	const response = await fetch(`${process.env.SERVER_URL}/baseData/settings`)
@@ -64,23 +84,26 @@ export default async function Catalog({ params }: { params: Promise<{ locale: La
 	const paramsUrl = transformUrl({ section, slug });
 	const found = slug?.find(item => item.startsWith('order-'))?.split('-')[1] as keyof typeof sort;
 	const searchParams = `${paramsUrl || ''}${found && sort[found] ? sort[found] : ''}`;
+	console.log(searchParams);
 	const products = await getProducts({ page, searchParams });
+	const filters = await getFilters();
+	const filtersAkum = await getFiltersAkum();
 
 	return (
 		<LayoutWrapper>
 			<HeaderCatalog section={ section } slug={ slug } />
 			<div className='py-5 lg:flex lg:gap-6'>
-				<FilterAlt locale={ locale } filterData={ filterData } section={ section } />
+				<FilterAlt locale={ locale } filterData={ filterData } section={ section } slug={ slug } filters={ filters } filtersAkum={ filtersAkum } />
 				<div className='flex-1 -mt-10 lg:-mt-12'>
 					<FilterByCar />
 					<SelectionByCar />
-					<FilterActive locale={ locale } className='hidden lg:flex' slug={ slug } />
+					<FilterActive locale={ locale } className='hidden lg:flex' slug={ slug } section={ section } />
 					{ products.result ? <ProductList
 						classnames='grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
 						data={ products.data }
 					/> : <NoResult noResultText='no result' /> }
 					{ products.result && products.data.total_count > pageItem && <div className='mt-10 flex justify-center'>
-						<Pagination initialPage={ page || 1 } total={ Math.ceil(products.data.total_count/pageItem) } />
+						<Pagination initialPage={ page || 1 } slug={ slug } total={ Math.ceil(products.data.total_count/pageItem) } section={ section } />
 					</div> }
 				</div>
 			</div>

@@ -33,10 +33,10 @@ const InfoBlock = ({ settings }: { settings: SettingsProps }) => {
 				<Image width={ 20 } height={ 20 } src='/icons/infoblock/payment-icon.svg' alt='' />
 				<span className='group-hover:underline'>{ t('payment') }</span>
 			</Link>
-			<Link href='/page/garantiya-ta-povernennya' className='mt-4 flex items-center gap-x-2.5 font-medium text-primary group'>
-				<Image width={ 20 } height={ 20 } src='/icons/infoblock/guarantee-icon.svg' alt='' />
-				<span className='group-hover:underline'>{ t('warranty and returns') }</span>
-			</Link>
+			{/*<Link href='/page/garantiya-ta-povernennya' className='mt-4 flex items-center gap-x-2.5 font-medium text-primary group'>*/}
+			{/*	<Image width={ 20 } height={ 20 } src='/icons/infoblock/guarantee-icon.svg' alt='' />*/}
+			{/*	<span className='group-hover:underline'>{ t('warranty and returns') }</span>*/}
+			{/*</Link>*/}
 		</div>
 		<OurAdvantages size='small'/>
 	</div>

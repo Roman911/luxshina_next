@@ -4,6 +4,7 @@ import TopLine from '@/components/Layout/Header/TopLine';
 import { AliasAll } from '@/models/alias';
 import HeaderMain from '@/components/Layout/Header/HeaderMain';
 import Menu from './Menu';
+import Progress from '@/components/Layout/Header/Progress';
 
 interface Props {
 	alias: AliasAll
@@ -12,11 +13,14 @@ interface Props {
 
 const Header: FC<Props> = ({ alias, settings }) => {
 	return (
-		<div className='header'>
-			<TopLine settings={ settings } alias={ alias } />
-			<HeaderMain settings={ settings } />
-			<Menu />
-		</div>
+		<>
+			<Progress />
+			<div className='header'>
+				<TopLine settings={ settings } alias={ alias } />
+				<HeaderMain settings={ settings } />
+				<Menu />
+			</div>
+		</>
 	)
 };
 

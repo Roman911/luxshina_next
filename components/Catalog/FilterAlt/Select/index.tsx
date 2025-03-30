@@ -137,39 +137,6 @@ const Select: FC<SelectProps> = (
 					</div>
 				</li>
 			}) }
-			{ name === 'sezon' && filterValue === '2' && <li
-				onClick={ (event) => handleClick(event, 1, true) }
-				className="relative cursor-default select-none py-1 pl-2.5 pr-9 text-gray-900"
-				id="listbox-option-0"
-			>
-				<div className="inline-flex items-center ml-8">
-					<label
-						className="relative flex cursor-pointer items-center rounded-full"
-						htmlFor='studded'
-						data-ripple-dark="true"
-					>
-						<input
-							onChange={ (event) => handleClick(event, '1', true) }
-							checked={ valueStudded == '1' }
-							id='studded'
-							type="checkbox"
-							className="peer relative h-7 w-7 bg-white appearance-none cursor-pointer rounded-sm border border-[#A9ACB2] transition-all checked:border-teal-400 checked:bg-teal-400 hover:border-teal-400"
-						/>
-						<div
-							className="pointer-events-none absolute top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 text-white peer-checked:opacity-100">
-							<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none"
-									 className="h-3.5 w-3.5 fill-white">
-								<path
-									d="M5.4447 8.55578L2.33276 5.44494L0.777344 7.00036L5.4447 11.6677L13.2218 3.88953L11.6675 2.33301L5.4447 8.55578Z"
-								/>
-							</svg>
-						</div>
-					</label>
-					<label className="mt-px cursor-pointer select-none font-medium ml-2.5">
-						Шип
-					</label>
-				</div>
-			</li> }
 		</ul>
 	</div>
 };

@@ -39,7 +39,7 @@ const ComparisonComponent: FC<ComparisonProps> = (
 		return <button
 			onClick={ () => setTab(name) }
 			className={
-				twMerge('font-semibold text-lg py-2 relative hover:text-[#575C66] group transition text-[#575C66]', tab !== name && 'text-teal-400')
+				twMerge('font-semibold text-lg py-2 relative hover:text-[#575C66] group transition text-[#575C66]', tab !== name && 'text-primary')
 			}>
 			{ t(name) } ({ length })
 			<div className={

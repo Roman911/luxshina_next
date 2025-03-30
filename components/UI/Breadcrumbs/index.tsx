@@ -16,20 +16,21 @@ interface Props {
 
 const MyBreadcrumbs: FC<Props> = ({ path }) => {
 	const t = useTranslations('Main');
+	const pathFilter = path.filter(item => item.href !== '');
 
 	return (
-		<Breadcrumbs separator='/' className='text-gray-400 hover:text-teal-600'>
+		<Breadcrumbs separator='/' className='text-gray-400 hover:text-primary'>
 			<BreadcrumbItem>
 				<Link href='/'>
 					<Icons.HomeIcon className='w-4 h-4 fill-gray-400'/>
 				</Link>
 			</BreadcrumbItem>
-			{ path.filter(item => item.href !== '').map((item, index) => {
+			{ pathFilter.map((item, index) => {
 				return (
 					<BreadcrumbItem key={ index + 1 } className={ twMerge(index === path.length - 1 ? 'text-black font-bold' : 'underline') }>
-						<Link href={ item.href }>
+						{ index + 1 === pathFilter.length ? item.translations ? t(item.title) : item.title : <Link href={ item.href }>
 							{ item.translations ? t(item.title) : item.title }
-						</Link>
+						</Link> }
 					</BreadcrumbItem>
 				)
 			}) }

@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/routing';
 import TypeCarLinks from '@/components/UI/TypeCarLinks';
@@ -6,11 +5,7 @@ import LinkComponent from '../LinkComponent';
 import Title from '../Title';
 import { brandsLinks, diameterLinks, seasonLinks } from './links';
 
-interface Props {
-	closeFilter: () => void
-}
-
-const CarTireFilter: FC<Props> = ({ closeFilter }) => {
+const CarTireFilter = () => {
 	const t = useTranslations('HeaderFilter');
 
 	return <>
@@ -24,13 +19,12 @@ const CarTireFilter: FC<Props> = ({ closeFilter }) => {
 					label={ t(item.label) }
 					mt={ item.mt }
 					border={ false }
-					onClick={ closeFilter }
 				/>
 			}) }
 		</div>
 		<div>
 			<Title title={ t('by car type') }/>
-			<TypeCarLinks setOpen={ closeFilter } section='header' />
+			<TypeCarLinks section='header' />
 		</div>
 		<div className='mt-6 lg:mt-0'>
 			<Title title={ t('by brands') }/>
@@ -41,13 +35,11 @@ const CarTireFilter: FC<Props> = ({ closeFilter }) => {
 						href={ item.href }
 						label={ item.label }
 						border={ false }
-						onClick={ closeFilter }
 					/>
 				}) }
 			</div>
 			<Link
 				href='/catalog/tires'
-				onClick={ closeFilter }
 				className='text-primary font-bold uppercase hover:underline'
 			>
 				{ t('all brands') }
@@ -62,7 +54,6 @@ const CarTireFilter: FC<Props> = ({ closeFilter }) => {
 						href={ item.href }
 						border={ item.border }
 						label={ item.label }
-						onClick={ closeFilter }
 					/>
 				}) }
 			</div>
