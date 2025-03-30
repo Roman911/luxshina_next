@@ -73,8 +73,8 @@ const Navbar = () => {
 				<div
 					className='w-full overflow-hidden bg-white shadow-lg pt-8 pb-6 font-normal'>
 					<div className='flex-auto max-w-7xl grid grid-cols-4 mx-auto px-4'>
-						{ section === 'tires' ? <CarTireFilter closeFilter={ closeFilter } /> :
-							<CarDiskFilter closeFilter={ closeFilter } /> }
+						{ section === 'tires' ? <CarTireFilter /> :
+							<CarDiskFilter /> }
 					</div>
 				</div>
 			</div>
