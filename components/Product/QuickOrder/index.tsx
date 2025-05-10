@@ -13,12 +13,16 @@ import { Offers } from '@/models/product';
 import { baseDataAPI } from '@/services/baseDataService';
 import PhoneMaskInput from '@/components/UI/PhoneMaskInput';
 import { formatPhoneNumber } from '@/lib/formatPhoneNumber';
+import { onOrderBuy1click } from '@/event';
 
 interface Props {
 	locale: Language
 	offerId: number
 	quantity: number
 	section: Section
+	model: string | undefined
+	brand: string | undefined
+	fullName: string | undefined
 	offerItem: Offers | undefined
 }
 
@@ -28,6 +32,10 @@ const QuickOrder: FC<Props> = (
 		offerId,
 		quantity,
 		offerItem,
+		brand,
+		model,
+		fullName,
+		section
 	}
 ) => {
 	const router = useRouter();
@@ -74,6 +82,7 @@ const QuickOrder: FC<Props> = (
 					window.open(data?.linkpay, "_blank")
 				}
 				if(data?.result) {
+					onOrderBuy1click(offerItem, fullName, brand, section, model, quantity, data?.order_id);
 					event.currentTarget.reset(); // Reset form fields
 					router.push(`/${ locale }/order/successful`)
 				}

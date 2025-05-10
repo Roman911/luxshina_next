@@ -285,5 +285,9 @@
   "Cart": {
     "total payable": "Разом до сплати",
     "place an order": "Оформити замовлення"
+  },
+  "OnlineInstallment": {
+    "close": "Закрити",
+    "installment plan": "Онлайн розстрочка"
   }
 }

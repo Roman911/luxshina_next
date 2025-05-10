@@ -21,6 +21,9 @@ import QuickOrder from '@/components/Product/QuickOrder';
 import CharacteristicsBlock from '@/components/Product/CharacteristicsBlock';
 import InfoBlock from '@/components/Product/InfoBlock';
 import { SettingsProps } from '@/models/settings';
+import OnlineInstallment from './OnlineInstallment';
+import './index.scss';
+import { onAddToCart, onItemView } from '@/event';
 
 interface Props {
 	idProduct: string
@@ -42,6 +45,10 @@ const ProductComponent: FC<Props> = ({ idProduct, locale, data, section, setting
 	const commentsAvgRateSum = review && review.length > 0
 		? review.reduce((sum, current) => sum + (current.score || 0), 0) : 0;
 	const averageScore = review && review.length > 0 ? commentsAvgRateSum / review.length : undefined;
+
+	useEffect(() => {
+		onItemView(data?.data, t(section));
+	}, [data?.data, section, t]);
 
 	useEffect(() => {
 		const storage = getFromStorage('reducerRecentlyViewed');
@@ -80,6 +87,7 @@ const ProductComponent: FC<Props> = ({ idProduct, locale, data, section, setting
 	}
 
 	const onSubmit = () => {
+		onAddToCart(data?.data, t(section), quantity);
 		const cartStorage = getFromStorage('reducerCart');
 		const cart = [ ...cartStorage, { id: offerId, section, quantity } ];
 		dispatch(addCart({ id: offerId, section, quantity }));
@@ -162,23 +170,25 @@ const ProductComponent: FC<Props> = ({ idProduct, locale, data, section, setting
 						</div>
 					</div> }
 				<div className='purchase-information grid justify-self-stretch mt-5 md:mt-10'>
-					<Quantity id={ 0 } quantity={ quantity } offerQuantity={ (Number(offer?.quantity) || 0) }
-										price={ offer?.price } onChange={ onChange } setQuantity={ onSetQuantity }/>
-					<DeliveryCalculation offer_id={ offerId }/>
-					<div className='buttons-buy md:justify-self-end flex flex-col gap-4 mt-8 md:0'>
+					<div className='mb-4 md:mb-0'>
+						<Quantity id={ 0 } quantity={ quantity } offerQuantity={ (Number(offer?.quantity) || 0) }
+											price={ offer?.price } onChange={ onChange } setQuantity={ onSetQuantity }/>
+						<DeliveryCalculation offer_id={ offerId }/>
+					</div>
+					<div className='buttons-buy md:justify-self-end flex flex-col gap-4'>
 						{ cartItems.find(item => item.id === offerId) ?
-							<Link href={ `/cart` }>
-								<Button color='success' size='lg' radius='full' className='uppercase font-bold w-full md:w-72'>
-									{ t('go to cart') }
-								</Button>
-							</Link> :
+							<Button as={ Link } href={ `/cart` } color='success' size='lg' radius='full' className='uppercase font-bold w-full md:w-72 text-white'>
+								{ t('go to cart') }
+							</Button> :
 							<Button onPress={ onSubmit } color='primary' radius='full' size='lg' className='uppercase font-bold w-full md:w-72'>
 								{ t('buy') }
 							</Button>
 						}
 						<QuickOrder locale={ locale } offerId={ offerId } quantity={ quantity } section={ section }
+												fullName={ full_name } brand={ data?.data?.brand.name } model={ model.name }
 												offerItem={ data?.data?.offers?.find(item => item.offer_id === offerId) }
 						/>
+						<OnlineInstallment locale={ locale } settings={ settings } />
 					</div>
 				</div>
 				<CharacteristicsBlock locale={ locale } data={ data } />

@@ -20,6 +20,7 @@ import ActionsBlock from '@/components/ProductList/Card/ActionsBlock';
 import { countryCodeTransform } from '@/lib/countryCodetransform';
 import CountryInfo from '@/components/UI/CountryInfo';
 import * as Icons from '@/components/UI/Icons';
+import { onAddToCart } from '@/event';
 
 const regex = /\/(auto-goods|services)/;
 const cargo = [ '3', '4', '5', '6', '9', '10', '11' ];
@@ -43,6 +44,7 @@ const ProductCard: FC<Props> = ({ item }) => {
 	const url = hasMatch ? `#` : `/${page_url}`;
 
 	const handleClick = () => {
+		onAddToCart(item, t(section), 1);
 		if(!cartStorage?.find((item: { id: number, quantity: number }) => item.id === best_offer.id)) {
 			const cart = [ ...cartStorage, {
 				id: best_offer.id,

@@ -1,5 +1,6 @@
-import type { Metadata } from 'next';
-import localFont from 'next/font/local'
+import localFont from 'next/font/local';
+import Script from 'next/script';
+import { GoogleAnalytics } from '@next/third-parties/google';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import StoreProvider from '@/app/StoreProvider';
@@ -28,36 +29,7 @@ const gilroy = localFont({
 			style: 'normal',
 		},
 	],
-})
-
-export const metadata: Metadata = {
-	icons: [
-		{
-			rel: 'icon',
-			type: 'image/png',
-			url: '/favicon-48x48.png',
-			sizes: '48x48',
-		},
-		{
-			rel: 'icon',
-			type: 'image/svg+xml',
-			url: '/favicon.svg',
-		},
-		{
-			rel: 'shortcut icon',
-			url: '/favicon.ico',
-		},
-		{
-			rel: 'apple-touch-icon',
-			sizes: '180x180',
-			url: '/apple-touch-icon.png'
-		},
-		{
-			rel: 'manifest',
-			url: '/site.webmanifest',
-		}
-	]
-};
+});
 
 async function getSettings() {
 	const res = await fetch(`${process.env.SERVER_URL}/baseData/settings`, {
@@ -94,6 +66,11 @@ export default async function RootLayout(
 
 	return (
 		<html lang={ locale }>
+		<head>
+			<Script id="my-script">
+				{response[0].head_html}
+			</Script>
+		</head>
 		<body className={ gilroy.className }>
 		<StoreProvider>
 			<NextIntlClientProvider messages={ messages }>
@@ -106,6 +83,7 @@ export default async function RootLayout(
 			<ToastProvider placement='top-right' />
 		</StoreProvider>
 		</body>
+		<GoogleAnalytics gaId="GTM-PDGTR8" />
 		</html>
 	);
 };

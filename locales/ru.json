@@ -284,5 +284,9 @@
   "Cart": {
     "total payable": "Итого к оплате",
     "place an order": "Оформить заказ"
+  },
+  "OnlineInstallment": {
+    "close": "Закрыть",
+    "installment plan": "Онлайн рассрочка"
   }
 }

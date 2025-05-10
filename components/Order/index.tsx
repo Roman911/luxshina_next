@@ -1,5 +1,5 @@
 'use client'
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { Input, Textarea } from '@heroui/input';
 import Summary from './Summary';
@@ -10,6 +10,7 @@ import { NpWarehousesSearch } from '@/components/UI/NpWarehousesSearch';
 import MySelect from '@/components/UI/Select';
 import type { ProductsProps } from '@/models/products';
 import type { OrdersParamProps } from '@/models/ordersParam';
+import { onOrderMakeStart } from '@/event';
 
 interface OrderProps {
 	data: ProductsProps | undefined
@@ -35,6 +36,10 @@ const OrderComponent: FC<OrderProps> = (
 	}) => {
 	const locale = useLocale();
 	const t = useTranslations('Order');
+
+	// useEffect(() => {
+	// 	onOrderMakeStart(newData, cartItems);
+	// }, [cartItems, newData]);
 
 	const deliverysOptions = dataOrdersParam?.Deliverys.map(item => {
 		return { value: item.deliverys_id, label: locale === Language.UK ? item.name : item.name_ru }

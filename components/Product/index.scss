@@ -1,0 +1,49 @@
+.product-page {
+  .offers__item {
+    @media screen and (max-width: 768px) {
+      grid-template-areas:
+				"input price storage country";
+
+      .input {
+        grid-area: input;
+      }
+
+      .country {
+        grid-area: country;
+      }
+
+      .price {
+        grid-area: price;
+      }
+
+      .storage {
+        grid-area: storage;
+      }
+    }
+  }
+
+  .purchase-information {
+    grid-template-areas:
+				"quantity buttons-buy"
+				"delivery-calculation buttons-buy";
+
+    .quantity {
+      grid-area: quantity;
+    }
+
+    .delivery-calculation {
+      grid-area: delivery-calculation;
+    }
+
+    .buttons-buy {
+      grid-area: buttons-buy;
+    }
+
+    @media screen and (max-width: 768px) {
+      grid-template-areas:
+				"quantity"
+				"buttons-buy"
+				"delivery-calculation";
+    }
+  }
+}

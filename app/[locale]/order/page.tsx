@@ -1,6 +1,6 @@
 'use client'
 import { useParams, useRouter } from 'next/navigation';
-import { FormEvent, useMemo, useState } from 'react';
+import { FormEvent, useEffect, useMemo, useState } from 'react';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { SerializedError } from '@reduxjs/toolkit';
 import { baseDataAPI } from '@/services/baseDataService';
@@ -14,6 +14,7 @@ import OrderComponent from '@/components/Order';
 import { resetStorage } from '@/lib/localeStorage';
 import { Form } from '@heroui/form';
 import { formatPhoneNumber } from '@/lib/formatPhoneNumber';
+import { onOrderMakeEnd, onOrderMakeStart } from '@/event';
 
 export default function Order() {
 	const router = useRouter();
@@ -24,7 +25,7 @@ export default function Order() {
 	const [ paymentMethod, setPaymentMethod ] = useState<number | string | null>(1);
 	const { cartItems } = useAppSelector(state => state.cartReducer);
 	const { city, wirehouse } = useAppSelector(state => state.orderReducer);
-	const { tires, cargo, disks, battery, isLoading } = useAppGetProducts(cartItems, 'reducerCart', true);
+	const { tires, cargo, disks, battery, autoGoods, services, isLoading } = useAppGetProducts(cartItems, 'reducerCart', true);
 	const { data: dataOrdersParam } = baseDataAPI.useFetchOrdersParamQuery('');
 	const [ createOrder ] = baseDataAPI.useCreateOrderMutation();
 
@@ -32,9 +33,13 @@ export default function Order() {
 		result: true,
 		data: {
 			total_count: 5,
-			products: [ ...tires, ...cargo, ...disks, ...battery ],
+			products: [ ...tires, ...cargo, ...disks, ...battery, ...autoGoods, ...services ],
 		},
-	}), [ battery, cargo, disks, tires ]);
+	}), [autoGoods, battery, cargo, disks, services, tires]);
+
+	useEffect(() => {
+		onOrderMakeStart(newData, cartItems);
+	}, [cartItems, newData]);
 
 	const products = newData?.data.products?.map((item) => {
 		return {
@@ -105,6 +110,7 @@ export default function Order() {
 				event.currentTarget.reset(); // Reset form fields
 				if(data?.linkpay?.length > 0) window.open(data?.linkpay, "_blank")
 				if(data?.result) {
+					onOrderMakeEnd(newData, cartItems, data?.order_id);
 					dispatch(reset());
 					resetStorage('reducerCart');
 					router.push(`/${ params.locale }/order/successful`);

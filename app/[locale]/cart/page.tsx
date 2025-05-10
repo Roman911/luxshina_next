@@ -14,12 +14,12 @@ export default function Cart() {
 	const dispatch = useAppDispatch();
 	const { cartItems } = useAppSelector(state => state.cartReducer);
 	const path = [{ title: 'cart', href: '/', translations: true }];
-	const { tires, cargo, disks, battery, isLoading} = useAppGetProducts(cartItems, 'reducerCart', true);
+	const { tires, cargo, disks, battery, autoGoods, services, isLoading} = useAppGetProducts(cartItems, 'reducerCart', true);
 	const data = {
 		result: true,
 		data: {
 			total_count: 5,
-			products: [...tires,...cargo,...disks,...battery]
+			products: [...tires,...cargo,...disks,...battery,...autoGoods,...services],
 		}
 	};
 

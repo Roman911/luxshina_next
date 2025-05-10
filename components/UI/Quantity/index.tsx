@@ -10,7 +10,7 @@ interface QuantityProps {
 }
 
 const Quantity: FC<QuantityProps> = ({ id = 0, price = 0, quantity, offerQuantity, onChange, setQuantity }) => {
-	return <div className='quantity flex items-center'>
+	return <div className='quantity flex items-center justify-center md:justify-start'>
 		<div className='flex gap-1.5'>
 			<button
 				onClick={() => setQuantity(id,quantity > 1 ? quantity - 1 : 1)}
