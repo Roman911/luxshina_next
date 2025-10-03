@@ -39,7 +39,7 @@ const CarTireFilter = () => {
 				}) }
 			</div>
 			<Link
-				href='/catalog/tires'
+				href='/katalog/shyny'
 				className='text-primary font-bold uppercase hover:underline'
 			>
 				{ t('all brands') }

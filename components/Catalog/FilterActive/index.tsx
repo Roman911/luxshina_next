@@ -22,7 +22,7 @@ const FilterActive: FC<FilterActiveProps> = ({ className, slug, section }) => {
 			<div key={ key }
 					 className="p-1 bg-[#393939] text-white text-sm font-medium rounded-full flex items-center gap-1">
 				<span className="ml-1.5">{ label }</span>
-				<Link href={ `/catalog/${section}/${slug?.filter(item => item !== value).join('/')}` } className='bg-[#A8AFB6] rounded-full p-1'>
+				<Link href={ `/katalog/${section}/${slug?.filter(item => item !== value).join('/')}` } className='bg-[#A8AFB6] rounded-full p-1'>
 					<Icons.CloseIcon className="stroke-[#393939] h-3 w-3"/>
 				</Link>
 			</div>
@@ -51,7 +51,7 @@ const FilterActive: FC<FilterActiveProps> = ({ className, slug, section }) => {
 				return renderItem(key, item, split[1])
 			}) }
 			{ slug && slug.length !== 0 &&
-				<Link href={ `/catalog/${section}` }>
+				<Link href={ `/katalog/${section}` }>
 					<button className='flex items-center gap-2 text-sm font-medium group text-gray-500'>
 						{ t('reset everything') }
 						<span className='bg-[#B9B9BA] rounded-full p-1.5 hidden lg:block'>

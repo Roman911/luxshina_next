@@ -43,7 +43,7 @@ const Filter = ({ locale }: { locale: Language }) => {
 
 	const submit = () => {
 		const searchUrl = generateUrl(filter);
-		const rout = `/catalog/${section}/`;
+		const rout = `/katalog/${section}/`;
 		const newRout = `/${locale}${rout}`;
 
 		router.push(newRout + searchUrl);

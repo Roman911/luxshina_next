@@ -36,14 +36,14 @@ const FilterByCar = () => {
 		if (found) slug.splice(slug.indexOf(found), 1);
 		setSort(label);
 		setOpenSort(false);
-		router.push(`/${locale}/catalog/${section}/${slug ? slug.join('/') : ''}/${path}`);
+		router.push(`/${locale}/katalog/${section}/${slug ? slug.join('/') : ''}/${path}`);
 	}
 
 	return (
 		<div className='flex justify-end items-center lg:items-start mb-3'>
 			{ subsection === Subsection.ByParams && section === Section.Tires &&
 				<div className='hidden lg:flex gap-x-3 xl:gap-x-6 mr-3 xl:mr-8'>
-					<TypeCarLinks section='catalog' />
+					<TypeCarLinks section='katalog' />
 				</div> }
 			<div className="relative inline-block text-left z-20">
 				<button type="button" onClick={() => setOpenSort(prev => !prev)}

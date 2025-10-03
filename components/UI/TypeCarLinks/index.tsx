@@ -11,7 +11,7 @@ import { BusIcon, CargoIcon, CarIcon, MotorcyclesIcon, SpecialEquipmentIcon, Suv
 import { typeCatLinks } from './links';
 
 interface TypeCarLinksProps {
-	section: 'header' | 'catalog'
+	section: 'header' | 'katalog'
 	setOpen?: Dispatch<SetStateAction<boolean>>
 }
 
@@ -26,7 +26,7 @@ const Icons = {
 
 interface ILinkComponent extends LinkProps {
 	label: string
-	section: 'header' | 'catalog'
+	section: 'header' | 'katalog'
 	icon: keyof typeof Icons
 	iconStyles?: string
 	iconStylesActive?: string
@@ -58,7 +58,7 @@ const LinkComponent: FC<ILinkComponent> = (
 		href={ href }
 		onClick={ handleClick }
 		className={ twMerge('flex items-center group/item',
-			section === 'catalog' && 'flex-col', section === 'header' && 'mt-3 gap-2.5'
+			section === 'katalog' && 'flex-col', section === 'header' && 'mt-3 gap-2.5'
 		) }
 	>
 		<IconComponent className={
@@ -73,7 +73,7 @@ const LinkComponent: FC<ILinkComponent> = (
 		<span className={
 			twMerge(
 				'transition group-hover/item:text-primary',
-				section === 'catalog' && 'text-sm font-bold text-gray-500',
+				section === 'katalog' && 'text-sm font-bold text-gray-500',
 				section === 'header' && 'group-hover/item:underline',
 				active && 'text-primary',
 			)

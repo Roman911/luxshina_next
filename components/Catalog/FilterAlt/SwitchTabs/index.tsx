@@ -7,7 +7,7 @@ const SwitchTabs = ({ section }: { section: Section }) => {
 	const t = useTranslations('Main');
 
 	const renderTab = (value: Section) => {
-		const url = `/catalog/${ value }`;
+		const url = `/katalog/${ value }`;
 
 		return (
 			<Link

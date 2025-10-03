@@ -33,7 +33,7 @@ const CarDiskFilter = () => {
 				}) }
 			</div>
 			<Link
-				href='/catalog/disks'
+				href='/katalog/disks'
 				className='text-primary font-bold hover:underline'
 			>
 				{ t('all brands') }
@@ -52,7 +52,7 @@ const CarDiskFilter = () => {
 				}) }
 			</div>
 			<Link
-				href='/catalog/disks'
+				href='/katalog/disks'
 				className='text-primary font-bold hover:underline'
 			>
 				{ t('all car brands') }

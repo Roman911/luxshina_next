@@ -34,7 +34,8 @@
   "Comparison": {
     "cargo": "Вантажні",
     "comparison": "Порівняння",
-    "tires": "Шини"
+    "tires": "Шини",
+    "shyny": "Шини"
   },
   "CreateComment": {
     "add comment": "Додати відгук",
@@ -114,6 +115,7 @@
     "summer": "Літні",
     "suvs": "Позашляховики",
     "tires": "Шини",
+    "shyny": "Шини",
     "to apply": "Застосувати",
     "type": "Тип",
     "type size": "Типорозмір",
@@ -141,7 +143,8 @@
     "information": "Інформація",
     "motorcycle tires": "Мотошини",
     "tire calculator": "Шинний калькулятор",
-    "tires": "Шини"
+    "tires": "Шини",
+    "shyny": "Шини"
   },
   "HeaderFilter": {
     "add all": "Додати всі",
@@ -204,6 +207,7 @@
     "similar products": "Схожі товари",
     "tire calculator": "Шинний калькулятор",
     "tires": "Шини",
+    "shyny": "Шини",
     "free": "Безкоштовний",
     "free in ukraine": "Безкоштовно по Україні",
     "show all": "Показати всі",

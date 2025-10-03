@@ -48,7 +48,7 @@ export const useAppSubmit = () => {
 		const joinedParams = `${ params.join('/') }`;
 
 		if(slug?.join('/') !== joinedParams) {
-			router.push(`/${ locale }/catalog/${ section }/${ joinedParams }`)
+			router.push(`/${ locale }/katalog/${ section }/${ joinedParams }`)
 		}
 	}, [ locale, params, router, section, slug ]);
 

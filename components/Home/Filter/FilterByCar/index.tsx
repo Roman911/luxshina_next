@@ -66,7 +66,7 @@ const FilterByCar = ({ locale }: { locale: Language }) => {
 		setIsLoading(true)
 		dispatch(changeSubsection(Subsection.ByCars));
 		dispatch(setSend());
-		router.push(`/${ locale }/catalog/${ type }`);
+		router.push(`/${ locale }/katalog/${ type }`);
 	}
 
 	return (

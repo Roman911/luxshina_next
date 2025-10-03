@@ -2,7 +2,6 @@ import LayoutWrapper from '@/components/Layout/LayoutWrapper';
 import { Language, LanguageCode } from '@/models/language';
 import FilterAlt from '@/components/Catalog/FilterAlt';
 import { Section } from '@/models/filter';
-import { BaseDataProps } from '@/models/baseData';
 import ProductList from '@/components/ProductList';
 import NoResult from '@/components/UI/NoResult';
 import FilterByCar from '@/components/Catalog/FilterByCar';
@@ -11,6 +10,7 @@ import SelectionByCar from '@/components/Catalog/SelectionByCar';
 import FilterActive from '@/components/Catalog/FilterActive';
 import HeaderCatalog from '@/components/Catalog/HeaderCatalog';
 import Pagination from '@/components/Catalog/Pagination';
+import { getFilterData, getProducts } from '@/app/api/api';
 import type { Metadata } from 'next';
 
 const pageItem = 12;
@@ -21,27 +21,27 @@ const sort = {
 	off: '&order[value]=offers'
 }
 
-async function getFilterData(id: string): Promise<BaseDataProps> {
-	const res = await fetch(`${process.env.SERVER_URL}/api/FildterData/${id}`, {
-		method: 'GET',
-		headers: {
-			'Access-Control-Allow-Credentials': 'true',
-		}
-	});
-	return await res.json();
-}
+// async function getFilterData(id: string): Promise<BaseDataProps> {
+// 	const res = await fetch(`${process.env.SERVER_URL}/api/FildterData/${id}`, {
+// 		method: 'GET',
+// 		headers: {
+// 			'Access-Control-Allow-Credentials': 'true',
+// 		}
+// 	});
+// 	return await res.json();
+// }
 
-async function getProducts({ page, searchParams }: { page: number | null, searchParams: string }) {
-	const res = await fetch(`${process.env.SERVER_URL}/api/getProducts?${searchParams}`, {
-		method: 'POST',
-		headers: {
-			'Access-Control-Allow-Credentials': 'true',
-			'content-type': 'application/json',
-		},
-		body: JSON.stringify({ start: page ? (page - 1) * pageItem : 0, length: 12 }),
-	});
-	return await res.json();
-}
+// async function getProducts({ page, searchParams }: { page: number | null, searchParams: string }) {
+// 	const res = await fetch(`${process.env.SERVER_URL}/api/getProducts?${searchParams}`, {
+// 		method: 'POST',
+// 		headers: {
+// 			'Access-Control-Allow-Credentials': 'true',
+// 			'content-type': 'application/json',
+// 		},
+// 		body: JSON.stringify({ start: page ? (page - 1) * pageItem : 0, length: 12 }),
+// 	});
+// 	return await res.json();
+// }
 
 async function getFilters() {
 	const res = await fetch(`${process.env.SERVER_URL}/baseData`, {
@@ -83,9 +83,22 @@ export default async function Catalog({ params }: { params: Promise<{ locale: La
 	);
 	const paramsUrl = transformUrl({ section, slug });
 	const found = slug?.find(item => item.startsWith('order-'))?.split('-')[1] as keyof typeof sort;
-	const searchParams = `${paramsUrl || ''}${found && sort[found] ? sort[found] : ''}`;
-	console.log(searchParams);
-	const products = await getProducts({ page, searchParams });
+	let typeTires = null;
+	if (slug?.includes('legkovi')) {
+		typeTires = '&vehicle_type=1';
+	} else if (slug?.includes('gruzovie')) {
+		typeTires = '&vehicle_type=3';
+	} else if (slug?.includes('moto')) {
+		typeTires = '&vehicle_type=7';
+	}
+	let season = null;
+	if (slug?.includes('litni-shini')) {
+		season = '&s-1';
+	} else if (slug?.includes('zimnie-shini')) {
+		season = '&s-2';
+	}
+	const searchParams = `?${paramsUrl || ''}${typeTires || ''}${season || ''}${found && sort[found] ? sort[found] : ''}`;
+	const products = await getProducts(searchParams, page ? (page - 1) * pageItem : 0, pageItem);
 	const filters = await getFilters();
 	const filtersAkum = await getFiltersAkum();
 

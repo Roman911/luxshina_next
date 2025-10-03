@@ -31,7 +31,7 @@ const MyCheckboxGroup: FC<Props> = ({ checkboxKey, label, slug, section, options
 						key={ value }
 						className='w-full flex mt-2'
 						onClick={ () => dispatch(setProgress(true)) }
-						href={ `/catalog/${ section }/${ checkboxKey }${ value }/${ checkboxKey === 's-' ? filteredArr.filter(item => item !== 'stud-1').join('/') : filteredArr.join('/') }` }
+						href={ `/katalog/${ section }/${ checkboxKey }${ value }/${ checkboxKey === 's-' ? filteredArr.filter(item => item !== 'stud-1').join('/') : filteredArr.join('/') }` }
 					>
 						<Checkbox className="-z-10" radius="none" size="lg" value={ value }>
 							{ label }

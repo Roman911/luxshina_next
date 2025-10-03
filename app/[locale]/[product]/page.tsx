@@ -76,7 +76,7 @@ export default async function Product({ params }: { params: Promise<{ locale: La
 		{
 			title: section,
 			translations: true,
-			href: `/catalog/${ section }`
+			href: `/katalog/${ section }`
 		},
 		{
 			title: productResponse?.data.full_name || '',

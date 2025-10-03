@@ -1,15 +1,15 @@
 export const links = [
 	{
 		title: 'cargo tires',
-		url: '/catalog/tires/vt-3',
+		url: '/katalog/shyny/vt-3',
 	},
 	{
 		title: 'motorcycle tires',
-		url: '/catalog/tires/vt-7',
+		url: '/katalog/shyny/vt-7',
 	},
 	{
 		title: 'battery',
-		url: '/catalog/battery',
+		url: '/katalog/battery',
 	},
 	{
 		title: 'auto goods',

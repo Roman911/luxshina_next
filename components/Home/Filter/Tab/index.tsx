@@ -15,7 +15,7 @@ interface TabProps {
 }
 
 const icons = {
-	tires: Icons.TireIcon,
+	shyny: Icons.TireIcon,
 	disks: Icons.DiskIcon,
 	car: Icons.CarFilterIcon,
 	battery: Icons.CarFilterIcon,

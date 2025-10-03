@@ -40,11 +40,11 @@ const CharacteristicsBlock: FC<CharacteristicsBlockProps> = ({ locale, data }) =
 
 	const link = (to: string) => {
 		if(section === 'tires') {
-			return `/catalog/tires${ to }`
+			return `/katalog/tires${ to }`
 		} else if(section === 'disks') {
-			return `/catalog/disks${ to }`
+			return `/katalog/disks${ to }`
 		} else {
-			return `/catalog/battery${ to }`
+			return `/katalog/battery${ to }`
 		}
 	};
 

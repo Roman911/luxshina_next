@@ -110,12 +110,12 @@ export const baseDataAPI = createApi({
 		// }),
 		// fetchBrands: build.query({
 		// 	query: (section) => ({
-		// 		url: `/api/catalog-map/${section}`,
+		// 		url: `/api/katalog-map/${section}`,
 		// 	}),
 		// }),
 		// fetchBrandItems: build.query({
 		// 	query: ({ section, [section] }) => ({
-		// 		url: `/api/catalog-map/${section}/${[section]}`,
+		// 		url: `/api/katalog-map/${section}/${[section]}`,
 		// 	}),
 		// }),
 		createComment: build.mutation({

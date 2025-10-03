@@ -60,32 +60,32 @@ const HeaderCatalog: FC<Props> = ({ section, slug }) => {
 		{
 			title: t(section) || '',
 			translations: false,
-			href: `/catalog/${section}/`,
+			href: `/katalog/${section}/`,
 		},
 		{
 			translations: false,
 			title: `${SeasonTransform(urlParams.sezon ?? '')?.name ? t(SeasonTransform(urlParams.sezon ?? '')?.name) : ''} ${t(section)}`,
-			href: urlParams.sezon ? `/catalog/${section}/s-${urlParams.sezon}` : '',
+			href: urlParams.sezon ? `/katalog/${section}/s-${urlParams.sezon}` : '',
 		},
 		{
 			translations: false,
 			title: `${typeof brandParam === 'object' && brandParam?.label ? brandParam.label : ''}`,
-			href: urlParams.brand ? `/catalog/${section}/b-${urlParams.brand}` : '',
+			href: urlParams.brand ? `/katalog/${section}/b-${urlParams.brand}` : '',
 		},
 		{
 			translations: false,
 			title: `${t('width')} ${urlParams.width}`,
-			href: urlParams.width ? `/catalog/${section}/w-${urlParams.width}` : '',
+			href: urlParams.width ? `/katalog/${section}/w-${urlParams.width}` : '',
 		},
 		{
 			translations: false,
 			title: `${t('height')} ${urlParams.height}`,
-			href: urlParams.height ? `/catalog/${section}/h-${urlParams.height}` : '',
+			href: urlParams.height ? `/katalog/${section}/h-${urlParams.height}` : '',
 		},
 		{
 			translations: false,
 			title: `R${urlParams.radius}`,
-			href: urlParams.radius ? `/catalog/${section}/d-${urlParams.radius}` : '',
+			href: urlParams.radius ? `/katalog/${section}/d-${urlParams.radius}` : '',
 		},
 		{
 			translations: false,

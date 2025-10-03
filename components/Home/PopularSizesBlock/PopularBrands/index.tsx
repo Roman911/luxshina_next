@@ -26,7 +26,7 @@ const PopularBrands: FC<PopularBrandsProps> = ({ data }) => {
 	return <>
 		<div className='grid grid-cols-2 lg:grid-cols-6 mt-12 gap-5 mb-8'>
 			{ data?.map((item, index) => (
-				<Link key={ index } className='uppercase font-bold text-blue-500' href='/catalog/tires'>
+				<Link key={ index } className='uppercase font-bold text-blue-500' href='/katalog/shyny'>
 					<Button color='primary' radius='full' variant='bordered' size='lg'
 									className='text-black font-semibold w-full' onPress={ () => handleClick(item.id) }>
 						{ item.name }
@@ -34,7 +34,7 @@ const PopularBrands: FC<PopularBrandsProps> = ({ data }) => {
 				</Link>
 			)) }
 		</div>
-		<Link className='uppercase font-bold text-blue-500' href='/catalog/tires'>
+		<Link className='uppercase font-bold text-blue-500' href='/katalog/shyny'>
 			<Button variant='light' size='lg' color='primary' className='text-lg uppercase font-bold text-primary'
 							onPress={ () => dispatch(changeSubsection(Subsection.ByCars)) }>
 				{ t('show all') }

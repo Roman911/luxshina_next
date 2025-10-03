@@ -1,17 +1,17 @@
 export const typeDiskLinks = [
 	{
 		label: 'cast',
-		href: '/catalog/disks/td-3',
+		href: '/katalog/disks/td-3',
 		mt: 'mt-3',
 	},
 	{
 		label: 'steel',
-		href: '/catalog/disks/td-1',
+		href: '/katalog/disks/td-1',
 		mt: 'mt-3',
 	},
 	{
 		label: 'forged',
-		href: '/catalog/disks/td-2',
+		href: '/katalog/disks/td-2',
 		mt: 'mt-3',
 	},
 ];
@@ -19,109 +19,109 @@ export const typeDiskLinks = [
 export const brandsLinks = [
 	{
 		label: 'Alutec',
-		href: '/catalog/disks/b-476',
+		href: '/katalog/disks/b-476',
 	},
 	{
 		label: 'Angel',
-		href: '/catalog/disks/b-476',
+		href: '/katalog/disks/b-476',
 	},
 	{
 		label: 'Allante',
-		href: '/catalog/disks/b-476',
+		href: '/katalog/disks/b-476',
 	},
 	{
 		label: 'Disla',
-		href: '/catalog/disks/b-476',
+		href: '/katalog/disks/b-476',
 	},
 	{
 		label: 'GT',
-		href: '/catalog/disks/b-476',
+		href: '/katalog/disks/b-476',
 	},
 	{
 		label: 'JH',
-		href: '/catalog/disks/b-476',
+		href: '/katalog/disks/b-476',
 	},
 	{
 		label: 'JT',
-		href: '/catalog/disks/b-476',
+		href: '/katalog/disks/b-476',
 	},
 	{
 		label: 'Kosei',
-		href: '/catalog/disks/b-476',
+		href: '/katalog/disks/b-476',
 	},
 	{
 		label: 'Marcello',
-		href: '/catalog/disks/b-476',
+		href: '/katalog/disks/b-476',
 	},
 	{
 		label: 'Rial',
-		href: '/catalog/disks/b-476',
+		href: '/katalog/disks/b-476',
 	},
 	{
 		label: 'Ronal',
-		href: '/catalog/disks/b-476',
+		href: '/katalog/disks/b-476',
 	},
 ];
 
 export const carBrandsLinks = [
 	{
 		label: 'Audi',
-		href: '/catalog/disks',
+		href: '/katalog/disks',
 		brand: 4,
 	},
 	{
 		label: 'BMW',
-		href: '/catalog/disks',
+		href: '/katalog/disks',
 		brand: 11,
 	},
 	{
 		label: 'Chevrolet',
-		href: '/catalog/disks',
+		href: '/katalog/disks',
 		brand: 20,
 	},
 	{
 		label: 'Citroen',
-		href: '/catalog/disks',
+		href: '/katalog/disks',
 		brand: 22,
 	},
 	{
 		label: 'Ford',
-		href: '/catalog/disks',
+		href: '/katalog/disks',
 		brand: 44,
 	},
 	{
 		label: 'Honda',
-		href: '/catalog/disks',
+		href: '/katalog/disks',
 		brand: 57,
 	},
 	{
 		label: 'Hyundai',
-		href: '/catalog/disks',
+		href: '/katalog/disks',
 		brand: 59,
 	},
 	{
 		label: 'Kia',
-		href: '/catalog/disks',
+		href: '/katalog/disks',
 		brand: 69,
 	},
 	{
 		label: 'Lexus',
-		href: '/catalog/disks',
+		href: '/katalog/disks',
 		brand: 75,
 	},
 	{
 		label: 'Mazda',
-		href: '/catalog/disks',
+		href: '/katalog/disks',
 		brand: 83,
 	},
 	{
 		label: 'Mercedes',
-		href: '/catalog/disks',
+		href: '/katalog/disks',
 		brand: 85,
 	},
 	{
 		label: 'Mitsubishi',
-		href: '/catalog/disks',
+		href: '/katalog/disks',
 		brand: 89,
 	},
 ];
@@ -129,62 +129,62 @@ export const carBrandsLinks = [
 export const diameterLinks = [
 	{
 		label: 'R16',
-		href: '/catalog/disks/d-16',
+		href: '/katalog/disks/d-16',
 		border: true
 	},
 	{
 		label: 'R17',
-		href: '/catalog/disks/d-17',
+		href: '/katalog/disks/d-17',
 		border: true
 	},
 	{
 		label: 'R18',
-		href: '/catalog/disks/d-18',
+		href: '/katalog/disks/d-18',
 		border: true
 	},
 	{
 		label: 'R19',
-		href: '/catalog/disks/d-19',
+		href: '/katalog/disks/d-19',
 		border: true
 	},
 	{
 		label: 'R20',
-		href: '/catalog/disks/d-20',
+		href: '/katalog/disks/d-20',
 		border: true
 	},
 	{
 		label: 'R21',
-		href: '/catalog/disks/d-21',
+		href: '/katalog/disks/d-21',
 		border: true
 	},
 	{
 		label: 'R22',
-		href: '/catalog/disks/d-22',
+		href: '/katalog/disks/d-22',
 		border: true
 	},
 	{
 		label: 'R23',
-		href: '/catalog/disks/d-23',
+		href: '/katalog/disks/d-23',
 		border: true
 	},
 	{
 		label: 'R24',
-		href: '/catalog/disks/d-24',
+		href: '/katalog/disks/d-24',
 		border: true
 	},
 	{
 		label: 'R17.5',
-		href: '/catalog/disks/d-17,5',
+		href: '/katalog/disks/d-17,5',
 		border: true
 	},
 	{
 		label: 'R19.5',
-		href: '/catalog/disks/d-19,5',
+		href: '/katalog/disks/d-19,5',
 		border: true
 	},
 	{
 		label: 'R22.5',
-		href: '/catalog/disks/d-22,5',
+		href: '/katalog/disks/d-22,5',
 		border: true
 	},
 ];

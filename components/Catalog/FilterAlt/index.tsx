@@ -102,83 +102,68 @@ const FilterAlt: FC<Props> = ({ locale, filterData, section, slug, filters, filt
 					{ section !== Section.Battery && <SwitchTabsByParams subsection={ subsection }/> }
 					{ subsection === Subsection.ByParams && <>
 						{ section === Section.Tires && <>
-							{ renderSelect(
-								'width',
-								'width',
-								'gray',
-								filterData?.tyre_width.map(item => ({ value: item.value, label: item.value, p: item.p })),
-								'175',
-								filter?.width,
-								true,
-							) }
-							{ section === Section.Tires && renderSelect(
-								'height',
-								'height',
-								'gray',
-								filterData?.tyre_height?.map(item => ({ value: item.value, label: item.value, p: item.p })),
-								'45',
-								filter?.height,
-								true,
-							) }
-							{ renderSelect(
-								'radius',
-								'diameter',
-								'gray',
-								filterData?.tyre_diameter?.map(item => ({ value: item.value, label: `R${ item.value }`, p: item.p })),
-								'R14',
-								filter?.radius,
-								true,
-							) }
+							<MyCheckboxGroup
+								checkboxKey='w-'
+								label={ t('width') }
+								slug={ slug }
+								section={ section }
+								options={ filterData?.tyre_width.map(item => ({ value: item.value, label: item.value, p: item.p })) || [] }
+							/>
+							<MyCheckboxGroup
+								checkboxKey='h-'
+								label={ t('height') }
+								slug={ slug }
+								section={ section }
+								options={ filterData?.tyre_height?.map(item => ({ value: item.value, label: item.value, p: item.p })) || [] }
+							/>
+							<MyCheckboxGroup
+								checkboxKey='d-'
+								label={ t('diameter') }
+								slug={ slug }
+								section={ section }
+								options={ filterData?.tyre_diameter?.map(item => ({ value: item.value, label: `R${ item.value }`, p: item.p })) || [] }
+							/>
 						</> }
 						{ section === Section.Disks && <>
-							{ renderSelect(
-								'width',
-								'width',
-								'gray',
-								filterData?.disc_width?.map(item => ({ value: item.value, label: item.value, p: item.p })),
-								false,
-								filter?.width,
-								true,
-							) }
-							{ renderSelect(
-								'radius',
-								'diameter',
-								'gray',
-								filterData?.disc_diameter?.map(item => ({ value: item.value, label: `R${ item.value }`, p: item.p })),
-								false,
-								filter?.radius,
-								true,
-							) }
+							<MyCheckboxGroup
+								checkboxKey='w-'
+								label={ t('width') }
+								slug={ slug }
+								section={ section }
+								options={ filterData?.disc_width?.map(item => ({ value: item.value, label: item.value, p: item.p })) || [] }
+							/>
+							<MyCheckboxGroup
+								checkboxKey='d-'
+								label={ t('diameter') }
+								slug={ slug }
+								section={ section }
+								options={ filterData?.disc_diameter?.map(item => ({ value: item.value, label: `R${ item.value }`, p: item.p })) || [] }
+							/>
 						</> }
 					</> }
 					{ subsection === 'byCars' && <ByCar data={ filters }/> }
 					{ section === Section.Battery && <>
-						{ renderSelect(
-							'jemnist',
-							'capacity',
-							'gray',
-							filtersAkum?.jemnist.map(item => ({ value: item.value, label: item.value, p: item.p })),
-							false,
-							filter?.jemnist,
-							true,
-						) }
-						{ renderSelect(
-							'puskovii_strum',
-							'starting current',
-							'gray',
-							filtersAkum?.['puskovii-strum'].map(item => ({ value: item.value, label: item.value, p: item.p })),
-							false,
-							filter?.puskovii_strum,
-							true,
-						) }
-						{ renderSelect(
-							'tip_elektrolitu',
-							'type of electrolyte',
-							'gray',
-							filtersAkum?.['tip-elektrolitu'].map(item => ({ value: item.value, label: item.value, p: item.p })),
-							false,
-							filter?.tip_elektrolitu,
-						) }
+						<MyCheckboxGroup
+							checkboxKey='ct-'
+							label={ t('capacity') }
+							slug={ slug }
+							section={ section }
+							options={ filtersAkum?.jemnist.map(item => ({ value: item.value, label: item.value, p: item.p })) || [] }
+						/>
+						<MyCheckboxGroup
+							checkboxKey='sk-'
+							label={ t('starting current') }
+							slug={ slug }
+							section={ section }
+							options={ filtersAkum?.['puskovii-strum'].map(item => ({ value: item.value, label: item.value, p: item.p })) || [] }
+						/>
+						<MyCheckboxGroup
+							checkboxKey='elt-'
+							label={ t('type of electrolyte') }
+							slug={ slug }
+							section={ section }
+							options={ filtersAkum?.['tip-elektrolitu'].map(item => ({ value: item.value, label: item.value, p: item.p })) || [] }
+						/>
 						<MyCheckboxGroup
 							checkboxKey='elt-'
 							label={ t('body type') }
@@ -210,7 +195,7 @@ const FilterAlt: FC<Props> = ({ locale, filterData, section, slug, filters, filt
 								<Link
 									className='ml-8 mt-2 flex'
 									onClick={ () => dispatch(setProgress(true)) }
-									href={ `/catalog/${ section }/${ slug ? slug.filter(item => !/^stud-\d+$/.test(item)).join('/') : '' }/${ slug?.includes('stud-1') ? '' : 'stud-1' }` }>
+									href={ `/katalog/${ section }/${ slug ? slug.filter(item => !/^stud-\d+$/.test(item)).join('/') : '' }/${ slug?.includes('stud-1') ? '' : 'stud-1' }` }>
 									<Checkbox className="-z-10" radius="none" size="lg" isSelected={ slug?.includes('stud-1') }>
 										Шип
 									</Checkbox>
@@ -361,7 +346,7 @@ const FilterAlt: FC<Props> = ({ locale, filterData, section, slug, filters, filt
 							<Link
 								className='w-full flex mt-2'
 								onClick={ () => dispatch(setProgress(true)) }
-								href={ `/catalog/${ section }/${slug ? slug.includes('oc-1') ? slug.filter(i => i !== 'oc-1').join('/') : `${slug.join('/')}/oc-1` : '/oc-1'}` }
+								href={ `/katalog/${ section }/${slug ? slug.includes('oc-1') ? slug.filter(i => i !== 'oc-1').join('/') : `${slug.join('/')}/oc-1` : '/oc-1'}` }
 							>
 								<Checkbox className='-z-10' radius='none' size='lg' value='oc-1'>
 									C
@@ -370,7 +355,7 @@ const FilterAlt: FC<Props> = ({ locale, filterData, section, slug, filters, filt
 							<Link
 								className='w-full flex mt-2'
 								onClick={ () => dispatch(setProgress(true)) }
-								href={ `/catalog/${ section }/${slug ? slug.includes('xl-1') ? slug.filter(i => i !== 'xl-1').join('/') : `${slug.join('/')}/xl-1` : '/xl-1'}` }
+								href={ `/katalog/${ section }/${slug ? slug.includes('xl-1') ? slug.filter(i => i !== 'xl-1').join('/') : `${slug.join('/')}/xl-1` : '/xl-1'}` }
 							>
 								<Checkbox className='-z-10' radius='none' size='lg' value='xl-1'>
 									XL
@@ -379,7 +364,7 @@ const FilterAlt: FC<Props> = ({ locale, filterData, section, slug, filters, filt
 							<Link
 								className='w-full flex mt-2'
 								onClick={ () => dispatch(setProgress(true)) }
-								href={ `/catalog/${ section }/${slug ? slug.includes('owl-1') ? slug.filter(i => i !== 'owl-1').join('/') : `${slug.join('/')}/owl-1` : '/owl-1'}` }
+								href={ `/katalog/${ section }/${slug ? slug.includes('owl-1') ? slug.filter(i => i !== 'owl-1').join('/') : `${slug.join('/')}/owl-1` : '/owl-1'}` }
 							>
 								<Checkbox className='-z-10' radius='none' size='lg' value='owl-1'>
 									{ locale === Language.UK ? 'OWL (белые буквы)' : 'OWL (білі букви)' }
@@ -388,7 +373,7 @@ const FilterAlt: FC<Props> = ({ locale, filterData, section, slug, filters, filt
 							<Link
 								className='w-full flex mt-2'
 								onClick={ () => dispatch(setProgress(true)) }
-								href={ `/catalog/${ section }/${slug ? slug.includes('rf-1') ? slug.filter(i => i !== 'rf-1').join('/') : `${slug.join('/')}/rf-1` : '/rf-1'}` }
+								href={ `/katalog/${ section }/${slug ? slug.includes('rf-1') ? slug.filter(i => i !== 'rf-1').join('/') : `${slug.join('/')}/rf-1` : '/rf-1'}` }
 							>
 								<Checkbox className='-z-10' radius='none' size='lg' value='rf-1'>
 									RunFlat
@@ -397,7 +382,7 @@ const FilterAlt: FC<Props> = ({ locale, filterData, section, slug, filters, filt
 							<Link
 								className='w-full flex mt-2'
 								onClick={ () => dispatch(setProgress(true)) }
-								href={ `/catalog/${ section }/${slug ? slug.includes('ofr-1') ? slug.filter(i => i !== 'ofr-1').join('/') : `${slug.join('/')}/ofr-1` : '/ofr-1'}` }
+								href={ `/katalog/${ section }/${slug ? slug.includes('ofr-1') ? slug.filter(i => i !== 'ofr-1').join('/') : `${slug.join('/')}/ofr-1` : '/ofr-1'}` }
 							>
 								<Checkbox className='-z-10' radius='none' size='lg' value='ofr-1'>
 									Off-Road 4x4
