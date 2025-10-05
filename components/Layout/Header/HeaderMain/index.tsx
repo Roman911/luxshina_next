@@ -81,9 +81,9 @@ const HeaderMain: FC<Props> = ({ settings }) => {
 				</NavbarMenuItem>
 				<NavbarMenuItem>
 					<button
-						onClick={ () => handleClick('disks') }
+						onClick={ () => handleClick('diski') }
 						className={ twMerge('px-5 py-2 w-full flex items-center justify-between uppercase font-bold group transition hover:text-primary',
-							filterIsOpen === 'disks' && 'text-primary'
+							filterIsOpen === 'diski' && 'text-primary'
 						) }>
 						<span>{ t('cardiscs') }</span>
 						<span className={ twMerge('transition', filterIsOpen === 'disks' && 'rotate-180') }>

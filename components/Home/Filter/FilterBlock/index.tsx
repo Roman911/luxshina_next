@@ -37,7 +37,7 @@ const FilterBlock: FC<Props> = ({ children, isBattery }) => {
 							variant={ section === Section.Disks ? 'solid' : 'bordered' }
 							className={ twMerge('text-2xl uppercase font-bold text-white', section === Section.Disks ? 'bg-white text-black' : 'opacity-50') }
 						>
-							{ t('disks') }
+							{ t('diski') }
 						</Button>
 					</div> }
 				<div>

@@ -49,7 +49,7 @@ const Navbar = () => {
 	return (
 		<div className='bg-white hidden lg:block relative'>
 			<nav className='container mx-auto max-w-7xl flex justify-between items-center uppercase font-bold gap-8 px-5'>
-				{[{ section: 'shyny', label: t('cartires') }, { section: 'disks', label: t('cardiscs') }]
+				{[{ section: 'shyny', label: t('cartires') }, { section: 'diski', label: t('cardiscs') }]
 					.map((item, i) => {
 						return <ButtonMeu key={ i } sectionItem={ item.section } label={ item.label } />
 					})}

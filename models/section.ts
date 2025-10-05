@@ -1,7 +1,7 @@
 export enum Section {
 	Battery = 'battery',
 	Tires = 'shyny',
-	Disks = 'disks',
+	Disks = 'diski',
 	Car = 'car',
 }
 

@@ -40,8 +40,8 @@ const OurAdvantages: FC<OurAdvantagesProps> = ({ size }) => {
 					src={`/images/our_advantages/item-oa-${index+1}.svg`}
 					alt=""
 				/>
-				{ index === 1 ? <h4><span className='font-bold'>{t(title)} </span>{subtitle}</h4> :
-				<h4>{t(title)} <span className='font-bold'>2008 {subtitle}</span></h4> }
+				{ index === 1 ? <h4><span className='font-bold'>{t(title)} </span>{t(subtitle)}</h4> :
+				<h4>{t(title)} <span className='font-bold'>{t(subtitle)}</span></h4> }
 			</div>
 		)
 	}

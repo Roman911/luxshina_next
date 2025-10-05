@@ -75,7 +75,7 @@ export const onOrderMakeStart = (data: ProductsProps | undefined, cartItem: {id:
 			item_id: item.group,
 			price: item.min_price,
 			item_brand: item.brand_name,
-			item_category: cart?.section === 'shyny' ? 'Автошини' : cart?.section === 'disks' ? 'Автодиски' : cart?.section === 'battery' ? 'Акумулятори' : '',
+			item_category: cart?.section === 'shyny' ? 'Автошини' : cart?.section === 'diski' ? 'Автодиски' : cart?.section === 'battery' ? 'Акумулятори' : '',
 			item_variant: item.model.name,
 			quantity: cart?.quantity,
 		}
@@ -105,7 +105,7 @@ export const onOrderMakeEnd = (data: ProductsProps | undefined, cartItem: {id: n
 			item_id: item.group,
 			price: item.min_price,
 			item_brand: item.brand_name,
-			item_category: cart?.section === 'shyny' ? 'Автошини' : cart?.section === 'disks' ? 'Автодиски' : cart?.section === 'battery' ? 'Акумулятори' : '',
+			item_category: cart?.section === 'shyny' ? 'Автошини' : cart?.section === 'diski' ? 'Автодиски' : cart?.section === 'battery' ? 'Акумулятори' : '',
 			item_variant: item.model.name,
 			quantity: cart?.quantity || 0,
 		}
@@ -148,7 +148,7 @@ export const onOrderBuy1click = (
 		item_id: offerItem.product_id,
 		price: offerItem.price,
 		item_brand: brand,
-		item_category: section === 'shyny' ? 'Автошини' : section === 'disks' ? 'Автодиски' : section === 'battery' ? 'Акумулятори' : '',
+		item_category: section === 'shyny' ? 'Автошини' : section === 'diski' ? 'Автодиски' : section === 'battery' ? 'Акумулятори' : '',
 		item_variant: model,
 		quantity: quantity,
 	}];

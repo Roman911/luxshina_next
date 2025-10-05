@@ -86,16 +86,24 @@ export default async function Catalog({ params }: { params: Promise<{ locale: La
 	let typeTires = null;
 	if (slug?.includes('legkovi')) {
 		typeTires = '&vehicle_type=1';
+	} else if (slug?.includes('suv')) {
+		typeTires = '&vehicle_type=2';
+	} else if (slug?.includes('bus')) {
+		typeTires = '&vehicle_type=8';
+	} else if (slug?.includes('spectehnika')) {
+		typeTires = '&vehicle_type=9';
 	} else if (slug?.includes('gruzovie')) {
 		typeTires = '&vehicle_type=3';
 	} else if (slug?.includes('moto')) {
 		typeTires = '&vehicle_type=7';
 	}
 	let season = null;
-	if (slug?.includes('litni-shini')) {
+	if (slug?.includes('litni')) {
 		season = '&s-1';
-	} else if (slug?.includes('zimnie-shini')) {
+	} else if (slug?.includes('zimovi')) {
 		season = '&s-2';
+	} else if (slug?.includes('vsesezonnye')) {
+		season = '&s-3';
 	}
 	const searchParams = `?${paramsUrl || ''}${typeTires || ''}${season || ''}${found && sort[found] ? sort[found] : ''}`;
 	const products = await getProducts(searchParams, page ? (page - 1) * pageItem : 0, pageItem);

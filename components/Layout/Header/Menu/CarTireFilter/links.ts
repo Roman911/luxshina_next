@@ -2,19 +2,19 @@ export const seasonLinks = [
 	{
 		img: 'sun',
 		label: 'summer',
-		href: '/katalog/shyny/s-1',
+		href: '/katalog/shyny/litni',
 		mt: 'mt-3',
 	},
 	{
 		img: 'snow',
 		label: 'winter',
-		href: '/katalog/shyny/s-2',
+		href: '/katalog/shyny/zimovi',
 		mt: 'mt-3',
 	},
 	{
 		img: 'seasonal',
 		label: 'all season',
-		href: '/katalog/shyny/s-3',
+		href: '/katalog/shyny/vsesezonnye',
 		mt: 'mt-3',
 	},
 	{

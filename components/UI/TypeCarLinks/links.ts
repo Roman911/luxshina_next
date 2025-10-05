@@ -7,7 +7,7 @@ export const typeCatLinks = [
 	},
 	{
 		label: 'suvs',
-		href: '/katalog/shyny/vt-2',
+		href: '/katalog/shyny/suv',
 		icon: 'suv',
 		iconStyles: 'stroke-gray-500 group-hover/item:stroke-primary',
 		iconStylesActive: 'stroke-primary',
@@ -15,7 +15,7 @@ export const typeCatLinks = [
 	},
 	{
 		label: 'buses',
-		href: '/katalog/shyny/vt-8',
+		href: '/katalog/shyny/bus',
 		icon: 'bus',
 		vehicleType: ['8'],
 	},
@@ -27,7 +27,7 @@ export const typeCatLinks = [
 	},
 	{
 		label: 'special equipment',
-		href: '/katalog/shyny/vt-9', //vehicle_type=9,10,11
+		href: '/katalog/shyny/spectehnika', //vehicle_type=9,10,11
 		icon: 'special',
 		vehicleType: ['9','10','11'],
 	},

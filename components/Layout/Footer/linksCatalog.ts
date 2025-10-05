@@ -1,22 +1,22 @@
 export const linksCatalog = [
 	{
-		link: '/katalog/tires',
+		link: '/katalog/shyny',
 		title: 'cartires',
 	},
 	{
-		link: '/katalog/disks',
+		link: '/katalog/diski',
 		title: 'cardiscs',
 	},
 	{
-		link: '/katalog/disks',
-		title: 'disks',
+		link: '/katalog/diski',
+		title: 'diski',
 	},
 	{
-		link: '/katalog/tires/vt-3',
+		link: '/katalog/shyny/vt-3',
 		title: 'cargo tires',
 	},
 	{
-		link: '/katalog/tires/vt-7',
+		link: '/katalog/shyny/vt-7',
 		title: 'motorcycle tires',
 	},
 	{

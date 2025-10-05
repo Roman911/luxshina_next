@@ -1,11 +1,11 @@
 export const links = [
 	{
 		title: 'cargo tires',
-		url: '/katalog/shyny/vt-3',
+		url: '/katalog/shyny/gruzovie',
 	},
 	{
 		title: 'motorcycle tires',
-		url: '/katalog/shyny/vt-7',
+		url: '/katalog/shyny/moto',
 	},
 	{
 		title: 'battery',
