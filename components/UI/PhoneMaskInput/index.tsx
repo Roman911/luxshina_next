@@ -1,7 +1,7 @@
 'use client'
 import { useState } from 'react';
 import { PatternFormat } from 'react-number-format';
-import { Input } from '@heroui/input';
+import { Input } from '@heroui/react';
 
 const PhoneMaskInput = () => {
 	const [ phone, setPhone ] = useState('');

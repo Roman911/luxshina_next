@@ -5,7 +5,7 @@ import { Link } from '@/i18n/routing';
 import CartItem from './CartItem';
 import type { ProductsProps } from '@/models/products';
 import { Language } from '@/models/language';
-import { Button } from '@heroui/button';
+import { Button } from '@heroui/react';
 
 const totalQuantityLabel = {
 	1: {

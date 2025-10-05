@@ -5,7 +5,7 @@ import LinkComponent from '../LinkComponent';
 import Title from '../Title';
 import { brandsLinks, diameterLinks, seasonLinks } from './links';
 
-const CarTireFilter = () => {
+const CarTireFilter = ({ onClick }: { onClick?: () => void }) => {
 	const t = useTranslations('HeaderFilter');
 
 	return <>
@@ -14,6 +14,7 @@ const CarTireFilter = () => {
 			{ seasonLinks.map(item => {
 				return <LinkComponent
 					key={ item.label }
+					onClick={ onClick }
 					href={ item.href }
 					img={ item.img }
 					label={ t(item.label) }
@@ -24,7 +25,7 @@ const CarTireFilter = () => {
 		</div>
 		<div>
 			<Title title={ t('by car type') }/>
-			<TypeCarLinks section='header' />
+			<TypeCarLinks section='header' onClick={ onClick } />
 		</div>
 		<div className='mt-6 lg:mt-0'>
 			<Title title={ t('by brands') }/>
@@ -32,6 +33,7 @@ const CarTireFilter = () => {
 				{ brandsLinks.map(item => {
 					return <LinkComponent
 						key={ item.label }
+						onClick={ onClick }
 						href={ item.href }
 						label={ item.label }
 						border={ false }
@@ -39,7 +41,8 @@ const CarTireFilter = () => {
 				}) }
 			</div>
 			<Link
-				href='/katalog/shyny'
+				onClick={ onClick }
+				href='/catalog/tires'
 				className='text-primary font-bold uppercase hover:underline'
 			>
 				{ t('all brands') }
@@ -51,6 +54,7 @@ const CarTireFilter = () => {
 				{ diameterLinks.map(item => {
 					return <LinkComponent
 						key={ item.label }
+						onClick={ onClick }
 						href={ item.href }
 						border={ item.border }
 						label={ item.label }

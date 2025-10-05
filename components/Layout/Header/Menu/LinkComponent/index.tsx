@@ -9,10 +9,12 @@ interface Props extends LinkProps {
 	label: string
 	mt?: string
 	border: boolean
+	onClick?: () => void
 }
 
-const LinkComponent: FC<Props> = ({ href, img, label, mt, border }) => {
+const LinkComponent: FC<Props> = ({ href, img, label, mt, border, onClick }) => {
 	return <Link
+		onClick={ onClick }
 		href={ href }
 		className={ twMerge('flex items-center gap-2.5 group/item', mt,
 			border &&

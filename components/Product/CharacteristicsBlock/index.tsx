@@ -4,7 +4,7 @@ import { FC, useEffect, useState } from 'react';
 import DOMPurify from 'isomorphic-dompurify';
 import { useTranslations } from 'next-intl';
 import { twMerge } from 'tailwind-merge';
-import { Tooltip } from '@heroui/tooltip';
+import { Tooltip } from '@heroui/react';
 import { useAppDispatch, useAppSelector } from '@/hooks/redux';
 import { addBrandAlias, addModelAlias, reset } from '@/store/slices/brandAliasSlice';
 import * as Icons from '../../UI/Icons';

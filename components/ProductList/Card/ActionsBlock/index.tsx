@@ -6,7 +6,7 @@ import { addComparison, removeComparison } from '@/store/slices/comparisonSlice'
 import { useAppDispatch, useAppSelector } from '@/hooks/redux';
 import { addToStorage, getFromStorage, removeFromStorage } from '@/lib/localeStorage';
 import { Section } from '@/models/filter';
-import { Button } from '@heroui/button';
+import { Button } from '@heroui/react';
 
 const toggleStorageItem = (storageKey: string, id: number, section: string, isInStorage: boolean) => {
 	if(isInStorage) {

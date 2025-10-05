@@ -1,7 +1,7 @@
 'use client'
 import { FC } from 'react';
 import { useTranslations } from 'next-intl';
-import { Autocomplete, AutocompleteItem, AutocompleteSection } from '@heroui/autocomplete';
+import { Autocomplete, AutocompleteItem, AutocompleteSection } from '@heroui/react';
 import { useAppSelector } from '@/hooks/redux';
 import { Section } from '@/models/filter';
 import type { Options } from '@/models/baseData';

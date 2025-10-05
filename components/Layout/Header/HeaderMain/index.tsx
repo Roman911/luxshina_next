@@ -2,7 +2,7 @@
 import { FC, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { twMerge } from 'tailwind-merge';
-import { Navbar, NavbarBrand, NavbarContent, NavbarMenu, NavbarMenuItem, NavbarMenuToggle } from '@heroui/navbar';
+import { Navbar, NavbarBrand, NavbarContent, NavbarMenu, NavbarMenuItem, NavbarMenuToggle } from '@heroui/react';
 import { Link } from '@/i18n/routing';
 import styles from './index.module.scss';
 import Logo from '@/components/UI/Logo';
@@ -42,7 +42,7 @@ const HeaderMain: FC<Props> = ({ settings }) => {
 			maxWidth='2xl'
 			isMenuOpen={ isMenuOpen }
 			onMenuOpenChange={ setIsMenuOpen }
-			className={ twMerge('bg-white border-b relative', styles['header-center']) }
+			className={ twMerge('bg-white border-b border-gray-200 relative', styles['header-center']) }
 			classNames={ { wrapper: twMerge('grid h-40 md:h-16 items-center justify-normal py-3 px-4 grid-cols-2 lg:grid-cols-[220px_auto_320px_150px]', styles['container']) } }
 		>
 			<NavbarContent className={ styles.logo }>
@@ -75,7 +75,7 @@ const HeaderMain: FC<Props> = ({ settings }) => {
 					</button>
 					{ filterIsOpen === 'tires' &&
 						<div className='mt-4 grid grid-cols-2 gap-2'>
-							<CarTireFilter />
+							<CarTireFilter onClick={ closeFilter } />
 						</div>
 					}
 				</NavbarMenuItem>
@@ -93,7 +93,7 @@ const HeaderMain: FC<Props> = ({ settings }) => {
 					</button>
 					{ filterIsOpen === 'disks' &&
 						<div className='mt-5 grid grid-cols-2 gap-2'>
-							<CarDiskFilter />
+							<CarDiskFilter onClick={ closeFilter } />
 						</div>
 					}
 				</NavbarMenuItem>

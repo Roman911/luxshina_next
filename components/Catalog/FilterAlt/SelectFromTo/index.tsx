@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl';
 import { useAppDispatch } from '@/hooks/redux';
 import { useAppSubmit } from '@/hooks/submit';
 import { setParams } from '@/store/slices/filterSlice';
-import { Button } from '@heroui/button';
+import { Button } from '@heroui/react';
 
 interface SelectFromTo {
 	name: string

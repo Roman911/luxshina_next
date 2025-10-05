@@ -4,7 +4,7 @@ import LinkComponent from '../LinkComponent';
 import Title from '../Title';
 import { brandsLinks, carBrandsLinks, diameterLinks, typeDiskLinks } from './links';
 
-const CarDiskFilter = () => {
+const CarDiskFilter = ({ onClick }: { onClick?: () => void }) => {
 	const t = useTranslations('HeaderFilter');
 
 	return <>
@@ -13,6 +13,7 @@ const CarDiskFilter = () => {
 			{ typeDiskLinks.map(item => {
 				return <LinkComponent
 					key={ item.label }
+					onClick={ onClick }
 					href={ item.href }
 					label={ t(item.label) }
 					mt={ item.mt }
@@ -26,6 +27,7 @@ const CarDiskFilter = () => {
 				{ brandsLinks.map(item => {
 					return <LinkComponent
 						key={ item.label }
+						onClick={ onClick }
 						href={ item.href }
 						label={ item.label }
 						border={ false }
@@ -33,7 +35,8 @@ const CarDiskFilter = () => {
 				}) }
 			</div>
 			<Link
-				href='/katalog/disks'
+				onClick={ onClick }
+				href='/catalog/disks'
 				className='text-primary font-bold hover:underline'
 			>
 				{ t('all brands') }
@@ -45,6 +48,7 @@ const CarDiskFilter = () => {
 				{ carBrandsLinks.map(item => {
 					return <LinkComponent
 						key={ item.label }
+						onClick={ onClick }
 						href={ item.href }
 						label={ item.label }
 						border={ false }
@@ -52,7 +56,8 @@ const CarDiskFilter = () => {
 				}) }
 			</div>
 			<Link
-				href='/katalog/disks'
+				onClick={ onClick }
+				href='/catalog/disks'
 				className='text-primary font-bold hover:underline'
 			>
 				{ t('all car brands') }
@@ -65,6 +70,7 @@ const CarDiskFilter = () => {
 					{ diameterLinks.map(item => {
 						return <LinkComponent
 							key={ item.label }
+							onClick={ onClick }
 							href={ item.href }
 							border={ item.border }
 							label={ item.label }

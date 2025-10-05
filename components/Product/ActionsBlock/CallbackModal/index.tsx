@@ -2,10 +2,8 @@
 import { FC, FormEvent } from 'react';
 import { useTranslations } from 'next-intl';
 import * as Icons from '@/components/UI/Icons';
-import { Button } from '@heroui/button';
-import { Form } from '@heroui/form';
+import { Button, Form, Modal, ModalBody, ModalContent, ModalHeader, useDisclosure } from '@heroui/react';
 import { addToast } from '@heroui/toast';
-import { Modal, ModalBody, ModalContent, ModalHeader, useDisclosure } from '@heroui/modal';
 import PhoneMaskInput from '@/components/UI/PhoneMaskInput';
 import { baseDataAPI } from '@/services/baseDataService';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';

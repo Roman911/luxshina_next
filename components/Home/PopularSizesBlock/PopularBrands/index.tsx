@@ -7,7 +7,7 @@ import { Car2BrandProps } from '@/models/featureParams';
 import { setCarFilter } from '@/store/slices/filterCarSlice';
 import { changeSubsection } from '@/store/slices/filterSlice';
 import { Subsection } from '@/models/filter';
-import { Button } from '@heroui/button';
+import { Button } from '@heroui/react';
 
 interface PopularBrandsProps {
 	data: Car2BrandProps[] | undefined

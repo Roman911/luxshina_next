@@ -39,7 +39,7 @@ const Tab: FC<TabProps> = ({ children, name, section, isOpen, handleClick, label
 		(name !== Section.Tires) && 'mt-2.5 md:mt-0'
 	);
 
-	const buttonClassNames = twMerge(styles.link, 'text-base xl:text-xl font-bold md:mr-1.5 xl:mr-2.5 p-5 md:p-0 w-full md:w-auto relative',
+	const buttonClassNames = twMerge(styles.link, 'text-base xl:text-xl font-bold md:mr-1.5 xl:mr-2 p-5 md:p-0 w-full md:w-auto relative',
 		(section === name && isOpen) && 'md:pointer-events-none',
 		(section === name && isOpen) && 'text-white',
 		(section === name) && 'md:text-white'

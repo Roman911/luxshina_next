@@ -3,9 +3,7 @@ import { FC, FormEvent, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { baseDataAPI } from '@/services/baseDataService';
 import Rating from '@/components/UI/Rating';
-import { Button } from '@heroui/button';
-import { Form } from '@heroui/form';
-import { Input, Textarea } from '@heroui/input';
+import { Button, Form, Input, Textarea } from '@heroui/react';
 
 interface CreateCommentProps {
 	model_id?: number

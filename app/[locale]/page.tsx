@@ -6,7 +6,7 @@ import Title from '@/components/UI/Title';
 import NoResult from '@/components/UI/NoResult';
 import ProductList from '@/components/ProductList';
 import TextSeo from '@/components/UI/TextSeo';
-import Carousel from '@/components/Home/Carousel';
+// import Carousel from '@/components/Home/Carousel';
 import OurAdvantages from '@/components/Home/OurAdvantages';
 import PopularSizesBlock from '@/components/Home/PopularSizesBlock';
 
@@ -81,7 +81,7 @@ export default async function Home({ params }: { params: Promise<{ locale: Langu
 					classnames='grid-cols-1 md:grid-cols-2 lg:grid-cols-4'
 					data={ products.data }
 				/> : <NoResult noResultText='no result'/> }
-				<Carousel sliderData={ sliderData } />
+				{/*<Carousel sliderData={ sliderData } />*/}
 				<OurAdvantages />
 				<PopularSizesBlock locale={ locale } settings={ response } featureParams={ featureParams } />
 				<TextSeo description={ response[lang].description }/>

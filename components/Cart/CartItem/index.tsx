@@ -5,7 +5,7 @@ import { Language } from '@/models/language';
 import { countryCodeTransform } from '@/lib/countryCodetransform';
 import CountryInfo from '@/components/UI/CountryInfo';
 import Quantity from '@/components/UI/Quantity';
-import { Button } from '@heroui/button';
+import { Button } from '@heroui/react';
 
 interface CartItemProps {
 	id: number

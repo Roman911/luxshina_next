@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import localFont from 'next/font/local';
 import Script from 'next/script';
 import { GoogleAnalytics } from '@next/third-parties/google';
@@ -10,6 +11,7 @@ import '../colors.css';
 import '../globals.css';
 import { Language } from '@/models/language';
 import { ToastProvider } from "@heroui/toast";
+import { twMerge } from 'tailwind-merge';
 
 const gilroy = localFont({
 	src: [
@@ -56,7 +58,7 @@ export default async function RootLayout(
 		children,
 		params,
 	}: Readonly<{
-		children: React.ReactNode;
+		children: ReactNode;
 		params: Promise<{ locale: Language }>;
 	}>) {
 	const { locale } = await params;
@@ -71,7 +73,7 @@ export default async function RootLayout(
 				{response[0].head_html}
 			</Script>
 		</head>
-		<body className={ gilroy.className }>
+		<body className={ twMerge('bg-[#F5F7FA]', gilroy.className) }>
 		<StoreProvider>
 			<NextIntlClientProvider messages={ messages }>
 				<Header settings={ response } alias={ alias } />

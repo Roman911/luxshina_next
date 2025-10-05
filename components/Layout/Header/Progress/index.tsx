@@ -1,5 +1,5 @@
 'use client'
-import { Progress } from '@heroui/progress';
+import { Progress } from '@heroui/react';
 import { useAppSelector } from '@/hooks/redux';
 
 const MyProgress = () => {

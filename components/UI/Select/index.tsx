@@ -1,5 +1,5 @@
 import { Dispatch, FC, SetStateAction } from 'react';
-import { Autocomplete, AutocompleteItem } from '@heroui/autocomplete';
+import { Autocomplete, AutocompleteItem } from '@heroui/react';
 import { useTranslations } from 'next-intl';
 import type { Options } from '@/models/baseData';
 

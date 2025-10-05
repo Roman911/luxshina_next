@@ -1,5 +1,5 @@
 .tab:not(:nth-child(1)) {
 	&:before {
-		@apply mr-1.5 xl:mr-2.5 font-bold md:content-['/'];
+		@apply mr-1.5 xl:mr-2 font-bold md:content-['/'];
 	}
 }

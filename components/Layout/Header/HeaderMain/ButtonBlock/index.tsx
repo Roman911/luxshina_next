@@ -1,7 +1,7 @@
 'use client'
 import { useEffect } from 'react';
 import { Link } from '@/i18n/routing';
-import { Badge } from '@heroui/badge';
+import { Badge } from '@heroui/react';
 import { useAppDispatch, useAppSelector } from '@/hooks/redux';
 import { addBookmarksFromStorage } from '@/store/slices/bookmarksSlice';
 import { addComparisonFromStorage } from '@/store/slices/comparisonSlice';

@@ -10,7 +10,7 @@ import Select from '../Select';
 import { Language } from '@/models/language';
 import { Subsection } from '@/models/section';
 import { Section } from '@/models/filter';
-import { Button } from '@heroui/button';
+import { Button } from '@heroui/react';
 
 const FilterByCar = ({ locale }: { locale: Language }) => {
 	const router = useRouter();

@@ -2,7 +2,7 @@
 import { FC } from 'react';
 import { ProductTiporazmerProps } from '@/models/featureParams';
 import { Link } from '@/i18n/routing';
-import { Button } from '@heroui/button';
+import { Button } from '@heroui/react';
 import { useAppDispatch } from '@/hooks/redux';
 import { setProgress } from '@/store/slices/progressSlice';
 

@@ -1,7 +1,7 @@
 'use client'
 import { FC } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { Pagination } from '@heroui/pagination';
+import { Pagination } from '@heroui/react';
 import { Language } from '@/models/language';
 
 interface Props {

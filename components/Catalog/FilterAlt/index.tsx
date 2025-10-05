@@ -1,11 +1,9 @@
 'use client'
 import { FC, useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { Checkbox, CheckboxGroup } from '@heroui/checkbox';
-import { Drawer, DrawerContent } from '@heroui/drawer';
+import { Button, Checkbox, CheckboxGroup, Drawer, DrawerContent, useDisclosure } from '@heroui/react';
 import { useAppDispatch, useAppSelector } from '@/hooks/redux';
 import { setParams } from '@/store/slices/filterSlice';
-import { useDisclosure } from '@heroui/modal';
 import SwitchTabs from './SwitchTabs';
 import SwitchTabsByParams from './SwitchTabsByParams';
 import Select from './Select';
@@ -16,7 +14,6 @@ import { Language } from '@/models/language';
 import { appointmentCargo, appointmentIndustrial, customTireSeason, others, typeDisc } from './customParamForSelector';
 import ByCar from '@/components/Catalog/FilterAlt/ByCar';
 import { SelectFromTo } from '@/components/Catalog/FilterAlt/SelectFromTo';
-import { Button } from '@heroui/button';
 import * as Icons from '@/components/UI/Icons';
 import MyCheckboxGroup from '@/components/Catalog/FilterAlt/CheckboxGroup';
 import { setProgress } from '@/store/slices/progressSlice';

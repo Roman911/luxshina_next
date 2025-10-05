@@ -2,7 +2,7 @@ import { FC, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import Select from '../Select';
 import type { FilterProps } from '@/models/filterHomePage';
-import { Button } from '@heroui/button';
+import { Button } from '@heroui/react';
 
 const DisksFilter: FC<FilterProps> = ({ filters, onChange, onSubmit }) => {
 	const [ isLoading, setIsLoading ] = useState(false);

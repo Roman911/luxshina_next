@@ -1,7 +1,7 @@
 import { useTranslations } from 'next-intl';
 import { FC } from 'react';
 import { twMerge } from 'tailwind-merge';
-import { Button } from '@heroui/button';
+import { Button } from '@heroui/react';
 import { useInView } from 'react-intersection-observer';
 import Spinner from '@/components/UI/Spinner';
 import Item from '@/components/Order/Summary/Item';

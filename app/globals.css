@@ -1,50 +1,20 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+@plugin './hero.ts';
+@source '../node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}';
 
-body {
-  color: var(--foreground);
-  background: var(--background);
+@theme static {
+  --color-primary: var(--g-color-blue-500);
 }
 
-/*@layer base {*/
-/*  input {*/
-/*    outline: none;*/
-/*  }*/
+:root {
+  --background: #FAFAFC;
+  --foreground: #0A0A0B;
+  --radius-small: 4px;
+}
 
-/*  .icon {*/
-/*    @apply text-2xl;*/
-/*  }*/
-/*}*/
-
-/*@layer components {*/
-/*  .btn {*/
-/*    @apply h-12 rounded-sm font-bold w-72 flex justify-center items-center transition-all;*/
-/*  }*/
-
-/*  .primary {*/
-/*    @apply text-black transition;*/
-/*    background: var(--g-color-primary);*/
-
-/*    &:hover {*/
-/*      background: var(--g-color-teal-400);*/
-/*    }*/
-/*  }*/
-
-/*  .black {*/
-/*    @apply text-white transition;*/
-/*    background: var(--g-color-background);*/
-/*  }*/
-
-  /*.secondary {*/
-  /*  @apply bg-white hover:bg-blue-200;*/
-  /*}*/
-
-/*  .success {*/
-/*    @apply bg-black text-white hover:bg-gray-800;*/
-/*  }*/
-
-/*  .small {*/
-/*    @apply w-20;*/
-/*  }*/
-/*}*/
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}

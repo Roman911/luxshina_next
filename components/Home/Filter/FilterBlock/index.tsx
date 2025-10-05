@@ -2,7 +2,7 @@
 import { FC, JSX, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { useTranslations } from 'next-intl';
-import { Button } from '@heroui/button';
+import { Button } from '@heroui/react';
 import { Section } from '@/models/section';
 
 interface Props {

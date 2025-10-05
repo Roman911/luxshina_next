@@ -2,15 +2,14 @@
 import { FC, FormEvent } from 'react';
 import { useTranslations } from 'next-intl';
 import * as Icons from '@/components/UI/Icons';
-import { Button } from '@heroui/button';
-import { Form } from '@heroui/form';
-import { Input } from '@heroui/input';
+import { Button } from '@heroui/react';
+import { Form } from '@heroui/react';
+import { Input } from '@heroui/react';
 import { addToast } from '@heroui/toast';
-import { Modal, ModalContent, ModalHeader, ModalBody, useDisclosure } from '@heroui/modal';
+import { Modal, ModalContent, ModalHeader, ModalBody, Textarea, useDisclosure } from '@heroui/react';
 import { baseDataAPI } from '@/services/baseDataService';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { SerializedError } from '@reduxjs/toolkit';
-import { Textarea } from '@heroui/input';
 
 interface Props {
 	id: number | undefined

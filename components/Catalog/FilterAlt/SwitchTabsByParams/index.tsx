@@ -3,7 +3,7 @@ import { twMerge } from 'tailwind-merge';
 import { useAppDispatch } from '@/hooks/redux';
 import { Subsection } from '@/models/filter';
 import { changeSubsection } from '@/store/slices/filterSlice';
-import { Button } from '@heroui/button';
+import { Button } from '@heroui/react';
 
 const tabs = [
 	{ title: 'by parameters', section: Subsection.ByParams },

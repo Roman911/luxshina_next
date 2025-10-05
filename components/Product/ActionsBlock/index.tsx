@@ -14,7 +14,7 @@ import {
 	ViberIcon,
 	ViberShareButton
 } from 'next-share';
-import { Button } from '@heroui/button';
+import { Button } from '@heroui/react';
 import { addToast } from '@heroui/toast';
 import { useAppDispatch, useAppSelector } from '@/hooks/redux';
 import { addToStorage, getFromStorage, removeFromStorage } from '@/lib/localeStorage';

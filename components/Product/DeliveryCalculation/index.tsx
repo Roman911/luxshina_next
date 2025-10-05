@@ -2,8 +2,8 @@
 import { FC, useState } from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import { Button } from '@heroui/button';
-import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure, } from '@heroui/modal';
+import { Button } from '@heroui/react';
+import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure, } from '@heroui/react';
 import { useAppSelector } from '@/hooks/redux';
 import { NpCitySearch } from '@/components/UI/NpCitySearch';
 import Quantity from '@/components/UI/Quantity';

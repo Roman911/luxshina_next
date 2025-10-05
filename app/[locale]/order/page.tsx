@@ -12,7 +12,7 @@ import LayoutWrapper from '@/components/Layout/LayoutWrapper';
 import Breadcrumbs from '@/components/UI/Breadcrumbs';
 import OrderComponent from '@/components/Order';
 import { resetStorage } from '@/lib/localeStorage';
-import { Form } from '@heroui/form';
+import { Form } from '@heroui/react';
 import { formatPhoneNumber } from '@/lib/formatPhoneNumber';
 import { onOrderMakeEnd, onOrderMakeStart } from '@/event';
 

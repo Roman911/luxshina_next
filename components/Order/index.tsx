@@ -1,7 +1,7 @@
 'use client'
 import { FC } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
-import { Input, Textarea } from '@heroui/input';
+import { Input, Textarea } from '@heroui/react';
 import Summary from './Summary';
 import { Language } from '@/models/language';
 import PhoneMaskInput from '@/components/UI/PhoneMaskInput';

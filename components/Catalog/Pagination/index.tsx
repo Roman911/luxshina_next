@@ -1,7 +1,7 @@
 'use client'
 import { FC, Key } from 'react';
 import { Link } from '@/i18n/routing';
-import { Pagination, PaginationItemType, PaginationItemValue } from '@heroui/pagination';
+import { Pagination, PaginationItemType, PaginationItemValue } from '@heroui/react';
 import { twMerge } from 'tailwind-merge';
 import { Section } from '@/models/section';
 

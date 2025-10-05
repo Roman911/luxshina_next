@@ -1,6 +1,5 @@
 import { FC } from 'react';
-import { ScrollShadow } from "@heroui/scroll-shadow";
-import { Checkbox, CheckboxGroup } from '@heroui/checkbox';
+import { Checkbox, CheckboxGroup, ScrollShadow } from "@heroui/react";
 import { useAppDispatch } from '@/hooks/redux';
 import { setProgress } from '@/store/slices/progressSlice';
 import { Link } from '@/i18n/routing';

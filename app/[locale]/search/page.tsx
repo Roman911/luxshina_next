@@ -2,7 +2,7 @@
 import Head from 'next/head';
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { Pagination } from '@heroui/pagination';
+import { Pagination } from '@heroui/react';
 import { baseDataAPI } from '@/services/baseDataService';
 import { useAppSelector } from '@/hooks/redux';
 import LayoutWrapper from '@/components/Layout/LayoutWrapper';

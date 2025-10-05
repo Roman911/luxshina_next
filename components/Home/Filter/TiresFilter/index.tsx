@@ -1,6 +1,6 @@
 import { ComponentType, FC, useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { Button } from '@heroui/button';
+import { Button } from '@heroui/react';
 import Select from '../Select';
 import * as Icons from '@/components/UI/Icons';
 import type { FilterProps } from '@/models/filterHomePage';

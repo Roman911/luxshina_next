@@ -7,7 +7,7 @@ import type { Product } from '@/models/products';
 import CloseButton from '@/components/UI/CloseButton';
 import { Characteristics } from '../Characteristics';
 import * as Icons from '../../UI/Icons';
-import { Button } from '@heroui/button';
+import { Button } from '@heroui/react';
 
 interface ItemWrapperProps {
 	characteristics: Product[]
