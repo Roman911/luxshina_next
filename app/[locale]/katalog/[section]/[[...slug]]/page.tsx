@@ -13,6 +13,7 @@ import Pagination from '@/components/Catalog/Pagination';
 import { getFilterData, getProducts } from '@/app/api/api';
 import type { Metadata } from 'next';
 
+const allowed = ['w','h','d','b','s','stud','m','ctr','y','hm','kr','td','clr','ct','sk','elt','tk','am','pl','vt','li','si','oc','xl','owl','rf','ofr','pfrom','pto','etfrom','etto','diafrom','diato','wfrom','wto','hfrom','hto','lngfrom','lngto','litni','zimovi','vsesezonnye','shipovani','legkovi','suv','bus','spectehnika','gruzovie','moto','p']
 const pageItem = 12;
 const sort = {
 	ch: '&order[asc]=1',
@@ -20,28 +21,6 @@ const sort = {
 	pop: '&order[value]=popular&order[asc]=0',
 	off: '&order[value]=offers'
 }
-
-// async function getFilterData(id: string): Promise<BaseDataProps> {
-// 	const res = await fetch(`${process.env.SERVER_URL}/api/FildterData/${id}`, {
-// 		method: 'GET',
-// 		headers: {
-// 			'Access-Control-Allow-Credentials': 'true',
-// 		}
-// 	});
-// 	return await res.json();
-// }
-
-// async function getProducts({ page, searchParams }: { page: number | null, searchParams: string }) {
-// 	const res = await fetch(`${process.env.SERVER_URL}/api/getProducts?${searchParams}`, {
-// 		method: 'POST',
-// 		headers: {
-// 			'Access-Control-Allow-Credentials': 'true',
-// 			'content-type': 'application/json',
-// 		},
-// 		body: JSON.stringify({ start: page ? (page - 1) * pageItem : 0, length: 12 }),
-// 	});
-// 	return await res.json();
-// }
 
 async function getFilters() {
 	const res = await fetch(`${process.env.SERVER_URL}/baseData`, {
@@ -76,6 +55,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: L
 
 export default async function Catalog({ params }: { params: Promise<{ locale: Language, section: Section, slug: string[] }> }) {
 	const { locale, section, slug } = await params;
+	const filters = await getFilters();
+	const filtersAkum = await getFiltersAkum();
 	const value = slug?.find(item => item.startsWith('p-'));
 	const page = value ? parseInt(value.split('-')[1], 10) : null;
 	const filterData = await getFilterData(
@@ -83,7 +64,7 @@ export default async function Catalog({ params }: { params: Promise<{ locale: La
 	);
 	const paramsUrl = transformUrl({ section, slug });
 	const found = slug?.find(item => item.startsWith('order-'))?.split('-')[1] as keyof typeof sort;
-	let typeTires = null;
+	let typeTires = section === Section.Tires ? '&vehicle_type=1' : '';
 	if (slug?.includes('legkovi')) {
 		typeTires = '&vehicle_type=1';
 	} else if (slug?.includes('suv')) {
@@ -99,16 +80,24 @@ export default async function Catalog({ params }: { params: Promise<{ locale: La
 	}
 	let season = null;
 	if (slug?.includes('litni')) {
-		season = '&s-1';
+		season = '&sezon=1';
 	} else if (slug?.includes('zimovi')) {
-		season = '&s-2';
+		season = '&sezon=2';
 	} else if (slug?.includes('vsesezonnye')) {
-		season = '&s-3';
+		season = '&sezon=3';
+	} else if (slug?.includes('shipovani')) {
+		season = '&sezon=2&only_studded=1';
 	}
-	const searchParams = `?${paramsUrl || ''}${typeTires || ''}${season || ''}${found && sort[found] ? sort[found] : ''}`;
+	const result = slug?.filter(item => {
+		const [prefix] = item.split('-');
+		return !allowed.includes(prefix);
+	});
+	const brands = section === Section.Disks ? filters?.brand_disc : section === Section.Battery ? filtersAkum?.brand_akum : filters?.brand;
+	const brand = result?.length ? brands?.find((item: { alias: string; }) => item.alias === result[0]) : null;
+	const searchParams = `?${paramsUrl || ''}${typeTires || ''}${season || ''}${found && sort[found] ? sort[found] : ''}${brand ? '&brand=' + brand.value : ''}`;
 	const products = await getProducts(searchParams, page ? (page - 1) * pageItem : 0, pageItem);
-	const filters = await getFilters();
-	const filtersAkum = await getFiltersAkum();
+
+	console.log(filtersAkum)
 
 	return (
 		<LayoutWrapper>

@@ -41,6 +41,18 @@ const FilterAlt: FC<Props> = ({ locale, filterData, section, slug, filters, filt
 	const appointmentIndustrialShow = filter.vehicle_type && industrialTypes.includes(filter.vehicle_type);
 	const { isOpen, onOpen, onOpenChange } = useDisclosure();
 	const country = locale === Language.UK ? filters?.country : filters?.country_ru;
+	let season = null;
+	if (slug?.includes('litni')) {
+		season = 'litni';
+	} else if (slug?.includes('zimovi')) {
+		season = 'zimovi';
+	} else if (slug?.includes('vsesezonnye')) {
+		season = 'vsesezonnye';
+	} else if (slug?.includes('shipovani')) {
+		season = 'shipovani';
+	}
+
+	console.log(slug, season)
 
 	const onChange = (name: string, value: number | string | undefined | null, element: HTMLElement) => {
 		if(name === 'brand') {
@@ -188,12 +200,12 @@ const FilterAlt: FC<Props> = ({ locale, filterData, section, slug, filters, filt
 									label: locale === Language.UK ? item.name_ua : item.name
 								})) }
 							/>
-							{ slug && slug.includes('s-2') &&
+							{ slug && slug.some(item => ['zimovi', 'shipovani'].includes(item)) &&
 								<Link
 									className='ml-8 mt-2 flex'
 									onClick={ () => dispatch(setProgress(true)) }
-									href={ `/katalog/${ section }/${ slug ? slug.filter(item => !/^stud-\d+$/.test(item)).join('/') : '' }/${ slug?.includes('stud-1') ? '' : 'stud-1' }` }>
-									<Checkbox className="-z-10" radius="none" size="lg" isSelected={ slug?.includes('stud-1') }>
+									href={ `/katalog/${ section }/${ slug ? slug.filter(item => !['zimovi', 'shipovani'].includes(item)).join('/') : '' }/${ slug?.includes('shipovani') ? 'zimovi' : 'shipovani' }` }>
+									<Checkbox className="-z-10" radius="none" size="lg" isSelected={ slug?.includes('shipovani') }>
 										Шип
 									</Checkbox>
 								</Link> }

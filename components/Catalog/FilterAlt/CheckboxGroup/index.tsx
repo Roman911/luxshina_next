@@ -19,10 +19,20 @@ const MyCheckboxGroup: FC<Props> = ({ checkboxKey, label, slug, section, options
 	const keyPattern = new RegExp(`^${checkboxKey}[\\w\u0400-\u04FF.()]+$`);
 	const filteredArr = slugTransform ? slugTransform.filter(item => !keyPattern.test(item)) : [];
 	const found = slugTransform?.find(item => keyPattern.test(item));
+	let season = undefined;
+	if (slug?.includes('litni')) {
+		season = ['litni'];
+	} else if (slug?.includes('zimovi')) {
+		season = ['zimovi'];
+	} else if (slug?.includes('vsesezonnye')) {
+		season = ['vsesezonnye'];
+	} else if (slug?.includes('shipovani')) {
+		season = ['zimovi'];
+	}
 	const defaultValue = found ? [ found.split('-')[1] ] : [];
 
 	return (
-		<CheckboxGroup defaultValue={ defaultValue } label={ label } classNames={ { label: 'mt-4 font-bold text-black' } }
+		<CheckboxGroup defaultValue={ checkboxKey === 's-' ? season : defaultValue } label={ label } classNames={ { label: 'mt-4 font-bold text-black' } }
 									 orientation='vertical'>
 			<ScrollShadow hideScrollBar className="w-[300px] max-h-[400px]">
 				{ options.map(({ value, label }) => (

@@ -11,9 +11,9 @@ interface IconsMap {
 }
 
 const buttons = [
-	{ id: 2, icon: 'snow' },
-	{ id: 1, icon: 'sun' },
-	{ id: 3, icon: 'cloud' },
+	{ id: 2, icon: 'snow', name: 'zimovi' },
+	{ id: 1, icon: 'sun', name: 'litni' },
+	{ id: 3, icon: 'cloud', name: 'vsesezonnye' },
 ];
 
 const icons: IconsMap = {
@@ -23,11 +23,11 @@ const icons: IconsMap = {
 };
 
 const TiresFilter: FC<FilterProps> = ({ filters, onChange, onSubmit }) => {
-	const [ season, setSeason ] = useState<null | number>(null);
+	const [ season, setSeason ] = useState<null | string>(null);
 	const [ isLoading, setIsLoading ] = useState(false);
 	const t = useTranslations('HeaderFilter');
 
-	const handleClick = (value: number) => {
+	const handleClick = (value: string) => {
 		setSeason(value);
 		onChange('sezon', value);
 	}
@@ -58,8 +58,8 @@ const TiresFilter: FC<FilterProps> = ({ filters, onChange, onSubmit }) => {
 						const Icon = icons[item.icon];
 						return (
 							<Button key={ item.id } variant='bordered' radius='full' isIconOnly size='lg'
-											onPress={ () => handleClick(item.id) }
-											className={ twMerge('hover:border-white', season === item.id ? 'border-white' : 'border-[#296EA9] md:border-blue-400'
+											onPress={ () => handleClick(item.name) }
+											className={ twMerge('hover:border-white', season === item.name ? 'border-white' : 'border-[#296EA9] md:border-blue-400'
 											) }>
 								<Icon/>
 							</Button>

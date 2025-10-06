@@ -48,7 +48,9 @@ const paramsTransForURL: IFilter = Object.fromEntries(
 
 export const generateUrl = (filter: IFilter): string => {
 	const parts = Object.entries(filter).reduce<string[]>((acc, [key, value]) => {
-		if (value) {
+		if(key === 'sezon') {
+			acc.push(value);
+		} else if (value) {
 			const formattedValue = Array.isArray(value) ? value.join(',') : String(value);
 			const urlParamKey = paramsTransForURL[key as keyof IFilter];
 			if (urlParamKey) {
