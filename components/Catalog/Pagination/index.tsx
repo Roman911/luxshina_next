@@ -27,7 +27,7 @@ const MyPagination: FC<Props> = ({ initialPage, total, section, slug }) => {
 			);
 		}
 
-		return <Link key={key} href={ `/${section}/p-${value}/${params}` }>
+		return <Link key={key} href={ `/katalog/${section}/p-${value}/${params}` }>
 			<button
 				className={twMerge(
 					className,

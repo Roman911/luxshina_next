@@ -12,6 +12,16 @@ import { AliasAll, Pages } from '@/models/alias';
 
 export const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
+export async function getFilters() {
+	const res = await fetch(`${ API_URL }${ baseEndpoints.baseData }`, {
+		method: API_CONSTANTS.METHODS.GET,
+		headers: DEFAULT_HEADERS
+	});
+	if (!res.ok) throw new Error('Failed to fetch products');
+
+	return await res.json();
+}
+
 export async function getSettings() {
 	const res = await fetch(`${ API_URL }${ baseEndpoints.settings }`, {
 		method: API_CONSTANTS.METHODS.GET,
@@ -83,6 +93,17 @@ export async function getFilterData(id: string): Promise<BaseDataProps> {
 
 export async function getBrands(id: string): Promise<BrandsObject | BrandsObjectItems> {
 	const res = await fetch(`${ API_URL }${ baseEndpoints.brands(id) }`, {
+		method: API_CONSTANTS.METHODS.GET,
+		headers: DEFAULT_HEADERS
+	});
+
+	if (!res.ok) throw new Error('Failed to fetch products');
+
+	return await res.json();
+}
+
+export async function getFiltersAkum() {
+	const res = await fetch(`${process.env.SERVER_URL}${ baseEndpoints.dataAkum }`, {
 		method: API_CONSTANTS.METHODS.GET,
 		headers: DEFAULT_HEADERS
 	});

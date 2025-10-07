@@ -22,7 +22,7 @@
     "light": "Легкові",
     "motorcycles": "Мотоцикли",
     "special equipment": "Спецтехніка",
-    "suvs": "Позашляховики"
+    "pozashlyahoviki": "Позашляховики"
   },
   "Catalog": {
     "all search result": "Усі результати пошуку",
@@ -113,7 +113,7 @@
     "starting current": "Пусковий струм",
     "strengthening": "Посилення",
     "summer": "Літні",
-    "suvs": "Позашляховики",
+    "pozashlyahoviki": "Позашляховики",
     "tires": "Шини",
     "avtoshini": "Шини",
     "to apply": "Застосувати",

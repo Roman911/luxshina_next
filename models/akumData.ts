@@ -5,6 +5,7 @@ interface Item {
 }
 
 interface ItemS {
+	alias: string
 	value: number
 	label: string
 	sort_order: string

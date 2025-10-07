@@ -22,7 +22,7 @@
     "light": "Легковые",
     "motorcycles": "Мотоциклы",
     "special equipment": "Спецтехника",
-    "suvs": "Внедорожники"
+    "pozashlyahoviki": "Внедорожники"
   },
   "Catalog": {
     "all search result": "Все результаты поиска",
@@ -112,7 +112,7 @@
     "starting current": "Пусковой ток",
     "strengthening": "Усиление",
     "summer": "Летние",
-    "suvs": "Внедорожники",
+    "pozashlyahoviki": "Внедорожники",
     "tires": "Шины",
     "avtoshini": "Шины",
     "to apply": "Применить",

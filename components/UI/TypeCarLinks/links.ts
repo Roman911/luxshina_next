@@ -6,8 +6,8 @@ export const typeCatLinks = [
 		vehicleType: ['1'],
 	},
 	{
-		label: 'suvs',
-		href: '/katalog/avtoshini/suv',
+		label: 'pozashlyahoviki',
+		href: '/katalog/avtoshini/pozashlyahoviki',
 		icon: 'suv',
 		iconStyles: 'stroke-gray-500 group-hover/item:stroke-primary',
 		iconStylesActive: 'stroke-primary',
@@ -15,25 +15,25 @@ export const typeCatLinks = [
 	},
 	{
 		label: 'buses',
-		href: '/katalog/avtoshini/bus',
+		href: '/katalog/avtoshini/busi',
 		icon: 'bus',
 		vehicleType: ['8'],
 	},
 	{
 		label: 'cargo',
-		href: '/katalog/avtoshini/gruzovie', // vehicle_type=3,4,5,6
+		href: '/katalog/vantazhni', // vehicle_type=3,4,5,6
 		icon: 'cargo',
 		vehicleType: ['3','4','5','6'],
 	},
 	{
 		label: 'special equipment',
-		href: '/katalog/avtoshini/spectehnika', //vehicle_type=9,10,11
+		href: '/katalog/spectehnika', //vehicle_type=9,10,11
 		icon: 'special',
 		vehicleType: ['9','10','11'],
 	},
 	{
 		label: 'motorcycles',
-		href: '/katalog/avtoshini/moto',
+		href: '/katalog/motoshini',
 		icon: 'motorcycle',
 		vehicleType: ['7'],
 	},

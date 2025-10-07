@@ -9,11 +9,11 @@ import { ReactSlick } from '@/components/Product/ImagesBlock/ReactSlick';
 
 const IconsObj = {
 	light: Icons.CarIcon,
-	bus: Icons.BusIcon,
+	busi: Icons.BusIcon,
 	cargo: Icons.CargoIcon,
 	motorcycle: Icons.MotorcyclesIcon,
 	special: Icons.SpecialEquipmentIcon,
-	suv: Icons.SuvIcon,
+	pozashlyahoviki: Icons.SuvIcon,
 };
 
 interface Props {

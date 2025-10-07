@@ -5,6 +5,7 @@ export enum Section {
 	Car = 'car',
 	Cargo = 'vantazhni',
 	Moto = 'motoshini',
+	Spectehnika = 'spectehnika',
 }
 
 export enum Subsection {

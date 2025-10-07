@@ -1,11 +1,11 @@
 export const links = [
 	{
 		title: 'cargo tires',
-		url: '/katalog/avtoshini/gruzovie',
+		url: '/katalog/avtoshini/vantazhni',
 	},
 	{
 		title: 'motorcycle tires',
-		url: '/katalog/avtoshini/moto',
+		url: '/katalog/avtoshini/motoshini',
 	},
 	{
 		title: 'akumulyatori',

@@ -11,37 +11,19 @@ import SelectionByCar from '@/components/Catalog/SelectionByCar';
 import FilterActive from '@/components/Catalog/FilterActive';
 import HeaderCatalog from '@/components/Catalog/HeaderCatalog';
 import Pagination from '@/components/Catalog/Pagination';
-import { getFilterData, getProducts } from '@/app/api/api';
+import { getFilterData, getFilters, getFiltersAkum, getProducts } from '@/app/api/api';
 import type { Metadata } from 'next';
 import { DEFAULT_HEADERS } from '@/config/api';
+import { Season } from '@/lib/season';
+import { TypeTires } from '@/lib/typeTires';
+import { Brand } from '@/lib/brand';
 
-const allowed = ['w','h','d','b','s','stud','m','ctr','y','hm','kr','td','clr','ct','sk','elt','tk','am','pl','vt','li','si','oc','xl','owl','rf','ofr','pfrom','pto','etfrom','etto','diafrom','diato','wfrom','wto','hfrom','hto','lngfrom','lngto','litni','zimovi','vsesezonnye','shipovani','legkovi','suv','bus','spectehnika','gruzovie','moto','p']
 const pageItem = 12;
 const sort = {
 	ch: '&order[asc]=1',
 	ex: '&order[asc]=0',
 	pop: '&order[value]=popular&order[asc]=0',
 	off: '&order[value]=offers'
-}
-
-async function getFilters() {
-	const res = await fetch(`${process.env.SERVER_URL}/baseData`, {
-		method: 'GET',
-		headers: {
-			'Access-Control-Allow-Credentials': 'true',
-		}
-	});
-	return await res.json();
-}
-
-async function getFiltersAkum() {
-	const res = await fetch(`${process.env.SERVER_URL}/api/baseDataAkum`, {
-		method: 'GET',
-		headers: {
-			'Access-Control-Allow-Credentials': 'true',
-		}
-	});
-	return await res.json();
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: Language, section: Section, slug: string[] }> }): Promise<Metadata> {
@@ -70,41 +52,12 @@ export default async function Catalog({ params }: { params: Promise<{ locale: La
 	const filtersAkum = await getFiltersAkum();
 	const value = slug?.find(item => item.startsWith('p-'));
 	const page = value ? parseInt(value.split('-')[1], 10) : null;
-	const filterData = await getFilterData(
-		`?typeproduct=${section === Section.Disks ? 3 : section === Section.Battery ? 4 : 1}`,
-	);
+	const filterData = await getFilterData(`?typeproduct=${section === Section.Disks ? 3 : section === Section.Battery ? 4 : 1}`);
 	const paramsUrl = transformUrl({ section, slug });
 	const found = slug?.find(item => item.startsWith('order-'))?.split('-')[1] as keyof typeof sort;
-	let typeTires = section === Section.Tires ? '&vehicle_type=1' : '';
-	if (slug?.includes('legkovi')) {
-		typeTires = '&vehicle_type=1';
-	} else if (slug?.includes('suv')) {
-		typeTires = '&vehicle_type=2';
-	} else if (slug?.includes('bus')) {
-		typeTires = '&vehicle_type=8';
-	} else if (slug?.includes('spectehnika')) {
-		typeTires = '&vehicle_type=9';
-	} else if (slug?.includes('gruzovie')) {
-		typeTires = '&vehicle_type=3';
-	} else if (slug?.includes('moto')) {
-		typeTires = '&vehicle_type=7';
-	}
-	let season = null;
-	if (slug?.includes('litni')) {
-		season = '&sezon=1';
-	} else if (slug?.includes('zimovi')) {
-		season = '&sezon=2';
-	} else if (slug?.includes('vsesezonnye')) {
-		season = '&sezon=3';
-	} else if (slug?.includes('shipovani')) {
-		season = '&sezon=2&only_studded=1';
-	}
-	const result = slug?.filter(item => {
-		const [prefix] = item.split('-');
-		return !allowed.includes(prefix);
-	});
-	const brands = section === Section.Disks ? filters?.brand_disc : section === Section.Battery ? filtersAkum?.brand_akum : filters?.brand;
-	const brand = result?.length ? brands?.find((item: { alias: string; }) => item.alias === result[0]) : null;
+	const typeTires = TypeTires(section, slug);
+	const season = section === Section.Tires ? Season(slug) : null;
+	const brand = Brand(section, slug, filters, filtersAkum);
 	const searchParams = `?${paramsUrl || ''}${typeTires || ''}${season || ''}${found && sort[found] ? sort[found] : ''}${brand ? '&brand=' + brand.value : ''}`;
 	const products = await getProducts(searchParams, page ? (page - 1) * pageItem : 0, pageItem);
 

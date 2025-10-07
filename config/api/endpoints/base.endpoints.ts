@@ -7,6 +7,7 @@ export const baseEndpoints = {
 	featureParams: `${API}/getFeatureParams`,
 	reviews: `${API}/reviews`,
 	filterData: (id: string) => `${API}/FildterData${id}`,
+	dataAkum: `${API}/baseDataAkum`,
 	autoBrandModel: (id: string) => `${BASE_DATA}/getAutoBrandModel/${id}`,
 	autoBrandModelYear: (id: string) => `${BASE_DATA}/getAutoBrandModelYear/${id}`,
 	autoBrandModelKit: (id: string) => `${BASE_DATA}/getAutoBrandModelKit/${id}`,
