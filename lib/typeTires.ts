@@ -6,6 +6,8 @@ export const TypeTires = (section: Section, slug: string[]) => {
 			return '&vehicle_type=2';
 		} else if (slug?.includes('busi')) {
 			return '&vehicle_type=8';
+		} else if (slug?.includes('off-road-4x4')) {
+			return '&vehicle_type=2&only_off_road=1';
 		} else {
 			return '&vehicle_type=1';
 		}

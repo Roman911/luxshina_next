@@ -14,12 +14,14 @@ import CarDiskFilter from '../Menu/CarDiskFilter';
 import { links } from '@/components/Layout/Header/links';
 import Contacts from '@/components/Layout/Header/Contacts';
 import { SettingsProps } from '@/models/settings';
+import { IMenu } from '@/models/menu';
 
 interface Props {
 	settings: SettingsProps
+	menu: IMenu[]
 }
 
-const HeaderMain: FC<Props> = ({ settings }) => {
+const HeaderMain: FC<Props> = ({ settings, menu }) => {
 	const [ isMenuOpen, setIsMenuOpen ] = useState(false);
 	const [ filterIsOpen, setFilterOpen ] = useState<boolean | string>(false);
 	const t = useTranslations('Main');
@@ -75,7 +77,7 @@ const HeaderMain: FC<Props> = ({ settings }) => {
 					</button>
 					{ filterIsOpen === 'tires' &&
 						<div className='mt-4 grid grid-cols-2 gap-2'>
-							<CarTireFilter onClick={ closeFilter } />
+							<CarTireFilter onClick={ closeFilter } menu={ menu } />
 						</div>
 					}
 				</NavbarMenuItem>
@@ -86,14 +88,14 @@ const HeaderMain: FC<Props> = ({ settings }) => {
 							filterIsOpen === 'diski' && 'text-primary'
 						) }>
 						<span>{ t('cardiscs') }</span>
-						<span className={ twMerge('transition', filterIsOpen === 'disks' && 'rotate-180') }>
+						<span className={ twMerge('transition', filterIsOpen === 'diski' && 'rotate-180') }>
 						<Icons.ChevronDownIcon
 							className={ twMerge('stroke-black transition group-hover:stroke-primary', filterIsOpen === 'disks' && 'stroke-primary') }/>
 					</span>
 					</button>
-					{ filterIsOpen === 'disks' &&
+					{ filterIsOpen === 'diski' &&
 						<div className='mt-5 grid grid-cols-2 gap-2'>
-							<CarDiskFilter onClick={ closeFilter } />
+							<CarDiskFilter onClick={ closeFilter } menu={ menu } />
 						</div>
 					}
 				</NavbarMenuItem>

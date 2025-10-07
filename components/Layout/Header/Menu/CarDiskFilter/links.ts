@@ -1,17 +1,17 @@
 export const typeDiskLinks = [
 	{
 		label: 'cast',
-		href: '/katalog/diski/td-3',
+		href: '/katalog/diski/liti',
 		mt: 'mt-3',
 	},
 	{
 		label: 'steel',
-		href: '/katalog/diski/td-1',
+		href: '/katalog/diski/stalni',
 		mt: 'mt-3',
 	},
 	{
 		label: 'forged',
-		href: '/katalog/diski/td-2',
+		href: '/katalog/diski/kovani',
 		mt: 'mt-3',
 	},
 ];

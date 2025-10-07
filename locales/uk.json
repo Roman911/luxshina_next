@@ -18,9 +18,9 @@
   },
   "CarType": {
     "buses": "Буси",
-    "cargo": "Вантажні",
+    "vantazhni": "Вантажні",
     "light": "Легкові",
-    "motorcycles": "Мотоцикли",
+    "motoshini": "Мотоцикли",
     "special equipment": "Спецтехніка",
     "pozashlyahoviki": "Позашляховики"
   },
@@ -32,7 +32,7 @@
     "search": "Пошук"
   },
   "Comparison": {
-    "cargo": "Вантажні",
+    "vantazhni": "Вантажні",
     "comparison": "Порівняння",
     "tires": "Шини",
     "avtoshini": "Шини"
@@ -70,7 +70,7 @@
     "capacity": "Ємність",
     "car brand": "Марка авто",
     "car type": "Тип автомобіля",
-    "cargo": "Вантажні",
+    "vantazhni": "Вантажні",
     "cast": "Литі",
     "choose disks": "Підібрати диски",
     "choose tires": "Підібрати шини",
@@ -99,7 +99,7 @@
     "main characteristics": "Основні характеристики",
     "model": "Модель",
     "modification": "Модифікація",
-    "motorcycles": "Мотоцикли",
+    "motoshini": "Мотоцикли",
     "other": "Інше",
     "polarity": "Полярність",
     "price": "Ціна",
@@ -108,7 +108,7 @@
     "reset everything": "Скинути все",
     "reviews": "Відгуки",
     "season": "Сезон",
-    "special equipment": "Спецтехніка",
+    "spectehnika": "Спецтехніка",
     "speed index": "Індекс швидкості",
     "starting current": "Пусковий струм",
     "strengthening": "Посилення",

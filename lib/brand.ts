@@ -5,7 +5,8 @@ import type { AkumProps } from '@/models/akumData';
 const allowed = [ 'w', 'h', 'd', 'b', 's', 'stud', 'm', 'ctr', 'y', 'hm', 'kr', 'td', 'clr', 'ct', 'sk', 'elt',
 	'tk', 'am', 'pl', 'vt', 'li', 'si', 'oc', 'xl', 'owl', 'rf', 'ofr', 'pfrom', 'pto', 'etfrom', 'etto', 'diafrom',
 	'diato', 'wfrom', 'wto', 'hfrom', 'hto', 'lngfrom', 'lngto', 'litni', 'zimovi', 'vsesezonnye', 'shipovani', 'legkovi',
-	'pozashlyahoviki', 'busi', 'spectehnika', 'vantazhni', 'motoshini', 'p', 'brand'
+	'pozashlyahoviki', 'busi', 'spectehnika', 'vantazhni', 'motoshini', 'p', 'brand', 'shipovani', 'off-road-4x4', 'liti',
+	'stalni', 'kovani'
 ];
 
 export const Brand = (section: Section, slug: string[], filters: BaseDataProps | undefined, filtersAkum: AkumProps | undefined) => {

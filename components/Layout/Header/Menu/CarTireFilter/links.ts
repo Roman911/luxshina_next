@@ -20,13 +20,13 @@ export const seasonLinks = [
 	{
 		img: 'spiked',
 		label: 'spiked',
-		href: '/katalog/avtoshini/s-2/stud-1',
+		href: '/katalog/avtoshini/shipovani',
 		mt: 'mt-8',
 	},
 	{
 		img: 'off-road',
 		label: 'off-Road 4x4',
-		href: '/katalog/avtoshini/ofr-1',
+		href: '/katalog/avtoshini/off-road-4x4',
 		mt: 'mt-3',
 	},
 ];

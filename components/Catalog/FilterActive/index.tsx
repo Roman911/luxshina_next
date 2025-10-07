@@ -29,8 +29,6 @@ const FilterActive: FC<FilterActiveProps> = ({ className, slug, section }) => {
 		);
 	};
 
-	console.log(slug?.length !== 0)
-
 	return (
 		<div
 			className={

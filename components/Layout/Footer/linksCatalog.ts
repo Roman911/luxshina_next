@@ -12,11 +12,11 @@ export const linksCatalog = [
 		title: 'diski',
 	},
 	{
-		link: '/katalog/avtoshini/vt-3',
+		link: '/katalog/vantazhni',
 		title: 'cargo tires',
 	},
 	{
-		link: '/katalog/avtoshini/vt-7',
+		link: '/katalog/motoshini',
 		title: 'motorcycle tires',
 	},
 	{

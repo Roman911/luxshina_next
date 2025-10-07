@@ -10,7 +10,6 @@ import TextSeo from '@/components/UI/TextSeo';
 import OurAdvantages from '@/components/Home/OurAdvantages';
 import PopularSizesBlock from '@/components/Home/PopularSizesBlock';
 import { getFeatureParams, getProducts, getSettings } from '@/app/api/api';
-import { DEFAULT_HEADERS } from '@/config/api';
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: Language }> }): Promise<Metadata> {
 	const { locale } = await params;

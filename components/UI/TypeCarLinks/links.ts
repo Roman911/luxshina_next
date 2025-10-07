@@ -20,7 +20,7 @@ export const typeCatLinks = [
 		vehicleType: ['8'],
 	},
 	{
-		label: 'cargo',
+		label: 'vantazhni',
 		href: '/katalog/vantazhni', // vehicle_type=3,4,5,6
 		icon: 'cargo',
 		vehicleType: ['3','4','5','6'],

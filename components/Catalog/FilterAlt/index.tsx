@@ -20,9 +20,6 @@ import { setProgress } from '@/store/slices/progressSlice';
 import { Link } from '@/i18n/routing';
 import type { AkumProps } from '@/models/akumData';
 
-const cargoTypes = [ '3', '4', '5', '6' ];
-const industrialTypes = [ '9', '10', '11' ];
-
 interface Props {
 	locale: Language
 	filterData: BaseDataProps | undefined
@@ -37,22 +34,8 @@ const FilterAlt: FC<Props> = ({ locale, filterData, section, slug, filters, filt
 	const [ element, setElement ] = useState<HTMLElement | null>(null);
 	const dispatch = useAppDispatch();
 	const { filter, subsection } = useAppSelector(state => state.filterReducer);
-	const appointmentCargoShow = filter.vehicle_type && cargoTypes.includes(filter.vehicle_type);
-	const appointmentIndustrialShow = filter.vehicle_type && industrialTypes.includes(filter.vehicle_type);
 	const { isOpen, onOpen, onOpenChange } = useDisclosure();
 	const country = locale === Language.UK ? filters?.country : filters?.country_ru;
-	let season = null;
-	if (slug?.includes('litni')) {
-		season = 'litni';
-	} else if (slug?.includes('zimovi')) {
-		season = 'zimovi';
-	} else if (slug?.includes('vsesezonnye')) {
-		season = 'vsesezonnye';
-	} else if (slug?.includes('shipovani')) {
-		season = 'shipovani';
-	}
-
-	console.log(slug, season)
 
 	const onChange = (name: string, value: number | string | undefined | null, element: HTMLElement) => {
 		if(name === 'brand') {
@@ -100,17 +83,17 @@ const FilterAlt: FC<Props> = ({ locale, filterData, section, slug, filters, filt
 			<Button variant='light' onPress={ onOpen } className='font-bold lg:hidden text-medium'
 							startContent={ <Icons.FilterIcon className='fill-black'/> }>{ t('filters') }</Button>
 			<div className='hidden md:block'>
-				{ section !== Section.Battery && <div
+				{ (section === Section.Tires || section === Section.Disks) && <div
 					className='filter lg:h-auto w-[calc(100%-70px)] lg:w-64 mr-6 pt-4 lg:pt-0 bg-white lg:bg-transparent'>
 					<SwitchTabs section={ section }/>
 				</div> }
 				<div
 					className='relative pb-32 lg:pb-4 px-4 pt-4 bg-white border border-gray-200 z-10 overflow-y-auto md:overflow-y-visible'>
 					<SubmitFloat element={ element } btnTitle={ t('to apply') } setElement={ setElement }
-											 offset={ Section.Battery ? 294 : 340 }/>
-					{ section !== Section.Battery && <SwitchTabsByParams subsection={ subsection }/> }
+											 offset={ (section === Section.Tires || section === Section.Disks) ? 340 : 294 }/>
+					{ (section === Section.Tires || section === Section.Disks) && <SwitchTabsByParams subsection={ subsection }/> }
 					{ subsection === Subsection.ByParams && <>
-						{ section === Section.Tires && <>
+						{ (section === Section.Tires || section === Section.Cargo || section === Section.Spectehnika || section === Section.Moto) && <>
 							<MyCheckboxGroup
 								checkboxKey='w-'
 								label={ t('width') }
@@ -188,48 +171,48 @@ const FilterAlt: FC<Props> = ({ locale, filterData, section, slug, filters, filt
 							options={ filtersAkum?.brand_akum?.map(item => ({ value: `${ item.value }`, label: item.label })) || [] }
 						/>
 					</> }
-					{ section === Section.Tires && <>
-						{ !appointmentCargoShow && !appointmentIndustrialShow && <>
-							<MyCheckboxGroup
-								checkboxKey='s-'
-								label={ t('season') }
-								slug={ slug }
-								section={ section }
-								options={ customTireSeason.map(item => ({
-									value: item.value,
-									label: locale === Language.UK ? item.name_ua : item.name
-								})) }
-							/>
-							{ slug && slug.some(item => ['zimovi', 'shipovani'].includes(item)) &&
-								<Link
-									className='ml-8 mt-2 flex'
-									onClick={ () => dispatch(setProgress(true)) }
-									href={ `/katalog/${ section }/${ slug ? slug.filter(item => !['zimovi', 'shipovani'].includes(item)).join('/') : '' }/${ slug?.includes('shipovani') ? 'zimovi' : 'shipovani' }` }>
-									<Checkbox className="-z-10" radius="none" size="lg" isSelected={ slug?.includes('shipovani') }>
-										Шип
-									</Checkbox>
-								</Link> }
-						</> }
-						{ appointmentCargoShow && <MyCheckboxGroup
-							checkboxKey='vt-'
-							label={ t('appointment') }
+					{ (section === Section.Tires || section === Section.Moto) && <>
+						<MyCheckboxGroup
+							checkboxKey='s-'
+							label={ t('season') }
 							slug={ slug }
 							section={ section }
-							options={ appointmentCargo.map(item => ({
+							options={ customTireSeason.map(item => ({
 								value: item.value,
 								label: locale === Language.UK ? item.name_ua : item.name
 							})) }
-						/> }
-						{ appointmentIndustrialShow && <MyCheckboxGroup
-							checkboxKey='vt-'
-							label={ t('appointment') }
-							slug={ slug }
-							section={ section }
-							options={ appointmentIndustrial.map(item => ({
-								value: item.value,
-								label: locale === Language.UK ? item.name_ua : item.name
-							})) }
-						/> }
+						/>
+						{ slug && slug.some(item => ['zimovi', 'shipovani'].includes(item)) &&
+							<Link
+								className='ml-8 mt-2 flex'
+								onClick={ () => dispatch(setProgress(true)) }
+								href={ `/katalog/${ section }/${ slug ? slug.filter(item => !['zimovi', 'shipovani'].includes(item)).join('/') : '' }/${ slug?.includes('shipovani') ? 'zimovi' : 'shipovani' }` }>
+								<Checkbox className="-z-10" radius="none" size="lg" isSelected={ slug?.includes('shipovani') }>
+									Шип
+								</Checkbox>
+							</Link> }
+					</> }
+					{ section === Section.Cargo && <MyCheckboxGroup
+						checkboxKey='vt-'
+						label={ t('appointment') }
+						slug={ slug }
+						section={ section }
+						options={ appointmentCargo.map(item => ({
+							value: item.value,
+							label: locale === Language.UK ? item.name_ua : item.name
+						})) }
+					/> }
+					{ section === Section.Spectehnika && <MyCheckboxGroup
+						checkboxKey='vt-'
+						label={ t('appointment') }
+						slug={ slug }
+						section={ section }
+						options={ appointmentIndustrial.map(item => ({
+							value: item.value,
+							label: locale === Language.UK ? item.name_ua : item.name
+						})) }
+					/> }
+					{ (section === Section.Tires || section === Section.Moto || section === Section.Cargo || section === Section.Spectehnika) && <>
 						<MyCheckboxGroup
 							checkboxKey='b-'
 							label={ t('brand') }
@@ -275,7 +258,7 @@ const FilterAlt: FC<Props> = ({ locale, filterData, section, slug, filters, filt
 							options={ filters?.brand_disc?.map(item => ({ value: `${ item.value }`, label: item.label })) || [] }
 						/>
 					</> }
-					{ section === Section.Tires && <>
+					{ (section === Section.Tires || section === Section.Moto || section === Section.Cargo || section === Section.Spectehnika) && <>
 						<MyCheckboxGroup
 							checkboxKey='ctr-'
 							label={ t('country') }
@@ -405,15 +388,15 @@ const FilterAlt: FC<Props> = ({ locale, filterData, section, slug, filters, filt
 				<DrawerContent>
 					{ () => (
 						<>
-							<div
+							{(section === Section.Tires || section === Section.Disks) && <div
 								className='filter lg:h-auto w-[calc(100%-70px)] lg:w-64 mr-6 pt-4 lg:pt-0 bg-white lg:bg-transparent'>
 								<SwitchTabs section={ section }/>
-							</div>
+							</div>}
 							<div
-								className='relative pb-32 lg:pb-4 px-4 pt-4 bg-white border border-gray-200 z-10 overflow-y-auto md:overflow-y-visible'>
-								{ section !== Section.Battery && <SwitchTabsByParams subsection={ subsection }/> }
+								className='relative mt-8 pb-32 lg:pb-4 px-4 pt-4 bg-white border border-gray-200 z-10 overflow-y-auto md:overflow-y-visible'>
+								{ (section === Section.Tires || section === Section.Disks) && <SwitchTabsByParams subsection={ subsection }/> }
 								{ subsection === Subsection.ByParams && <>
-									{ section === Section.Tires && <>
+									{ (section === Section.Tires || section === Section.Cargo || section === Section.Spectehnika || section === Section.Moto) && <>
 										{ renderSelect(
 											'width',
 											'width',
@@ -517,8 +500,8 @@ const FilterAlt: FC<Props> = ({ locale, filterData, section, slug, filters, filt
 										true,
 									) }
 								</> }
-								{ section === Section.Tires && <>
-									{ !appointmentCargoShow && !appointmentIndustrialShow && renderSelect(
+								{ (section === Section.Tires || section === Section.Moto) && <>
+									{renderSelect(
 										'sezon',
 										'season',
 										'white',
@@ -530,29 +513,31 @@ const FilterAlt: FC<Props> = ({ locale, filterData, section, slug, filters, filt
 										filter?.sezon,
 										false,
 										filter?.only_studded
-									) }
-									{ appointmentCargoShow && renderSelect(
-										'vehicle_type',
-										'appointment',
-										'white',
-										appointmentCargo.map(item => ({
-											value: item.value,
-											label: locale === Language.UK ? item.name_ua : item.name
-										})),
-										false,
-										filter?.vehicle_type,
-									) }
-									{ appointmentIndustrialShow && renderSelect(
-										'vehicle_type',
-										'appointment',
-										'white',
-										appointmentIndustrial.map(item => ({
-											value: item.value,
-											label: locale === Language.UK ? item.name_ua : item.name
-										})),
-										false,
-										filter?.vehicle_type,
-									) }
+									)}
+								</> }
+								{ section === Section.Cargo && renderSelect(
+									'vehicle_type',
+									'appointment',
+									'white',
+									appointmentCargo.map(item => ({
+										value: item.value,
+										label: locale === Language.UK ? item.name_ua : item.name
+									})),
+									false,
+									filter?.vehicle_type,
+								) }
+								{ section === Section.Spectehnika && renderSelect(
+									'vehicle_type',
+									'appointment',
+									'white',
+									appointmentIndustrial.map(item => ({
+										value: item.value,
+										label: locale === Language.UK ? item.name_ua : item.name
+									})),
+									false,
+									filter?.vehicle_type,
+								) }
+								{ (section === Section.Tires || section === Section.Moto || section === Section.Cargo || section === Section.Spectehnika) && <>
 									{ renderSelect(
 										'brand',
 										'brand',
@@ -607,7 +592,7 @@ const FilterAlt: FC<Props> = ({ locale, filterData, section, slug, filters, filt
 										true,
 									) }
 								</> }
-								{ section === Section.Tires && renderSelect(
+								{ (section === Section.Tires || section === Section.Moto || section === Section.Cargo || section === Section.Spectehnika) && renderSelect(
 									'country',
 									'country',
 									'white',
@@ -616,7 +601,7 @@ const FilterAlt: FC<Props> = ({ locale, filterData, section, slug, filters, filt
 									filter?.country,
 									true,
 								) }
-								{ section === Section.Tires && renderSelect(
+								{ (section === Section.Tires || section === Section.Moto || section === Section.Cargo || section === Section.Spectehnika) && renderSelect(
 									'year',
 									'year',
 									'gray',

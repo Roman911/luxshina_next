@@ -37,7 +37,6 @@ export default function Comparison() {
 	}
 
 	const onClick = (offerId: number, section: string) => {
-		console.log('click',offerId, section);
 		const cartStorage = getFromStorage('reducerCart');
 		const cart = [ ...cartStorage, { id: offerId, section, quantity: 1 }];
 		dispatch(addCart({ id: offerId, section, quantity: 1 }));

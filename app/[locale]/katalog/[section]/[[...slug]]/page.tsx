@@ -1,6 +1,5 @@
-import { redirect } from 'next/navigation';
 import LayoutWrapper from '@/components/Layout/LayoutWrapper';
-import { Language, LanguageCode } from '@/models/language';
+import { Language } from '@/models/language';
 import FilterAlt from '@/components/Catalog/FilterAlt';
 import { Section } from '@/models/filter';
 import ProductList from '@/components/ProductList';
@@ -13,10 +12,11 @@ import HeaderCatalog from '@/components/Catalog/HeaderCatalog';
 import Pagination from '@/components/Catalog/Pagination';
 import { getFilterData, getFilters, getFiltersAkum, getProducts } from '@/app/api/api';
 import type { Metadata } from 'next';
-import { DEFAULT_HEADERS } from '@/config/api';
 import { Season } from '@/lib/season';
 import { TypeTires } from '@/lib/typeTires';
 import { Brand } from '@/lib/brand';
+import { TypeDisks } from '@/lib/typeDisks';
+import { generateCatalogMetadata } from '@/utils/metadata';
 
 const pageItem = 12;
 const sort = {
@@ -28,22 +28,7 @@ const sort = {
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: Language, section: Section, slug: string[] }> }): Promise<Metadata> {
 	const { locale, section, slug } = await params;
-	const response = await fetch(`${ process.env.SERVER_URL }/api/getSeo`, {
-		method: 'POST',
-		headers: DEFAULT_HEADERS,
-		body: JSON.stringify({
-			url: `${process.env.NEXT_PUBLIC_ACCESS_ORIGIN}/${locale}/katalog/${section}/${slug?.join('/')}`,
-		})
-	}).then((res) => res.json());
-
-	if(response.redirect) {
-		redirect(response.redirect);
-	}
-
-	return {
-		title: response?.descriptions[locale === Language.UK ? LanguageCode.UA : Language.RU].title,
-		description: response?.descriptions[locale === Language.UK ? LanguageCode.UA : Language.RU].meta_description,
-	}
+	return generateCatalogMetadata({ locale, section, slug });
 }
 
 export default async function Catalog({ params }: { params: Promise<{ locale: Language, section: Section, slug: string[] }> }) {
@@ -56,9 +41,10 @@ export default async function Catalog({ params }: { params: Promise<{ locale: La
 	const paramsUrl = transformUrl({ section, slug });
 	const found = slug?.find(item => item.startsWith('order-'))?.split('-')[1] as keyof typeof sort;
 	const typeTires = TypeTires(section, slug);
+	const typeDisks = section === Section.Disks ? TypeDisks(slug) : null;
 	const season = section === Section.Tires ? Season(slug) : null;
 	const brand = Brand(section, slug, filters, filtersAkum);
-	const searchParams = `?${paramsUrl || ''}${typeTires || ''}${season || ''}${found && sort[found] ? sort[found] : ''}${brand ? '&brand=' + brand.value : ''}`;
+	const searchParams = `?${paramsUrl || ''}${typeTires || ''}${typeDisks || ''}${season || ''}${found && sort[found] ? sort[found] : ''}${brand ? '&brand=' + brand.value : ''}`;
 	const products = await getProducts(searchParams, page ? (page - 1) * pageItem : 0, pageItem);
 
 	return (

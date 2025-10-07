@@ -63,30 +63,28 @@ const Search = () => {
 					</Button> }
 					type='search'
 				/>
-			</form>
-			<div ref={ dropdownRef } className={ twMerge(
-				'absolute top-12 right-0 z-20 py-6 px-6 md:px-10 bg-zinc-700 text-white rounded-sm w-full lg:max-w-[460px]',
-				value.length < 2 && 'hidden'
-			) }>
-				<CloseButton handleClick={ handleClick }/>
-				<ul className='mb-8'>
-					<Spinner height='h-20' show={ !data }>
-						{ data?.result ? data.data.products?.map(item => {
-							return <li key={ item.group } className='my-3'>
-								<Link className='hover:underline' onClick={ handleClick } href={ `/${ item.page_url }` }>
-									{ item.full_name }
-								</Link>
-							</li>
-						}) : <p>{ t('no result by search') }</p> }
-					</Spinner>
-				</ul>
-				{ data?.result && <Link className='mx-auto' onClick={ handleClickAllProduct } href='/search'>
-					<Button className='mx-auto' color='primary' radius='full'>
+				<div ref={ dropdownRef } className={ twMerge(
+					'absolute top-12 right-0 z-20 py-6 px-6 md:px-10 bg-zinc-700 text-white rounded-sm w-full lg:max-w-[460px]',
+					value.length < 2 && 'hidden'
+				) }>
+					<CloseButton handleClick={ handleClick }/>
+					<ul className='mb-8'>
+						<Spinner height='h-20' show={ !data }>
+							{ data?.result ? data.data.products?.map(item => {
+								return <li key={ item.group } className='my-3'>
+									<Link className='hover:underline' onClick={ handleClick } href={ `/${ item.page_url }` }>
+										{ item.full_name }
+									</Link>
+								</li>
+							}) : <p>{ t('no result by search') }</p> }
+						</Spinner>
+					</ul>
+					{ data?.result && <Button type='submit' className='mx-auto' color='primary' radius='full'>
 						{ t('all search result') + ' ' }
 						({ data?.data.total_count })
-					</Button>
-				</Link> }
-			</div>
+					</Button> }
+				</div>
+			</form>
 		</div>
 	)
 };
