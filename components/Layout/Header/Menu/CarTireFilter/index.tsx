@@ -3,9 +3,10 @@ import { Link } from '@/i18n/routing';
 import TypeCarLinks from '@/components/UI/TypeCarLinks';
 import LinkComponent from '../LinkComponent';
 import Title from '../Title';
-import { brandsLinks, diameterLinks, seasonLinks } from './links';
+import { seasonLinks } from './links';
+import { IMenu } from '@/models/menu';
 
-const CarTireFilter = ({ onClick }: { onClick?: () => void }) => {
+const CarTireFilter = ({ onClick, menu }: { onClick?: () => void, menu: IMenu[] }) => {
 	const t = useTranslations('HeaderFilter');
 
 	return <>
@@ -25,24 +26,24 @@ const CarTireFilter = ({ onClick }: { onClick?: () => void }) => {
 		</div>
 		<div>
 			<Title title={ t('by car type') }/>
-			<TypeCarLinks section='header' onClick={ onClick } />
+			<TypeCarLinks section='header' />
 		</div>
 		<div className='mt-6 lg:mt-0'>
 			<Title title={ t('by brands') }/>
 			<div className='mt-6 mb-6 grid grid-cols-2 gap-y-4 gap-x-2'>
-				{ brandsLinks.map(item => {
+				{ menu[0].manufs?.map(item => {
 					return <LinkComponent
-						key={ item.label }
+						key={ item.manufacturer_id }
 						onClick={ onClick }
-						href={ item.href }
-						label={ item.label }
+						href={ item.alias }
+						label={ item.name }
 						border={ false }
 					/>
 				}) }
 			</div>
 			<Link
 				onClick={ onClick }
-				href='/catalog/tires'
+				href='/katalog/avtoshini'
 				className='text-primary font-bold uppercase hover:underline'
 			>
 				{ t('all brands') }
@@ -51,13 +52,13 @@ const CarTireFilter = ({ onClick }: { onClick?: () => void }) => {
 		<div className='mt-6 lg:mt-0'>
 			<Title title={ t('by diameter') }/>
 			<div className='mt-6 mb-6 grid grid-cols-3 md:grid-cols-4 gap-1.5 max-w-64 pr-2.5'>
-				{ diameterLinks.map(item => {
+				{ menu[0].radius.map(item => {
 					return <LinkComponent
-						key={ item.label }
+						key={ item.radius }
 						onClick={ onClick }
-						href={ item.href }
-						border={ item.border }
-						label={ item.label }
+						href={ item.alias }
+						border={ true }
+						label={ item.name }
 					/>
 				}) }
 			</div>

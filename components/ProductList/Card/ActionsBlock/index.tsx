@@ -20,7 +20,7 @@ const toggleStorageItem = (storageKey: string, id: number, section: string, isIn
 interface Props {
 	group: number
 	className: string
-	sectionNew: Section.Disks | 'cargo' | 'tires' | 'battery'
+	sectionNew: Section.Disks | 'cargo' | 'tires' | 'akumulyatori'
 }
 
 const ActionsBlock: FC<Props> = ({ group, className, sectionNew }) => {

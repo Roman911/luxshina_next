@@ -22,7 +22,7 @@ import CountryInfo from '@/components/UI/CountryInfo';
 import * as Icons from '@/components/UI/Icons';
 import { onAddToCart } from '@/event';
 
-const regex = /\/(auto-goods|services)/;
+const regex = /\/(auto-goods|poslugi)/;
 const cargo = [ '3', '4', '5', '6', '9', '10', '11' ];
 
 interface Props {

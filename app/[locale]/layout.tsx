@@ -7,6 +7,7 @@ import { getMessages } from 'next-intl/server';
 import StoreProvider from '@/app/StoreProvider';
 import Header from '@/components/Layout/Header';
 import Footer from '@/components/Layout/Footer';
+import { getAliasAll, getSettings, getMenu } from '@/app/api/api';
 import '../colors.css';
 import '../globals.css';
 import { Language } from '@/models/language';
@@ -33,26 +34,6 @@ const gilroy = localFont({
 	],
 });
 
-async function getSettings() {
-	const res = await fetch(`${process.env.SERVER_URL}/baseData/settings`, {
-		method: 'GET',
-		headers: {
-			'Access-Control-Allow-Credentials': 'true',
-		}
-	});
-	return await res.json();
-}
-
-async function getAlias() {
-	const res = await fetch(`${process.env.SERVER_URL}/baseData/StatiAlias`, {
-		method: 'GET',
-		headers: {
-			'Access-Control-Allow-Credentials': 'true',
-		}
-	});
-	return await res.json();
-}
-
 export default async function RootLayout(
 	{
 		children,
@@ -64,7 +45,8 @@ export default async function RootLayout(
 	const { locale } = await params;
 	const messages = await getMessages();
 	const response = await getSettings();
-	const alias = await getAlias();
+	const alias = await getAliasAll();
+	const menu = await getMenu();
 
 	return (
 		<html lang={ locale }>
@@ -76,7 +58,7 @@ export default async function RootLayout(
 		<body className={ twMerge('bg-[#F5F7FA]', gilroy.className) }>
 		<StoreProvider>
 			<NextIntlClientProvider messages={ messages }>
-				<Header settings={ response } alias={ alias } />
+				<Header settings={ response } alias={ alias } menu={menu} />
 				<main>
 					{ children }
 				</main>

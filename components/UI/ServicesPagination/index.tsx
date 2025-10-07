@@ -14,7 +14,7 @@ const ServicesPagination: FC<Props> = ({ initialPage, total }) => {
 	const router = useRouter();
 
 	const onchange = (page: number) => {
-		router.push(`/${locale}/services/p-${page}`)
+		router.push(`/${locale}/poslugi/p-${page}`)
 	}
 
 	return (

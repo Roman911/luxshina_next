@@ -9,48 +9,8 @@ import TextSeo from '@/components/UI/TextSeo';
 // import Carousel from '@/components/Home/Carousel';
 import OurAdvantages from '@/components/Home/OurAdvantages';
 import PopularSizesBlock from '@/components/Home/PopularSizesBlock';
-
-async function getSettings() {
-	const res = await fetch(`${ process.env.SERVER_URL }/baseData/settings`, {
-		method: 'GET',
-		headers: {
-			'Access-Control-Allow-Credentials': 'true',
-		}
-	});
-	return await res.json();
-}
-
-async function getProducts() {
-	const res = await fetch(`${ process.env.SERVER_URL }/api/getProducts?vehicle_type=1&order[value]=popular&order[asc]=0`, {
-		method: 'POST',
-		headers: {
-			'Access-Control-Allow-Credentials': 'true',
-			'content-type': 'application/json',
-		},
-		body: JSON.stringify({ start: 0, length: 8 }),
-	});
-	return await res.json();
-}
-
-async function getSliderData() {
-	const res = await fetch(`${ process.env.SERVER_URL }/api/banner`, {
-		method: 'GET',
-		headers: {
-			'Access-Control-Allow-Credentials': 'true',
-		}
-	});
-	return await res.json();
-}
-
-async function getFeatureParams() {
-	const res = await fetch(`${ process.env.SERVER_URL }/api/getFeatureParams`, {
-		method: 'GET',
-		headers: {
-			'Access-Control-Allow-Credentials': 'true',
-		}
-	});
-	return await res.json();
-}
+import { getFeatureParams, getProducts, getSettings } from '@/app/api/api';
+import { DEFAULT_HEADERS } from '@/config/api';
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: Language }> }): Promise<Metadata> {
 	const { locale } = await params;
@@ -68,8 +28,8 @@ export default async function Home({ params }: { params: Promise<{ locale: Langu
 	const locale = (await params).locale;
 	const lang = locale === Language.UK ? LanguageCode.UA : Language.RU;
 	const response = await getSettings();
-	const products = await getProducts();
-	const sliderData = await getSliderData();
+	const products = await getProducts('?vehicle_type=1&order[value]=popular&order[asc]=0', 0, 8);
+	// const sliderData = await getSliderData();
 	const featureParams = await getFeatureParams();
 
 	return (

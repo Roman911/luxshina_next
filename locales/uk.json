@@ -35,7 +35,7 @@
     "cargo": "Вантажні",
     "comparison": "Порівняння",
     "tires": "Шини",
-    "shyny": "Шини"
+    "avtoshini": "Шини"
   },
   "CreateComment": {
     "add comment": "Додати відгук",
@@ -63,7 +63,7 @@
   "Filters": {
     "all season": "Всесезонні",
     "appointment": "Призначення",
-    "battery": "Акумулятори",
+    "akumulyatori": "Акумулятори",
     "brand": "Бренд",
     "buses": "Буси",
     "buy": "Купити",
@@ -115,7 +115,7 @@
     "summer": "Літні",
     "suvs": "Позашляховики",
     "tires": "Шини",
-    "shyny": "Шини",
+    "avtoshini": "Шини",
     "to apply": "Застосувати",
     "type": "Тип",
     "type size": "Типорозмір",
@@ -130,8 +130,8 @@
   "Footer": {
     "accumulators": "Акумулятори",
     "all rights reserved": "Всі права захищені",
-    "auto goods": "Автотовари",
-    "battery": "Акумулятори",
+    "avtotovari": "Автотовари",
+    "akumulyatori": "Акумулятори",
     "brands": "Бренди",
     "cargo tires": "Вантажні шини",
     "cardiscs": "Автодиски",
@@ -144,7 +144,7 @@
     "motorcycle tires": "Мотошини",
     "tire calculator": "Шинний калькулятор",
     "tires": "Шини",
-    "shyny": "Шини"
+    "avtoshini": "Шини"
   },
   "HeaderFilter": {
     "add all": "Додати всі",
@@ -181,8 +181,8 @@
   },
   "Main": {
     "about us": "Про нас",
-    "auto goods": "Автотовари",
-    "battery": "Акумулятори",
+    "avtotovari": "Автотовари",
+    "akumulyatori": "Акумулятори",
     "brands": "Бренди",
     "by car": "За авто",
     "by parameters": "За параметрами",
@@ -203,11 +203,11 @@
     "motorcycle tires": "Мотошини",
     "placing an order": "Оформлення замовлення",
     "selection by car": "Підбір за авто",
-    "services": "Послуги",
+    "poslugi": "Послуги",
     "similar products": "Схожі товари",
     "tire calculator": "Шинний калькулятор",
     "tires": "Шини",
-    "shyny": "Шини",
+    "avtoshini": "Шини",
     "free": "Безкоштовний",
     "free in ukraine": "Безкоштовно по Україні",
     "show all": "Показати всі",

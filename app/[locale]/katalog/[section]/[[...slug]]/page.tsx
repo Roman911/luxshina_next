@@ -1,3 +1,4 @@
+import { redirect } from 'next/navigation';
 import LayoutWrapper from '@/components/Layout/LayoutWrapper';
 import { Language, LanguageCode } from '@/models/language';
 import FilterAlt from '@/components/Catalog/FilterAlt';
@@ -12,6 +13,7 @@ import HeaderCatalog from '@/components/Catalog/HeaderCatalog';
 import Pagination from '@/components/Catalog/Pagination';
 import { getFilterData, getProducts } from '@/app/api/api';
 import type { Metadata } from 'next';
+import { DEFAULT_HEADERS } from '@/config/api';
 
 const allowed = ['w','h','d','b','s','stud','m','ctr','y','hm','kr','td','clr','ct','sk','elt','tk','am','pl','vt','li','si','oc','xl','owl','rf','ofr','pfrom','pto','etfrom','etto','diafrom','diato','wfrom','wto','hfrom','hto','lngfrom','lngto','litni','zimovi','vsesezonnye','shipovani','legkovi','suv','bus','spectehnika','gruzovie','moto','p']
 const pageItem = 12;
@@ -42,14 +44,23 @@ async function getFiltersAkum() {
 	return await res.json();
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ locale: Language }> }): Promise<Metadata> {
-	const { locale } = await params;
-	const response = await fetch(`${process.env.SERVER_URL}/baseData/settings`)
-		.then((res) => res.json());
+export async function generateMetadata({ params }: { params: Promise<{ locale: Language, section: Section, slug: string[] }> }): Promise<Metadata> {
+	const { locale, section, slug } = await params;
+	const response = await fetch(`${ process.env.SERVER_URL }/api/getSeo`, {
+		method: 'POST',
+		headers: DEFAULT_HEADERS,
+		body: JSON.stringify({
+			url: `${process.env.NEXT_PUBLIC_ACCESS_ORIGIN}/${locale}/katalog/${section}/${slug?.join('/')}`,
+		})
+	}).then((res) => res.json());
+
+	if(response.redirect) {
+		redirect(response.redirect);
+	}
 
 	return {
-		title: response[locale === Language.UK ? LanguageCode.UA : Language.RU].meta_title,
-		description: response[locale === Language.UK ? LanguageCode.UA : Language.RU].meta_description,
+		title: response?.descriptions[locale === Language.UK ? LanguageCode.UA : Language.RU].title,
+		description: response?.descriptions[locale === Language.UK ? LanguageCode.UA : Language.RU].meta_description,
 	}
 }
 
@@ -96,8 +107,6 @@ export default async function Catalog({ params }: { params: Promise<{ locale: La
 	const brand = result?.length ? brands?.find((item: { alias: string; }) => item.alias === result[0]) : null;
 	const searchParams = `?${paramsUrl || ''}${typeTires || ''}${season || ''}${found && sort[found] ? sort[found] : ''}${brand ? '&brand=' + brand.value : ''}`;
 	const products = await getProducts(searchParams, page ? (page - 1) * pageItem : 0, pageItem);
-
-	console.log(filtersAkum)
 
 	return (
 		<LayoutWrapper>

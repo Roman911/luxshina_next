@@ -1,18 +1,25 @@
 'use client';
-import { useState } from 'react';
-import { useTranslations } from 'next-intl';
+import { FC, useState } from 'react';
+import { useTranslations, useLocale } from 'next-intl';
 import { twMerge } from 'tailwind-merge';
 import { Link } from '@/i18n/routing';
 import CarTireFilter from './CarTireFilter';
 import CarDiskFilter from './CarDiskFilter';
 import * as Icons from '@/components/UI/Icons';
 import { Button } from '@heroui/react';
-import { links } from '../links';
 import { Section } from '@/models/section';
+import { IMenu } from '@/models/menu';
+import { Language, LanguageCode } from '@/models/language';
 
-const Navbar = () => {
+interface Props {
+	menu: IMenu[]
+}
+
+const Navbar: FC<Props> = ({ menu }) => {
+	const locale = useLocale();
 	const [reset, setReset] = useState(false);
 	const t = useTranslations('Main');
+	const lang = locale === Language.UK ? LanguageCode.UA : Language.RU;
 
 	const handleClick = () => {
 		setReset(true);
@@ -40,7 +47,7 @@ const Navbar = () => {
 				className={ twMerge('absolute container left-1/2 top-16 z-30 w-full -translate-x-1/2 px-4 hidden group group-hover:flex', reset && 'hidden') }>
 				<div
 					className='w-full flex-auto overflow-hidden bg-white shadow-lg ring-1 ring-gray-900/5 py-8 px-12 grid grid-cols-4'>
-					{ sectionItem === Section.Tires ? <CarTireFilter onClick={ handleClick } /> : <CarDiskFilter onClick={ handleClick } /> }
+					{ sectionItem === Section.Tires ? <CarTireFilter onClick={ handleClick } menu={ menu } /> : <CarDiskFilter onClick={ handleClick } menu={ menu } /> }
 				</div>
 			</div>
 		</div>
@@ -49,14 +56,14 @@ const Navbar = () => {
 	return (
 		<div className='bg-white hidden lg:block relative'>
 			<nav className='container mx-auto max-w-7xl flex justify-between items-center uppercase font-bold gap-8 px-5'>
-				{[{ section: 'shyny', label: t('cartires') }, { section: 'diski', label: t('cardiscs') }]
+				{[{ section: 'avtoshini', label: t('cartires') }, { section: 'diski', label: t('cardiscs') }]
 					.map((item, i) => {
 						return <ButtonMeu key={ i } sectionItem={ item.section } label={ item.label } />
 					})}
-				{ links.map((item, index) => {
-					return <Link key={ index } href={ item.url }
+				{ menu.slice(2).map((item, index) => {
+					return <Link key={ index } href={ item.alias }
 											 className='hover:text-primary'>
-						{ t(item.title) }
+						{ item.descriptions[lang].title }
 					</Link>
 				}) }
 			</nav>

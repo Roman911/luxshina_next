@@ -113,3 +113,26 @@ export async function getAlias(id: string): Promise<Pages> {
 
 	return await res.json();
 }
+
+export async function getMenu() {
+	const res = await fetch(`${ API_URL }${ baseEndpoints.menu }`, {
+		method: API_CONSTANTS.METHODS.GET,
+		headers: DEFAULT_HEADERS
+	});
+
+	if (!res.ok) throw new Error('Failed to fetch products');
+
+	return await res.json();
+}
+
+export async function getSeo(url: string | false, brand_id: string | false, model_id: string | false, category_id: string | false, product_id: string | false) {
+	const res = await fetch(`${ API_URL }${ baseEndpoints.seo }`, {
+		method: API_CONSTANTS.METHODS.POST,
+		headers: DEFAULT_HEADERS,
+		body: JSON.stringify({ url, brand_id, model_id, category_id, product_id }),
+	});
+
+	if (!res.ok) throw new Error('Failed to fetch products');
+
+	return await res.json();
+}

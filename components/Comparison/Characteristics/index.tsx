@@ -17,7 +17,7 @@ interface Item {
 }
 
 interface CharacteristicsProps {
-	name: 'tires' | 'cargo' | 'disks' | 'battery'
+	name: 'tires' | 'cargo' | 'disks' | 'akumulyatori'
 	item: Product
 }
 

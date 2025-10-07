@@ -65,7 +65,7 @@ const ComparisonComponent: FC<ComparisonProps> = (
 			{ tires.length > 0 && tabRender('tires', tires.length) }
 			{ cargo.length > 0 && tabRender('cargo', cargo.length) }
 			{ disks.length > 0 && tabRender('disks', disks.length) }
-			{ battery.length > 0 && tabRender('battery', battery.length) }
+			{ battery.length > 0 && tabRender('akumulyatori', battery.length) }
 		</div>
 		<div className='flex relative'>
 			<div className='w-28 md:w-60 px-2'>
@@ -77,7 +77,7 @@ const ComparisonComponent: FC<ComparisonProps> = (
 					{ tab === 'tires' && paramsRender(tiresParams) }
 					{ tab === 'cargo' && paramsRender(tiresParams) }
 					{ tab === 'disks' && paramsRender(disksParams) }
-					{ tab === 'battery' && paramsRender(batteryParams) }
+					{ tab === 'akumulyatori' && paramsRender(batteryParams) }
 				</div>
 			</div>
 			<div className='flex-1 w-[calc(100%-15rem)]'>
@@ -88,8 +88,8 @@ const ComparisonComponent: FC<ComparisonProps> = (
 																						handleClickAction={ handleClick }/> }
 					{ tab === 'disks' && <ItemWrapper characteristics={ disks } name={ 'disks' } tab={ tab } onClickAction={ onClick }
 																						handleClickAction={ handleClick }/> }
-					{ tab === 'battery' &&
-						<ItemWrapper characteristics={ battery } name={ 'battery' } tab={ tab } onClickAction={ onClick }
+					{ tab === 'akumulyatori' &&
+						<ItemWrapper characteristics={ battery } name={ 'akumulyatori' } tab={ tab } onClickAction={ onClick }
 												 handleClickAction={ handleClick }/> }
 				</div>
 			</div>

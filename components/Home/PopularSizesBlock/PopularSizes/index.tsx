@@ -23,7 +23,7 @@ const PopularSizes: FC<PopularSizesProps> = ({ data }) => {
 				return <div key={i} className='flex flex-col gap-4'>
 					<div className='text-center text-lg font-bold'>R{i}</div>
 					{diameters.map((item) => (
-						<Link key={ item.tiporazmer_id } href={ `/katalog/shyny/w-${item.width}/h-${item.height}/d-${item.radius}` } >
+						<Link key={ item.tiporazmer_id } href={ `/katalog/avtoshini/w-${item.width}/h-${item.height}/d-${item.radius}` } >
 							<Button onPress={() => dispatch(setProgress(true))} color='primary' radius='full' variant='bordered' size='lg' className='text-black font-semibold'>
 								{`${item.width}/${item.height} R${i}`}
 							</Button>

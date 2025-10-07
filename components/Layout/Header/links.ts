@@ -1,22 +1,22 @@
 export const links = [
 	{
 		title: 'cargo tires',
-		url: '/katalog/shyny/gruzovie',
+		url: '/katalog/avtoshini/gruzovie',
 	},
 	{
 		title: 'motorcycle tires',
-		url: '/katalog/shyny/moto',
+		url: '/katalog/avtoshini/moto',
 	},
 	{
-		title: 'battery',
-		url: '/katalog/battery',
+		title: 'akumulyatori',
+		url: '/katalog/akumulyatori',
 	},
 	{
-		title: 'auto goods',
+		title: 'avtotovari',
 		url: '/auto-goods',
 	},
 	{
-		title: 'services',
-		url: '/services',
+		title: 'poslugi',
+		url: '/poslugi',
 	},
 ];

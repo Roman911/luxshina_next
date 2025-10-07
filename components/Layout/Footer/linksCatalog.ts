@@ -1,6 +1,6 @@
 export const linksCatalog = [
 	{
-		link: '/katalog/shyny',
+		link: '/katalog/avtoshini',
 		title: 'cartires',
 	},
 	{
@@ -12,19 +12,19 @@ export const linksCatalog = [
 		title: 'diski',
 	},
 	{
-		link: '/katalog/shyny/vt-3',
+		link: '/katalog/avtoshini/vt-3',
 		title: 'cargo tires',
 	},
 	{
-		link: '/katalog/shyny/vt-7',
+		link: '/katalog/avtoshini/vt-7',
 		title: 'motorcycle tires',
 	},
 	{
-		link: '/katalog/battery',
+		link: '/katalog/akumulyatori',
 		title: 'accumulators',
 	},
 	{
-		link: '/auto-goods',
-		title: 'auto goods',
+		link: '/avtotovari',
+		title: 'avtotovari',
 	},
 ]

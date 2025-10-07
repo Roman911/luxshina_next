@@ -50,7 +50,7 @@ export default function Comparison() {
 			<Title title={ t('comparison') } />
 			{comparisonItems.length > 0 ? <Spinner height='h-40' show={ isLoading } >
 				<ComparisonComponent
-					defaultTab={ tires.length > 0 ? 'shyny' : cargo.length > 0 ? 'cargo' : disks.length > 0 ? 'diski' : 'battery' }
+					defaultTab={ tires.length > 0 ? 'avtoshini' : cargo.length > 0 ? 'cargo' : disks.length > 0 ? 'diski' : 'akumulyatori' }
 					tires={ tires }
 					cargo={ cargo }
 					disks={ disks }

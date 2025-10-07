@@ -15,10 +15,10 @@ interface TabProps {
 }
 
 const icons = {
-	shyny: Icons.TireIcon,
+	avtoshini: Icons.TireIcon,
 	diski: Icons.DiskIcon,
 	car: Icons.CarFilterIcon,
-	battery: Icons.CarFilterIcon,
+	akumulyatori: Icons.CarFilterIcon,
 	autoGoods: Icons.CarFilterIcon,
 	services: Icons.CarFilterIcon,
 };

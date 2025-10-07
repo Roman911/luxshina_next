@@ -44,7 +44,7 @@ const CharacteristicsBlock: FC<CharacteristicsBlockProps> = ({ locale, data }) =
 		} else if(section === 'disks') {
 			return `/katalog/disks${ to }`
 		} else {
-			return `/katalog/battery${ to }`
+			return `/katalog/akumulyatori${ to }`
 		}
 	};
 

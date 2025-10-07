@@ -16,53 +16,6 @@ export const typeDiskLinks = [
 	},
 ];
 
-export const brandsLinks = [
-	{
-		label: 'Alutec',
-		href: '/katalog/diski/b-476',
-	},
-	{
-		label: 'Angel',
-		href: '/katalog/diski/b-476',
-	},
-	{
-		label: 'Allante',
-		href: '/katalog/diski/b-476',
-	},
-	{
-		label: 'Disla',
-		href: '/katalog/diski/b-476',
-	},
-	{
-		label: 'GT',
-		href: '/katalog/diski/b-476',
-	},
-	{
-		label: 'JH',
-		href: '/katalog/diski/b-476',
-	},
-	{
-		label: 'JT',
-		href: '/katalog/diski/b-476',
-	},
-	{
-		label: 'Kosei',
-		href: '/katalog/diski/b-476',
-	},
-	{
-		label: 'Marcello',
-		href: '/katalog/diski/b-476',
-	},
-	{
-		label: 'Rial',
-		href: '/katalog/diski/b-476',
-	},
-	{
-		label: 'Ronal',
-		href: '/katalog/diski/b-476',
-	},
-];
-
 export const carBrandsLinks = [
 	{
 		label: 'Audi',
@@ -123,68 +76,5 @@ export const carBrandsLinks = [
 		label: 'Mitsubishi',
 		href: '/katalog/diski',
 		brand: 89,
-	},
-];
-
-export const diameterLinks = [
-	{
-		label: 'R16',
-		href: '/katalog/diski/d-16',
-		border: true
-	},
-	{
-		label: 'R17',
-		href: '/katalog/diski/d-17',
-		border: true
-	},
-	{
-		label: 'R18',
-		href: '/katalog/diski/d-18',
-		border: true
-	},
-	{
-		label: 'R19',
-		href: '/katalog/diski/d-19',
-		border: true
-	},
-	{
-		label: 'R20',
-		href: '/katalog/diski/d-20',
-		border: true
-	},
-	{
-		label: 'R21',
-		href: '/katalog/diski/d-21',
-		border: true
-	},
-	{
-		label: 'R22',
-		href: '/katalog/diski/d-22',
-		border: true
-	},
-	{
-		label: 'R23',
-		href: '/katalog/diski/d-23',
-		border: true
-	},
-	{
-		label: 'R24',
-		href: '/katalog/diski/d-24',
-		border: true
-	},
-	{
-		label: 'R17.5',
-		href: '/katalog/diski/d-17,5',
-		border: true
-	},
-	{
-		label: 'R19.5',
-		href: '/katalog/diski/d-19,5',
-		border: true
-	},
-	{
-		label: 'R22.5',
-		href: '/katalog/diski/d-22,5',
-		border: true
 	},
 ];

@@ -35,7 +35,7 @@
     "cargo": "Грузовые",
     "comparison": "Сравнение",
     "tires": "Шины",
-    "shyny": "Шины"
+    "avtoshini": "Шины"
   },
   "CreateComment": {
     "add comment": "Добавить отзыв",
@@ -63,7 +63,7 @@
   "Filters": {
     "all season": "Всесезонные",
     "appointment": "Назначение",
-    "battery": "Аккумуляторы",
+    "akumulyatori": "Аккумуляторы",
     "brand": "Бренд",
     "buses": "Бусы",
     "buy": "Купить",
@@ -114,7 +114,7 @@
     "summer": "Летние",
     "suvs": "Внедорожники",
     "tires": "Шины",
-    "shyny": "Шины",
+    "avtoshini": "Шины",
     "to apply": "Применить",
     "type": "Тип",
     "type size": "Типоразмер",
@@ -129,8 +129,8 @@
   "Footer": {
     "accumulators": "Аккумуляторы",
     "all rights reserved": "Все права защищены",
-    "auto goods": "Автотовары",
-    "battery": "Аккумуляторы",
+    "avtotovari": "Автотовары",
+    "akumulyatori": "Аккумуляторы",
     "brands": "Бренды",
     "cargo tires": "Грузовые шины",
     "cardiscs": "Автодиски",
@@ -143,7 +143,7 @@
     "motorcycle tires": "Мотошины",
     "tire calculator": "Шинный калькулятор",
     "tires": "Шины",
-    "shyny": "Шины"
+    "avtoshini": "Шины"
   },
   "HeaderFilter": {
     "add all": "Добавить все",
@@ -180,8 +180,8 @@
   },
   "Main": {
     "about us": "О нас",
-    "auto goods": "Автотовары",
-    "battery": "Аккумуляторы",
+    "avtotovari": "Автотовары",
+    "akumulyatori": "Аккумуляторы",
     "brands": "Бренды",
     "by car": "По авто",
     "by parameters": "По параметрам",
@@ -202,11 +202,11 @@
     "motorcycle tires": "Мотошины",
     "placing an order": "Оформление заказа",
     "selection by car": "Подбор за авто",
-    "services": "Услуги",
+    "poslugi": "Услуги",
     "similar products": "Недавно просмотрены",
     "tire calculator": "Шинный калькулятор",
     "tires": "Шины",
-    "shyny": "Шины",
+    "avtoshini": "Шины",
     "free": "Бесплатный",
     "free in ukraine": "Бесплатно по Украине",
     "show all": "Показать все",

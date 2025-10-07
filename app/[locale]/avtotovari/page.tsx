@@ -33,7 +33,7 @@ export default async function AutoGoods() {
 
 	const path = [
 		{
-			title: 'auto goods',
+			title: 'avtotovari',
 			href: '/',
 			translations: true
 		}
@@ -42,7 +42,7 @@ export default async function AutoGoods() {
 	return (
 		<LayoutWrapper>
 			<Breadcrumbs path={ path } />
-			<Title isMain={ true } title='auto goods' translations={ true } className='mt-3 text-lg font-medium px-0 md:px-3 mb-3 md:mb-1' />
+			<Title isMain={ true } title='avtotovari' translations={ true } className='mt-3 text-lg font-medium px-0 md:px-3 mb-3 md:mb-1' />
 			{ products.result ? <ProductList
 				classnames='grid-cols-1 sm:grid-cols-2 md:grid-cols-4'
 				data={ products.data }

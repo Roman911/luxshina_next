@@ -1,8 +1,10 @@
 export enum Section {
-	Battery = 'battery',
-	Tires = 'shyny',
+	Battery = 'akumulyatori',
+	Tires = 'avtoshini',
 	Disks = 'diski',
 	Car = 'car',
+	Cargo = 'vantazhni',
+	Moto = 'motoshini',
 }
 
 export enum Subsection {

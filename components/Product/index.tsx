@@ -3,7 +3,7 @@ import { Link } from '@/i18n/routing';
 import { FC, useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Button } from '@heroui/react';
-// import ImagesBlock from './ImagesBlock';
+import ImagesBlock from './ImagesBlock';
 import { useAppDispatch, useAppSelector } from '@/hooks/redux';
 import { changeSection } from '@/store/slices/filterSlice';
 import { Language } from '@/models/language';
@@ -39,7 +39,7 @@ const ProductComponent: FC<Props> = ({ idProduct, locale, data, section, setting
 	const [ quantity, setQuantity ] = useState(1);
 	const { cartItems } = useAppSelector(state => state.cartReducer);
 	const t = useTranslations('Main');
-	const { id = 0, full_name = '', offers = [], min_price = 0, model, offer_group } = data?.data || {};
+	const { id = 0, full_name = '', offers = [], min_price = 0, model, offer_group, labels, photo } = data?.data || {};
 	const offer = offers.find(item => item.offer_id === offerId);
 	const review = data?.data.review;
 	const commentsAvgRateSum = review && review.length > 0
@@ -99,15 +99,15 @@ const ProductComponent: FC<Props> = ({ idProduct, locale, data, section, setting
 			<div className='max-w-[900px] flex-1 pr-3 xl:pr-5'>
 				{ data.result &&
 					<div className='flex flex-col md:flex-row items-center md:items-start md:border-b border-gray-200'>
-						{/*<ImagesBlock*/}
-						{/*	labels={ labels }*/}
-						{/*	locale={ locale }*/}
-						{/*	images={ data.data.photos.urls || [] }*/}
-						{/*	photo={ photo }*/}
-						{/*	full_name={ full_name }*/}
-						{/*	vehicle_type={ data.data.offer_group.vehicle_type }*/}
-						{/*	season={ model.season }*/}
-						{/*/>*/}
+						<ImagesBlock
+							labels={ labels }
+							locale={ locale }
+							images={ data.data.photos.urls || [] }
+							photo={ photo }
+							full_name={ full_name }
+							vehicle_type={ data.data.offer_group.vehicle_type }
+							season={ model.season }
+						/>
 						<ActionsBlock className='flex md:hidden' id={ id } section={ section } quantity={ quantity } productName={ full_name } />
 						<div className='flex-1 md:ml-6 xl:ml-10'>
 							<h1 className='text-2xl font-bold mt-8 md:mt-0'>{ full_name }</h1>

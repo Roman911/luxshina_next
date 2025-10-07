@@ -2,9 +2,10 @@ import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/routing';
 import LinkComponent from '../LinkComponent';
 import Title from '../Title';
-import { brandsLinks, carBrandsLinks, diameterLinks, typeDiskLinks } from './links';
+import { carBrandsLinks, typeDiskLinks } from './links';
+import { IMenu } from '@/models/menu';
 
-const CarDiskFilter = ({ onClick }: { onClick?: () => void }) => {
+const CarDiskFilter = ({ onClick, menu }: { onClick?: () => void, menu: IMenu[] }) => {
 	const t = useTranslations('HeaderFilter');
 
 	return <>
@@ -24,19 +25,19 @@ const CarDiskFilter = ({ onClick }: { onClick?: () => void }) => {
 		<div>
 			<Title title={ t('by brands') }/>
 			<div className='mt-6 mb-6 grid grid-cols-2 gap-y-4 gap-x-2'>
-				{ brandsLinks.map(item => {
+				{ menu[1].manufs?.map(item => {
 					return <LinkComponent
-						key={ item.label }
+						key={ item.manufacturer_id }
 						onClick={ onClick }
-						href={ item.href }
-						label={ item.label }
+						href={ item.alias }
+						label={ item.name }
 						border={ false }
 					/>
 				}) }
 			</div>
 			<Link
 				onClick={ onClick }
-				href='/catalog/diski'
+				href='/katalog/diski'
 				className='text-primary font-bold hover:underline'
 			>
 				{ t('all brands') }
@@ -57,7 +58,7 @@ const CarDiskFilter = ({ onClick }: { onClick?: () => void }) => {
 			</div>
 			<Link
 				onClick={ onClick }
-				href='/catalog/diski'
+				href='/katalog/diski'
 				className='text-primary font-bold hover:underline'
 			>
 				{ t('all car brands') }
@@ -67,13 +68,13 @@ const CarDiskFilter = ({ onClick }: { onClick?: () => void }) => {
 			<div>
 				<Title title={ t('by diameter') }/>
 				<div className='mt-6 mb-6 grid grid-cols-3 md:grid-cols-4 gap-1.5 max-w-64 pr-2.5'>
-					{ diameterLinks.map(item => {
+					{ menu[1].radius.map(item => {
 						return <LinkComponent
-							key={ item.label }
+							key={ item.radius }
 							onClick={ onClick }
-							href={ item.href }
-							border={ item.border }
-							label={ item.label }
+							href={ item.alias }
+							border={ true }
+							label={ item.name }
 						/>
 					}) }
 				</div>

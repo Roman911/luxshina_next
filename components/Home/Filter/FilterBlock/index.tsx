@@ -19,7 +19,7 @@ const FilterBlock: FC<Props> = ({ children, isBattery }) => {
 		<div className={ twMerge('flex-1 py-8 px-6 rounded-2xl bg-violet-500 text-white', isBattery && 'bg-primary') }>
 			<div className='flex justify-between'>
 				{ isBattery ?
-					<div className='text-2xl uppercase font-bold'>{ t('battery') }</div> :
+					<div className='text-2xl uppercase font-bold'>{ t('akumulyatori') }</div> :
 					<div>
 						<Button
 							size='lg'

@@ -1,13 +1,13 @@
 export const typeCatLinks = [
 	{
 		label: 'light',
-		href: '/katalog/shyny/legkovi', // 'vehicle_type=1,2
+		href: '/katalog/avtoshini/legkovi', // 'vehicle_type=1,2
 		icon: 'light',
 		vehicleType: ['1'],
 	},
 	{
 		label: 'suvs',
-		href: '/katalog/shyny/suv',
+		href: '/katalog/avtoshini/suv',
 		icon: 'suv',
 		iconStyles: 'stroke-gray-500 group-hover/item:stroke-primary',
 		iconStylesActive: 'stroke-primary',
@@ -15,25 +15,25 @@ export const typeCatLinks = [
 	},
 	{
 		label: 'buses',
-		href: '/katalog/shyny/bus',
+		href: '/katalog/avtoshini/bus',
 		icon: 'bus',
 		vehicleType: ['8'],
 	},
 	{
 		label: 'cargo',
-		href: '/katalog/shyny/gruzovie', // vehicle_type=3,4,5,6
+		href: '/katalog/avtoshini/gruzovie', // vehicle_type=3,4,5,6
 		icon: 'cargo',
 		vehicleType: ['3','4','5','6'],
 	},
 	{
 		label: 'special equipment',
-		href: '/katalog/shyny/spectehnika', //vehicle_type=9,10,11
+		href: '/katalog/avtoshini/spectehnika', //vehicle_type=9,10,11
 		icon: 'special',
 		vehicleType: ['9','10','11'],
 	},
 	{
 		label: 'motorcycles',
-		href: '/katalog/shyny/moto',
+		href: '/katalog/avtoshini/moto',
 		icon: 'motorcycle',
 		vehicleType: ['7'],
 	},
