@@ -31,6 +31,9 @@ export const transformUrl = (
 		[Section.Disks]: 'typeproduct=3&',
 		[Section.Tires]: (filter.vehicle_type && special.includes(filter.vehicle_type)) ? 'typeproduct=2&' : '',
 		[Section.Car]: '',
+		[Section.Cargo]: (filter.vehicle_type && special.includes(filter.vehicle_type)) ? 'typeproduct=2&' : '',
+		[Section.Spectehnika]: (filter.vehicle_type && special.includes(filter.vehicle_type)) ? 'typeproduct=2&' : '',
+		[Section.Moto]: (filter.vehicle_type && special.includes(filter.vehicle_type)) ? 'typeproduct=2&' : '',
 	};
 
 	return `${sectionTypeMap[section] || ''}${params.join('&')}`;

@@ -89,7 +89,7 @@ const ComparisonComponent: FC<ComparisonProps> = (
 					{ tab === 'disks' && <ItemWrapper characteristics={ disks } name={ 'disks' } tab={ tab } onClickAction={ onClick }
 																						handleClickAction={ handleClick }/> }
 					{ tab === 'akumulyatori' &&
-						<ItemWrapper characteristics={ battery } name={ 'akumulyatori' } tab={ tab } onClickAction={ onClick }
+						<ItemWrapper characteristics={ battery } name={ 'battery' } tab={ tab } onClickAction={ onClick }
 												 handleClickAction={ handleClick }/> }
 				</div>
 			</div>

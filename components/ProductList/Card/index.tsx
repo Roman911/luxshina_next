@@ -1,10 +1,9 @@
 'use client';
-import { useRouter, usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { FC, useMemo } from 'react';
 import Image from 'next/image';
 import { useLocale, useTranslations } from 'next-intl';
-import { Button } from '@heroui/react';
-import { Card, CardBody, CardFooter } from '@heroui/react';
+import { Button, Card, CardBody, CardFooter } from '@heroui/react';
 import { Link } from '@/i18n/routing';
 import { useAppDispatch } from '@/hooks/redux';
 import { addCart } from '@/store/slices/cartSlice';
@@ -38,7 +37,7 @@ const ProductCard: FC<Props> = ({ item }) => {
 	const { default_photo, full_name, sku, min_price, season, vehicle_type, page_url, best_offer, group } = item;
 	const cartStorage = useMemo(() => getFromStorage('reducerCart'), []);
 	const section = item.vehicle_type ? Section.Tires : item.diameter ? Section.Disks : Section.Battery;
-	const sectionNew = section === Section.Tires ? cargo.includes(item.vehicle_type) ? 'cargo' : 'tires' : section;
+	const sectionNew = section === Section.Tires ? cargo.includes(item.vehicle_type) ? Section.Cargo : Section.Tires : section;
 	const countryCode = countryCodeTransform(best_offer.country);
 	const hasMatch = regex.test(pathname);
 	const url = hasMatch ? `#` : `/${page_url}`;
