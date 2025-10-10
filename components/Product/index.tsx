@@ -63,7 +63,7 @@ const ProductComponent: FC<Props> = ({ idProduct, locale, data, section, setting
 
 	useEffect(() => {
 		if(data) {
-			if(section === 'diski') {
+			if(section === Section.Disks) {
 				dispatch(changeSection(Section.Disks));
 			}
 		}

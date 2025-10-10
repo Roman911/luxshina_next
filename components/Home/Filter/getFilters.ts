@@ -43,7 +43,7 @@ export const getFilters = ({ locale, section, data }: Props) => {
 			label: 'brand',
 			name: 'brand',
 			focusValue: '',
-			options: data?.brand?.map(item => ({ value: item.value, label: item.label }))
+			options: data?.brand?.map(item => ({ value: item.alias, label: item.label }))
 		});
 
 		filterConfigs.push({
@@ -64,7 +64,7 @@ export const getFilters = ({ locale, section, data }: Props) => {
 			label: 'brand',
 			name: 'brand',
 			focusValue: '',
-			options: data?.brand_disc?.map(item => ({ value: item.value, label: item.label }))
+			options: data?.brand_disc?.map(item => ({ value: item.alias, label: item.label }))
 		});
 
 		filterConfigs.push({

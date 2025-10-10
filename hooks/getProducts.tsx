@@ -13,10 +13,10 @@ interface ProductItem {
 	quantity?: number;
 }
 
-type GroupedIds = { tires: number[]; cargo: number[]; disks: number[]; battery: number[]; autoGoods: number[]; services: number[] };
+type GroupedIds = { avtoshini: number[]; vantazhni: number[]; diski: number[]; akumulyatori: number[]; autoGoods: number[]; services: number[] };
 type GroupedItems = { tiresItems: Product[]; cargoItems: Product[]; disksItems: Product[]; batteryItems: Product[]; autoGoodsItems: Product[]; servicesItems: Product[] };
 
-const emptyIds: GroupedIds = { tires: [], cargo: [], disks: [], battery: [], autoGoods: [], services: [] };
+const emptyIds: GroupedIds = { avtoshini: [], vantazhni: [], diski: [], akumulyatori: [], autoGoods: [], services: [] };
 
 export const useAppGetProducts = (
 	products: ProductItem[] = [],
@@ -38,7 +38,7 @@ export const useAppGetProducts = (
 
 	// Group products by section
 	useEffect(() => {
-		const grouped: GroupedIds = { tires: [], cargo: [], disks: [], battery: [], autoGoods: [], services: [] };
+		const grouped: GroupedIds = { avtoshini: [], vantazhni: [], diski: [], akumulyatori: [], autoGoods: [], services: [] };
 		products.forEach(({ id, section }) => {
 			if (grouped[section as keyof GroupedIds]) {
 				grouped[section as keyof GroupedIds].push(id);
@@ -49,24 +49,24 @@ export const useAppGetProducts = (
 
 	// Query definitions
 	const { data: dataTires, isLoading: tiresIsLoading } = baseDataAPI.useFetchProductsQuery({
-		id: `${byOffer ? '?Offer_id' : '?product_ids'}=${groupedIds.tires.join(',')}`,
-		length: groupedIds.tires.length || 1,
-	}, { skip: groupedIds.tires.length === 0 });
+		id: `${byOffer ? '?Offer_id' : '?product_ids'}=${groupedIds.avtoshini.join(',')}`,
+		length: groupedIds.avtoshini.length || 1,
+	}, { skip: groupedIds.avtoshini.length === 0 });
 
 	const { data: dataCargo, isLoading: cargoIsLoading } = baseDataAPI.useFetchProductsQuery({
-		id: `${byOffer ? '?typeproduct=2&Offer_id' : '?typeproduct=2&product_ids'}=${groupedIds.cargo.join(',')}`,
-		length: groupedIds.cargo.length || 1,
-	}, { skip: groupedIds.cargo.length === 0 });
+		id: `${byOffer ? '?typeproduct=2&Offer_id' : '?typeproduct=2&product_ids'}=${groupedIds.vantazhni.join(',')}`,
+		length: groupedIds.vantazhni.length || 1,
+	}, { skip: groupedIds.vantazhni.length === 0 });
 
 	const { data: dataDisks, isLoading: disksIsLoading } = baseDataAPI.useFetchProductsQuery({
-		id: `${byOffer ? '?typeproduct=3&Offer_id' : '?typeproduct=3&product_ids'}=${groupedIds.disks.join(',')}`,
-		length: groupedIds.disks.length || 1,
-	}, { skip: groupedIds.disks.length === 0 });
+		id: `${byOffer ? '?typeproduct=3&Offer_id' : '?typeproduct=3&product_ids'}=${groupedIds.diski.join(',')}`,
+		length: groupedIds.diski.length || 1,
+	}, { skip: groupedIds.diski.length === 0 });
 
 	const { data: dataBattery, isLoading: batteryIsLoading } = baseDataAPI.useFetchProductsQuery({
-		id: `${byOffer ? '?typeproduct=4&Offer_id' : '?typeproduct=4&product_ids'}=${groupedIds.battery.join(',')}`,
-		length: groupedIds.battery.length || 1,
-	}, { skip: groupedIds.battery.length === 0 });
+		id: `${byOffer ? '?typeproduct=4&Offer_id' : '?typeproduct=4&product_ids'}=${groupedIds.akumulyatori.join(',')}`,
+		length: groupedIds.akumulyatori.length || 1,
+	}, { skip: groupedIds.akumulyatori.length === 0 });
 
 	const { data: dataAutoGoods, isLoading: autoGoodsIsLoading } = baseDataAPI.useFetchProductsQuery({
 		id: `${byOffer ? '?typeproduct=5&categories=7&Offer_id' : '?typeproduct=5&categories=7&Offer_id'}=${groupedIds.autoGoods.join(',')}`,
@@ -98,22 +98,22 @@ export const useAppGetProducts = (
 
 	// Sync fetched items and cleanup
 	useEffect(() => {
-		cleanInvalidProducts(dataTires?.data?.products, groupedIds.tires);
-		cleanInvalidProducts(dataCargo?.data?.products, groupedIds.cargo);
-		cleanInvalidProducts(dataDisks?.data?.products, groupedIds.disks);
-		cleanInvalidProducts(dataBattery?.data?.products, groupedIds.battery);
+		cleanInvalidProducts(dataTires?.data?.products, groupedIds.avtoshini);
+		cleanInvalidProducts(dataCargo?.data?.products, groupedIds.vantazhni);
+		cleanInvalidProducts(dataDisks?.data?.products, groupedIds.diski);
+		cleanInvalidProducts(dataBattery?.data?.products, groupedIds.akumulyatori);
 		cleanInvalidProducts(dataAutoGoods?.data?.products, groupedIds.autoGoods);
 		cleanInvalidProducts(dataServices?.data?.products, groupedIds.services);
 
 		setGroupedItems({
-			tiresItems: dataTires?.data?.products || [],
-			cargoItems: dataCargo?.data?.products || [],
-			disksItems: dataDisks?.data?.products || [],
-			batteryItems: dataBattery?.data?.products || [],
-			autoGoodsItems: dataAutoGoods?.data?.products || [],
-			servicesItems: dataServices?.data?.products || [],
+			tiresItems: groupedIds.avtoshini.length ? dataTires?.data?.products || [] : [],
+			cargoItems: groupedIds.vantazhni.length ? dataCargo?.data?.products || [] : [],
+			disksItems: groupedIds.diski.length ? dataDisks?.data?.products || [] : [],
+			batteryItems: groupedIds.akumulyatori.length ? dataBattery?.data?.products || [] : [],
+			autoGoodsItems: groupedIds.autoGoods.length ? dataAutoGoods?.data?.products || [] : [],
+			servicesItems: groupedIds.services.length ? dataServices?.data?.products || [] : [],
 		});
-	}, [dataTires, dataCargo, dataDisks, dataBattery, dataAutoGoods, dataServices]);
+	}, [groupedIds, dataTires, dataCargo, dataDisks, dataBattery, dataAutoGoods, dataServices]);
 
 	// Sort returned products to match original order
 	useEffect(() => {

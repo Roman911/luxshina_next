@@ -12,7 +12,7 @@ import { Button } from '@heroui/react';
 interface ItemWrapperProps {
 	characteristics: Product[]
 	tab: string
-	name: 'tires' | 'cargo' | 'disks' | 'akumulyatori'
+	name: 'tires' | 'cargo' | 'disks' | 'battery'
 	handleClickAction: (id: number) => void
 	onClickAction: (offerId: number, section: string) => void
 }

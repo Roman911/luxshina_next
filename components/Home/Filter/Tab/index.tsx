@@ -1,4 +1,4 @@
-import { FC, ReactNode } from 'react';
+import { FC, ReactNode, SVGProps } from 'react';
 import styles from './index.module.scss';
 import * as Icons from '@/components/UI/Icons';
 
@@ -14,17 +14,20 @@ interface TabProps {
 	label: string
 }
 
-const icons = {
+const icons: Partial<Record<Section, FC<SVGProps<SVGSVGElement>>>> = {
 	avtoshini: Icons.TireIcon,
 	diski: Icons.DiskIcon,
 	car: Icons.CarFilterIcon,
 	akumulyatori: Icons.CarFilterIcon,
-	autoGoods: Icons.CarFilterIcon,
-	services: Icons.CarFilterIcon,
 };
 
 const Tab: FC<TabProps> = ({ children, name, section, isOpen, handleClick, label }) => {
 	const Icon = icons[name];
+
+	if (!Icon) {
+		console.warn(`Icon for section ${name} not found`);
+		return null;
+	}
 
 	const iconClassNames = twMerge('absolute inset-1/2 left-5 -translate-y-2/4 md:hidden',
 		(section !== name || !isOpen) && 'fill-[#99CFFF]',

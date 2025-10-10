@@ -12,6 +12,7 @@ import { SeasonTransform, VehicleTypeTransform } from '@/lib/characteristicsTran
 import Comments from '../Comments';
 import type { ProductProps } from '@/models/product';
 import { Language, LanguageCode } from '@/models/language';
+import { Section } from '@/models/filter';
 
 const tabs = [
 	{ label: 'main characteristics' },
@@ -39,9 +40,9 @@ const CharacteristicsBlock: FC<CharacteristicsBlockProps> = ({ locale, data }) =
 	}, [ dispatch ]);
 
 	const link = (to: string) => {
-		if(section === 'tires') {
+		if(section === Section.Tires) {
 			return `/katalog/tires${ to }`
-		} else if(section === 'disks') {
+		} else if(section === Section.Disks) {
 			return `/katalog/disks${ to }`
 		} else {
 			return `/katalog/akumulyatori${ to }`
@@ -105,8 +106,8 @@ const CharacteristicsBlock: FC<CharacteristicsBlockProps> = ({ locale, data }) =
 				{ data?.data.offer_group.width && <div className='flex md:my-4 text-sm font-medium'>
 					<div
 						className='w-full flex items-center text-[#575C66] after:flex-1 after:min-w-6 after:border-b after:border-dashed after:border-[#AEB6C2] after:h-px after:mt-3 after:mx-2'>
-						<Tooltip content={ locale === Language.UK ? `Ширина ${ section === 'tires' ? 'шини в міліметрах' : 'диска в дюймах' }` :
-							`Ширина ${ section === 'tires' ? 'шины в миллиметрах' : 'диска в дюймах' }` }>
+						<Tooltip content={ locale === Language.UK ? `Ширина ${ section === Section.Tires ? 'шини в міліметрах' : 'диска в дюймах' }` :
+							`Ширина ${ section === Section.Tires ? 'шины в миллиметрах' : 'диска в дюймах' }` }>
 							<div className='flex gap-x-0.5'>
 								<Icons.InfoTooltipIcon className='fill-[#AEB6C2]' />{ t('width') }
 							</div>
@@ -137,8 +138,8 @@ const CharacteristicsBlock: FC<CharacteristicsBlockProps> = ({ locale, data }) =
 					<div
 						className='w-full flex items-center text-[#575C66] after:flex-1 after:min-w-6 after:border-b after:border-dashed after:border-[#AEB6C2] after:h-px after:mt-3 after:mx-2'>
 						<Tooltip content={ locale === Language.UK ?
-							`${ section === 'tires' ? 'Внутрішній діаметр шини' : 'Діаметр диска' } в дюймах` :
-							`${ section === 'tires' ? 'Внутренний диаметр шины' : 'Диаметр диска' } в дюймах` }>
+							`${ section === Section.Tires ? 'Внутрішній діаметр шини' : 'Діаметр диска' } в дюймах` :
+							`${ section === Section.Tires ? 'Внутренний диаметр шины' : 'Диаметр диска' } в дюймах` }>
 							<div className='flex gap-x-0.5'>
 								<Icons.InfoTooltipIcon className='fill-[#AEB6C2]' />{ t('diameter') }
 							</div>
@@ -248,7 +249,7 @@ const CharacteristicsBlock: FC<CharacteristicsBlockProps> = ({ locale, data }) =
 						{ data?.data.offer_group.dia }
 					</Link>
 				</div> }
-				{ section === 'tires' && <div className='flex my-4 text-sm font-medium'>
+				{ section === Section.Tires && <div className='flex my-4 text-sm font-medium'>
 					<div
 						className='w-full flex items-center text-[#575C66] after:flex-1 after:min-w-6 after:border-b after:border-dashed after:border-[#AEB6C2] after:h-px after:mt-3 after:mx-2'>
 						{ t('type size') }

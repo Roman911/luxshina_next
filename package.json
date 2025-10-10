@@ -23,7 +23,8 @@
     "react-number-format": "^5.4.4",
     "react-redux": "^9.2.0",
     "react-slick": "^0.31.0",
-    "slick-carousel": "^1.8.1"
+    "slick-carousel": "^1.8.1",
+    "yet-another-react-lightbox": "^3.25.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

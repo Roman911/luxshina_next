@@ -10,7 +10,6 @@ import Footer from '@/components/Layout/Footer';
 import { getAliasAll, getSettings, getMenu } from '@/app/api/api';
 import '../colors.css';
 import '../globals.css';
-import { Language } from '@/models/language';
 import { ToastProvider } from "@heroui/toast";
 import { twMerge } from 'tailwind-merge';
 
@@ -40,7 +39,7 @@ export default async function RootLayout(
 		params,
 	}: Readonly<{
 		children: ReactNode;
-		params: Promise<{ locale: Language }>;
+		params: Promise<{ locale: string }>;
 	}>) {
 	const { locale } = await params;
 	const messages = await getMessages();
