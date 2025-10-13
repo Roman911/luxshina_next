@@ -126,7 +126,17 @@
     "type of electrolyte": "Тип електроліту",
     "body type": "Тип корпусу",
     "popular": "Популярні",
-    "all": "Всі"
+    "all": "Всі",
+    "litni": "Літні",
+    "zimovi": "Зимові",
+    "vsesezonnye": "Всесезонні",
+    "shipovani": "Шиповані",
+    "off-road-4x4": "Off road 4x4",
+    "legkovi": "Легкові",
+    "busi": "Буси",
+    "liti": "Литі",
+    "stalni": "Стальні",
+    "kovani": "Ковані"
   },
   "Footer": {
     "accumulators": "Акумулятори",

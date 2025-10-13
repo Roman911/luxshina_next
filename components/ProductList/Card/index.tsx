@@ -20,8 +20,9 @@ import { countryCodeTransform } from '@/lib/countryCodetransform';
 import CountryInfo from '@/components/UI/CountryInfo';
 import * as Icons from '@/components/UI/Icons';
 import { onAddToCart } from '@/event';
+import { twMerge } from 'tailwind-merge';
 
-const regex = /\/(auto-goods|poslugi)/;
+const regex = /\/(avtotovari|poslugi)/;
 const cargo = [ '3', '4', '5', '6', '9', '10', '11' ];
 
 interface Props {
@@ -71,7 +72,7 @@ const ProductCard: FC<Props> = ({ item }) => {
 					/>
 				</div>
 				<Link href={ url }
-							className='font-bold my-2.5 min-h-12 after:absolute after:inset-0'>{ full_name }</Link>
+							className={twMerge('font-bold my-2.5 min-h-12 after:absolute after:inset-0', hasMatch && 'pointer-events-none')}>{ full_name }</Link>
 				<div className='text-sm text-gray-500 my-2.5'>
 					<span>Артикул: </span><span>{ sku }</span>
 				</div>

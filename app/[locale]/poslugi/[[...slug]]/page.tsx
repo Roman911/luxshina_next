@@ -6,20 +6,9 @@ import type { Metadata } from 'next';
 import ProductList from '@/components/ProductList';
 import NoResult from '@/components/UI/NoResult';
 import ServicesPagination from '@/components/UI/ServicesPagination';
+import { getProducts } from '@/app/api/api';
 
 const pageItem = 12;
-
-async function getProducts(page: number | null) {
-	const res = await fetch(`${process.env.SERVER_URL}/api/getProducts?typeproduct=5&categories=8`, {
-		method: 'POST',
-		headers: {
-			'Access-Control-Allow-Credentials': 'true',
-			'content-type': 'application/json',
-		},
-		body: JSON.stringify({ start: page ? (page - 1) * pageItem : 0, length: 12 }),
-	});
-	return await res.json();
-}
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: Language }> }): Promise<Metadata> {
 	const { locale } = await params;
@@ -36,7 +25,7 @@ export default async function Services({ params }: { params: Promise<{ slug: str
 	const { slug } = await params;
 	const value = slug?.find(item => item.startsWith('p-'));
 	const page = value ? parseInt(value.split('-')[1], 10) : null;
-	const products = await getProducts(page);
+	const products = await getProducts('?typeproduct=5&categories=8', page ? (page - 1) * pageItem : 0, pageItem);
 
 	const path = [
 		{

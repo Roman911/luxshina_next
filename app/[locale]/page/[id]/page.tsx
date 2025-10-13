@@ -3,29 +3,13 @@ import DOMPurify from 'isomorphic-dompurify';
 import LayoutWrapper from '@/components/Layout/LayoutWrapper';
 import Breadcrumbs from '@/components/UI/Breadcrumbs';
 import Title from '@/components/UI/Title';
-import type { Pages } from '@/models/alias';
 import { Language, LanguageCode } from '@/models/language';
-
-async function getAlias(id: string): Promise<Pages> {
-	const res = await fetch(`${process.env.SERVER_URL}/baseData/StatiAlias/${id}`, {
-		method: 'GET',
-		headers: {
-			'Access-Control-Allow-Credentials': 'true',
-		}
-	});
-	return await res.json();
-}
+import { getAlias } from '@/app/api/api';
+import { generateCatalogMetadata } from '@/utils/metadata';
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: Language, id: string }> }): Promise<Metadata> {
 	const { locale, id } = await params;
-	const lang = locale === Language.UK ? LanguageCode.UA : Language.RU;
-	const alias = await fetch(`${process.env.SERVER_URL}/baseData/StatiAlias/${id}`)
-		.then((res) => res.json());
-
-	return {
-		title: alias[id].description[lang].meta_title,
-		description: alias[id].description[lang].meta_description,
-	}
+	return generateCatalogMetadata({ locale, urlPath: `page/${id}` });
 }
 
 export default async function Pages({ params }: { params: Promise<{ locale: Language, id: string }> }) {

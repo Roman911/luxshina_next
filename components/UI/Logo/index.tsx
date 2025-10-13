@@ -17,16 +17,22 @@ const Logo: FC<Props> = ({ isFooter }) => {
 		if(pathname !== '/') dispatch(setProgress(true));
 	}
 
+	const RenderLogo = () => {
+		return <Image
+			src={ `/logo${ isFooter ? '-footer' : '' }.svg` }
+			alt="logo"
+			width={ isFooter ? 226 : 243 }
+			height={ 50 }
+			priority
+		/>
+	}
+
 	return (
-		<Link href='/' onClick={ handleClick } className='logo'>
-			<Image
-				src={ `/logo${isFooter ? '-footer' : ''}.svg` }
-				alt="logo"
-				width={ isFooter ? 226 : 243 }
-				height={ 50 }
-				priority
-			/>
-		</Link>
+		pathname === '/' ?
+			<RenderLogo/> :
+			<Link href='/' onClick={ handleClick } className='logo'>
+				<RenderLogo/>
+			</Link>
 	)
 };
 

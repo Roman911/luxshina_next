@@ -1,19 +1,17 @@
 import type { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 import { Language, LanguageCode } from '@/models/language';
-import { Section } from '@/models/filter';
 import { DEFAULT_HEADERS } from '@/config/api';
 
-export async function generateCatalogMetadata({ locale, section, slug }: {
+export async function generateCatalogMetadata({ locale, urlPath }: {
 	locale: Language;
-	section: Section;
-	slug: string[]
+	urlPath: string;
 }): Promise<Metadata> {
 	const response = await fetch(`${process.env.SERVER_URL}/api/getSeo`, {
 		method: 'POST',
 		headers: DEFAULT_HEADERS,
 		body: JSON.stringify({
-			url: `${process.env.NEXT_PUBLIC_ACCESS_ORIGIN}/${locale}/katalog/${section}/${slug?.join('/')}`,
+			url: `${process.env.NEXT_PUBLIC_ACCESS_ORIGIN}/${locale}/${urlPath}`,
 		})
 	});
 
@@ -21,7 +19,7 @@ export async function generateCatalogMetadata({ locale, section, slug }: {
 	if (!response.ok) {
 		console.error(`API error: ${response.status} ${response.statusText}`);
 		return {
-			title: 'Catalog',
+			title: 'Шини та диски',
 			description: '',
 		};
 	}
@@ -33,7 +31,7 @@ export async function generateCatalogMetadata({ locale, section, slug }: {
 	if (!text || text.trim() === '') {
 		console.error('Empty response from API');
 		return {
-			title: 'Catalog',
+			title: 'Шини та диски',
 			description: '',
 		};
 	}
@@ -55,7 +53,12 @@ export async function generateCatalogMetadata({ locale, section, slug }: {
 	}
 
 	return {
-		title: data?.descriptions?.[locale === Language.UK ? LanguageCode.UA : Language.RU]?.title || 'Catalog',
+		title: data?.descriptions?.[locale === Language.UK ? LanguageCode.UA : Language.RU]?.meta_title || 'Шини та диски',
 		description: data?.descriptions?.[locale === Language.UK ? LanguageCode.UA : Language.RU]?.meta_description || '',
+		openGraph: {
+			title: data?.descriptions?.[locale === Language.UK ? LanguageCode.UA : Language.RU]?.meta_title || 'Шини та диски',
+			description: data?.descriptions?.[locale === Language.UK ? LanguageCode.UA : Language.RU]?.meta_description || '',
+			images: data?.image || `${process.env.NEXT_PUBLIC_ACCESS_ORIGIN}/logo.svg`,
+		}
 	};
 }

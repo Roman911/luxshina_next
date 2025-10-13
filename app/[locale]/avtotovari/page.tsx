@@ -5,17 +5,7 @@ import { Language, LanguageCode } from '@/models/language';
 import type { Metadata } from 'next';
 import ProductList from '@/components/ProductList';
 import NoResult from '@/components/UI/NoResult';
-
-async function getProducts() {
-	const res = await fetch(`${process.env.SERVER_URL}/api/getProducts?typeproduct=5&categories=7`, {
-		method: 'POST',
-		headers: {
-			'Access-Control-Allow-Credentials': 'true',
-			'content-type': 'application/json',
-		},
-	});
-	return await res.json();
-}
+import { getProducts } from '@/app/api/api';
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: Language }> }): Promise<Metadata> {
 	const { locale } = await params;
@@ -29,7 +19,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: L
 }
 
 export default async function AutoGoods() {
-	const products = await getProducts();
+	const products = await getProducts('?typeproduct=5&categories=7', 0, 12);
 
 	const path = [
 		{

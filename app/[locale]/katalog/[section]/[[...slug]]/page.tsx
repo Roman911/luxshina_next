@@ -28,7 +28,7 @@ const sort = {
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: Language, section: Section, slug: string[] }> }): Promise<Metadata> {
 	const { locale, section, slug } = await params;
-	return generateCatalogMetadata({ locale, section, slug });
+	return generateCatalogMetadata({ locale, urlPath: `katalog/${section}/${slug?.join('/')}`});
 }
 
 export default async function Catalog({ params }: { params: Promise<{ locale: Language, section: Section, slug: string[] }> }) {
@@ -51,11 +51,11 @@ export default async function Catalog({ params }: { params: Promise<{ locale: La
 		<LayoutWrapper>
 			<HeaderCatalog section={ section } slug={ slug } />
 			<div className='py-5 lg:flex lg:gap-6'>
-				<FilterAlt locale={ locale } filterData={ filterData } section={ section } slug={ slug } filters={ filters } filtersAkum={ filtersAkum } />
+				<FilterAlt locale={ locale } filterData={ filterData } section={ section } slug={ slug } filters={ filters } filtersAkum={ filtersAkum } brand={ brand } />
 				<div className='flex-1 -mt-10 lg:-mt-12'>
 					<FilterByCar />
 					<SelectionByCar />
-					<FilterActive locale={ locale } className='hidden lg:flex' slug={ slug } section={ section } />
+					<FilterActive locale={ locale } className='hidden lg:flex' slug={ slug } section={ section } brand={ brand } />
 					{ products.result ? <ProductList
 						classnames='grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
 						data={ products.data }

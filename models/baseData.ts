@@ -3,7 +3,7 @@ interface Auto {
 	value: number
 }
 
-interface Brand {
+export interface Brand {
 	alias: string
 	label: string
 	sort_order: string

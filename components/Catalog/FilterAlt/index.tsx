@@ -19,6 +19,7 @@ import MyCheckboxGroup from '@/components/Catalog/FilterAlt/CheckboxGroup';
 import { setProgress } from '@/store/slices/progressSlice';
 import { Link } from '@/i18n/routing';
 import type { AkumProps } from '@/models/akumData';
+import type { Brand } from '@/models/baseData';
 
 interface Props {
 	locale: Language
@@ -27,9 +28,10 @@ interface Props {
 	slug: string[]
 	filters: BaseDataProps | undefined
 	filtersAkum: AkumProps | undefined
+	brand: Brand | null | undefined
 }
 
-const FilterAlt: FC<Props> = ({ locale, filterData, section, slug, filters, filtersAkum }) => {
+const FilterAlt: FC<Props> = ({ locale, filterData, section, slug, filters, filtersAkum, brand }) => {
 	const t = useTranslations('Filters');
 	const [ element, setElement ] = useState<HTMLElement | null>(null);
 	const dispatch = useAppDispatch();
@@ -168,7 +170,8 @@ const FilterAlt: FC<Props> = ({ locale, filterData, section, slug, filters, filt
 							label={ t('brand') }
 							slug={ slug }
 							section={ section }
-							options={ filtersAkum?.brand_akum?.map(item => ({ value: `${ item.value }`, label: item.label })) || [] }
+							options={ filtersAkum?.brand_akum?.map(item => ({ value: `${ item.alias }`, label: item.label })) || [] }
+							brand={ brand }
 						/>
 					</> }
 					{ (section === Section.Tires || section === Section.Moto) && <>
@@ -218,7 +221,8 @@ const FilterAlt: FC<Props> = ({ locale, filterData, section, slug, filters, filt
 							label={ t('brand') }
 							slug={ slug }
 							section={ section }
-							options={ filters?.brand?.map(item => ({ value: `${ item.value }`, label: item.label })) || [] }
+							options={ filters?.brand?.map(item => ({ value: `${ item.alias }`, label: item.label })) || [] }
+							brand={ brand }
 						/>
 					</> }
 					{ section === Section.Disks && <>
@@ -255,7 +259,8 @@ const FilterAlt: FC<Props> = ({ locale, filterData, section, slug, filters, filt
 							label={ t('brand') }
 							slug={ slug }
 							section={ section }
-							options={ filters?.brand_disc?.map(item => ({ value: `${ item.value }`, label: item.label })) || [] }
+							options={ filters?.brand_disc?.map(item => ({ value: `${ item.alias }`, label: item.label })) || [] }
+							brand={ brand }
 						/>
 					</> }
 					{ (section === Section.Tires || section === Section.Moto || section === Section.Cargo || section === Section.Spectehnika) && <>
