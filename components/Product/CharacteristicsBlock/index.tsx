@@ -41,9 +41,9 @@ const CharacteristicsBlock: FC<CharacteristicsBlockProps> = ({ locale, data }) =
 
 	const link = (to: string) => {
 		if(section === Section.Tires) {
-			return `/katalog/tires${ to }`
+			return `/katalog/avtoshini${ to }`
 		} else if(section === Section.Disks) {
-			return `/katalog/disks${ to }`
+			return `/katalog/diski${ to }`
 		} else {
 			return `/katalog/akumulyatori${ to }`
 		}
@@ -193,7 +193,7 @@ const CharacteristicsBlock: FC<CharacteristicsBlockProps> = ({ locale, data }) =
 						className='w-full flex items-center text-[#575C66] after:flex-1 after:min-w-6 after:border-b after:border-dashed after:border-[#AEB6C2] after:h-px after:mt-3 after:mx-2'>
 						{ t('brand') }
 					</div>
-					<Link href={ link(`/b-${ data?.data.brand.id }`) }
+					<Link href={ `/${data?.data.brand.alias}` }
 								onClick={ () => dispatch(addBrandAlias(data ? data?.data.brand.alias : '')) }
 								className='text-black max-w-max w-full hover:underline'>
 						{ data?.data.brand.name }
@@ -204,7 +204,7 @@ const CharacteristicsBlock: FC<CharacteristicsBlockProps> = ({ locale, data }) =
 						className='w-full flex items-center text-[#575C66] after:flex-1 after:min-w-6 after:border-b after:border-dashed after:border-[#AEB6C2] after:h-px after:mt-3 after:mx-2'>
 						{ t('model') }
 					</div>
-					<Link href={ link(`/b-${ data?.data.brand.id }/m-${ data?.data.model.id }`) }
+					<Link href={ `/${ data?.data.brand.alias }/m-${ data?.data.model.id }` }
 								onClick={ () => dispatch(addModelAlias(data ? data?.data.model.alias : '')) }
 								className='text-black max-w-max w-full hover:underline'>
 						{ data?.data.model.name }

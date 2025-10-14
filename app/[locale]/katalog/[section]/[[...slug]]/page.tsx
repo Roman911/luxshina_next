@@ -28,7 +28,7 @@ const sort = {
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: Language, section: Section, slug: string[] }> }): Promise<Metadata> {
 	const { locale, section, slug } = await params;
-	return generateCatalogMetadata({ locale, urlPath: `katalog/${section}/${slug?.join('/')}`});
+	return generateCatalogMetadata({ locale, urlPath: `katalog/${section}/${slug ? slug?.join('/') : ''}`});
 }
 
 export default async function Catalog({ params }: { params: Promise<{ locale: Language, section: Section, slug: string[] }> }) {

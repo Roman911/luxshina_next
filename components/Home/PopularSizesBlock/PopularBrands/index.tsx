@@ -26,20 +26,15 @@ const PopularBrands: FC<PopularBrandsProps> = ({ data }) => {
 	return <>
 		<div className='grid grid-cols-2 lg:grid-cols-6 mt-12 gap-5 mb-8'>
 			{ data?.map((item, index) => (
-				<Link key={ index } className='uppercase font-bold text-blue-500' href='/katalog/avtoshini'>
-					<Button color='primary' radius='full' variant='bordered' size='lg'
-									className='text-black font-semibold w-full' onPress={ () => handleClick(item.id) }>
-						{ item.name }
-					</Button>
-				</Link>
+				<Button key={index} as={Link} color='primary' radius='full' variant='bordered' size='lg'
+								className='text-black font-semibold w-full' onPress={ () => handleClick(item.id) } href='/katalog/avtoshini'>
+					{ item.name }
+				</Button>
 			)) }
 		</div>
-		<Link className='uppercase font-bold text-blue-500' href='/katalog/avtoshini'>
-			<Button variant='light' size='lg' color='primary' className='text-lg uppercase font-bold text-primary'
-							onPress={ () => dispatch(changeSubsection(Subsection.ByCars)) }>
-				{ t('show all') }
-			</Button>
-		</Link>
+		<Button variant='light' size='lg' color='primary' className='text-lg uppercase font-bold text-primary' as={Link} onPress={() => dispatch(changeSubsection(Subsection.ByCars))} href='/katalog/avtoshini'>
+			{ t('show all') }
+		</Button>
 	</>
 };
 
