@@ -20,6 +20,9 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: L
 	return {
 		title: response[lang].meta_title,
 		description: response[lang].meta_description,
+		alternates: {
+			canonical: `${process.env.NEXT_PUBLIC_ACCESS_ORIGIN}`,
+		}
 	}
 }
 
