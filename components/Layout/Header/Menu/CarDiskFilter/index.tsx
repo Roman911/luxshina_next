@@ -4,9 +4,20 @@ import LinkComponent from '../LinkComponent';
 import Title from '../Title';
 import { carBrandsLinks, typeDiskLinks } from './links';
 import { IMenu } from '@/models/menu';
+import { setCarFilter } from '@/store/slices/filterCarSlice';
+import { changeSubsection } from '@/store/slices/filterSlice';
+import { Subsection } from '@/models/filter';
+import { useAppDispatch, useAppSelector } from '@/hooks/redux';
 
 const CarDiskFilter = ({ onClick, menu }: { onClick?: () => void, menu: IMenu[] }) => {
 	const t = useTranslations('HeaderFilter');
+	const { filter } = useAppSelector(state => state.filterCarReducer);
+	const dispatch = useAppDispatch();
+
+	const handleClick = (brand: number) => {
+		dispatch(setCarFilter({ ...filter, brand }));
+		dispatch(changeSubsection(Subsection.ByCars));
+	}
 
 	return <>
 		<div>
@@ -49,7 +60,7 @@ const CarDiskFilter = ({ onClick, menu }: { onClick?: () => void, menu: IMenu[] 
 				{ carBrandsLinks.map(item => {
 					return <LinkComponent
 						key={ item.label }
-						onClick={ onClick }
+						onClick={ () => handleClick(item.brand) }
 						href={ item.href }
 						label={ item.label }
 						border={ false }
@@ -57,7 +68,7 @@ const CarDiskFilter = ({ onClick, menu }: { onClick?: () => void, menu: IMenu[] 
 				}) }
 			</div>
 			<Link
-				onClick={ onClick }
+				onClick={ () => dispatch(changeSubsection(Subsection.ByCars)) }
 				href='/katalog/diski'
 				className='text-primary font-bold hover:underline'
 			>
