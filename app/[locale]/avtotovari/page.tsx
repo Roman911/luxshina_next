@@ -1,21 +1,16 @@
 import LayoutWrapper from '@/components/Layout/LayoutWrapper';
 import Breadcrumbs from '@/components/UI/Breadcrumbs';
 import Title from '@/components/UI/Title';
-import { Language, LanguageCode } from '@/models/language';
+import { Language } from '@/models/language';
 import type { Metadata } from 'next';
 import ProductList from '@/components/ProductList';
 import NoResult from '@/components/UI/NoResult';
 import { getProducts } from '@/app/api/api';
+import { generateCatalogMetadata } from '@/utils/metadata';
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: Language }> }): Promise<Metadata> {
 	const { locale } = await params;
-	const response = await fetch(`${process.env.SERVER_URL}/baseData/settings`)
-		.then((res) => res.json());
-
-	return {
-		title: response[locale === Language.UK ? LanguageCode.UA : Language.RU].meta_title,
-		description: response[locale === Language.UK ? LanguageCode.UA : Language.RU].meta_description,
-	}
+	return generateCatalogMetadata({ locale, urlPath: `avtotovari` });
 }
 
 export default async function AutoGoods() {

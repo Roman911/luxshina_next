@@ -1,24 +1,19 @@
 import LayoutWrapper from '@/components/Layout/LayoutWrapper';
 import Breadcrumbs from '@/components/UI/Breadcrumbs';
 import Title from '@/components/UI/Title';
-import { Language, LanguageCode } from '@/models/language';
+import { Language } from '@/models/language';
 import type { Metadata } from 'next';
 import ProductList from '@/components/ProductList';
 import NoResult from '@/components/UI/NoResult';
 import ServicesPagination from '@/components/UI/ServicesPagination';
 import { getProducts } from '@/app/api/api';
+import { generateCatalogMetadata } from '@/utils/metadata';
 
 const pageItem = 12;
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: Language }> }): Promise<Metadata> {
 	const { locale } = await params;
-	const response = await fetch(`${process.env.SERVER_URL}/baseData/settings`)
-		.then((res) => res.json());
-
-	return {
-		title: response[locale === Language.UK ? LanguageCode.UA : Language.RU].meta_title,
-		description: response[locale === Language.UK ? LanguageCode.UA : Language.RU].meta_description,
-	}
+	return generateCatalogMetadata({ locale, urlPath: `poslugi` });
 }
 
 export default async function Services({ params }: { params: Promise<{ slug: string[] }> }) {
@@ -38,7 +33,7 @@ export default async function Services({ params }: { params: Promise<{ slug: str
 	return (
 		<LayoutWrapper>
 			<Breadcrumbs path={ path } />
-			<Title isMain={ true } title='avtotovari' translations={ true } className='mt-3 text-lg font-medium px-0 md:px-3 mb-3 md:mb-1' />
+			<Title isMain={ true } title='poslugi' translations={ true } className='mt-3 text-lg font-medium px-0 md:px-3 mb-3 md:mb-1' />
 			{ products.result ? <ProductList
 				classnames='grid-cols-1 sm:grid-cols-2 md:grid-cols-4'
 				data={ products.data }

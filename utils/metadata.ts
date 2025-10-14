@@ -59,6 +59,9 @@ export async function generateCatalogMetadata({ locale, urlPath }: {
 			title: data?.descriptions?.[locale === Language.UK ? LanguageCode.UA : Language.RU]?.meta_title || 'Шини та диски',
 			description: data?.descriptions?.[locale === Language.UK ? LanguageCode.UA : Language.RU]?.meta_description || '',
 			images: data?.image || `${process.env.NEXT_PUBLIC_ACCESS_ORIGIN}/logo.svg`,
+		},
+		alternates: {
+			canonical: data?.descriptions?.[locale === Language.UK ? LanguageCode.UA : Language.RU]?.canonical || `${process.env.NEXT_PUBLIC_ACCESS_ORIGIN}/${locale}/${urlPath}`,
 		}
 	};
 }
