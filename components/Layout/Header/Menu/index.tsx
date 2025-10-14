@@ -61,7 +61,7 @@ const Navbar: FC<Props> = ({ menu }) => {
 						return <ButtonMeu key={ i } sectionItem={ item.section } label={ item.label } />
 					})}
 				{ menu.slice(2).map((item, index) => {
-					return <Link key={ index } href={ `/${ item.alias }` }
+					return <Link key={ index } href={ item.alias }
 											 className='hover:text-primary'>
 						{ item.descriptions[lang].title }
 					</Link>
