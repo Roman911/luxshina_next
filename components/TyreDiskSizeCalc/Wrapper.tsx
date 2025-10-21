@@ -1,7 +1,12 @@
 'use client'
 import { useEffect, useState } from 'react';
-import TyreDiskSizeCalcComponent from '@/components/TyreDiskSizeCalc';
 import NoResult from '@/components/UI/NoResult';
+import dynamic from 'next/dynamic';
+import { Spinner } from '@heroui/react';
+
+const DynamicCalc = dynamic(() => import('@/components/TyreDiskSizeCalc'), {
+	loading: () => <Spinner />,
+})
 
 export default function CalcWrapper() {
 	const [ isStatic, setStatic ] = useState(true);
@@ -12,5 +17,5 @@ export default function CalcWrapper() {
 
 	if(isStatic) return <NoResult noResultText='page is unavailable' />;
 
-	return <TyreDiskSizeCalcComponent />
+	return <DynamicCalc />
 };
