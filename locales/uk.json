@@ -71,6 +71,7 @@
     "capacity": "Ємність",
     "car brand": "Марка авто",
     "car type": "Тип автомобіля",
+    "cargo": "Вантажні",
     "vantazhni": "Вантажні",
     "cast": "Литі",
     "choose disks": "Підібрати диски",
@@ -284,7 +285,8 @@
     "specify city": "Вкажіть місто",
     "specify quantity": "Вкажіть кількість",
     "close": "Закрити",
-    "calculate": "Розрахувати"
+    "calculate": "Розрахувати",
+    "change": "Змінити"
   },
   "OurAdvantages": {
     "our advantages": "Наші переваги",

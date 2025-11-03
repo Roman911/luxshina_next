@@ -173,7 +173,7 @@ const ProductComponent: FC<Props> = ({ idProduct, locale, data, section, setting
 					<div className='mb-4 md:mb-0'>
 						<Quantity id={ 0 } quantity={ quantity } offerQuantity={ (Number(offer?.quantity) || 0) }
 											price={ offer?.price } onChange={ onChange } setQuantity={ onSetQuantity }/>
-						<DeliveryCalculation offer_id={ offerId }/>
+						<DeliveryCalculation offer_id={ offerId } quantity={ quantity } setQuantity={ setQuantity } price={ offer ? +offer?.price : 0 } />
 					</div>
 					<div className='buttons-buy md:justify-self-end flex flex-col gap-4'>
 						{ cartItems.find(item => item.id === offerId) ?

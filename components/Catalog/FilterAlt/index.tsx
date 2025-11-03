@@ -26,18 +26,17 @@ interface Props {
 	filterData: BaseDataProps | undefined
 	section: Section
 	slug: string[]
-	filters: BaseDataProps | undefined
 	filtersAkum: AkumProps | undefined
 	brand: Brand | null | undefined
 }
 
-const FilterAlt: FC<Props> = ({ locale, filterData, section, slug, filters, filtersAkum, brand }) => {
+const FilterAlt: FC<Props> = ({ locale, filterData, section, slug, filtersAkum, brand }) => {
 	const t = useTranslations('Filters');
 	const [ element, setElement ] = useState<HTMLElement | null>(null);
 	const dispatch = useAppDispatch();
 	const { filter, subsection } = useAppSelector(state => state.filterReducer);
 	const { isOpen, onOpen, onOpenChange } = useDisclosure();
-	const country = locale === Language.UK ? filters?.country : filters?.country_ru;
+	const country = locale === Language.UK ? filterData?.country : filterData?.country_ru;
 
 	const onChange = (name: string, value: number | string | undefined | null, element: HTMLElement) => {
 		if(name === 'brand') {
@@ -135,7 +134,7 @@ const FilterAlt: FC<Props> = ({ locale, filterData, section, slug, filters, filt
 							/>
 						</> }
 					</> }
-					{ subsection === 'byCars' && <ByCar data={ filters }/> }
+					{ subsection === 'byCars' && <ByCar data={ filterData }/> }
 					{ section === Section.Battery && <>
 						<MyCheckboxGroup
 							checkboxKey='ct-'
@@ -221,7 +220,7 @@ const FilterAlt: FC<Props> = ({ locale, filterData, section, slug, filters, filt
 							label={ t('brand') }
 							slug={ slug }
 							section={ section }
-							options={ filters?.brand?.map(item => ({ value: `${ item.alias }`, label: item.label })) || [] }
+							options={ filterData?.brand?.map(item => ({ value: `${ item.alias }`, label: item.label })) || [] }
 							brand={ brand }
 						/>
 					</> }
@@ -231,7 +230,7 @@ const FilterAlt: FC<Props> = ({ locale, filterData, section, slug, filters, filt
 							label={ t('fasteners') }
 							slug={ slug }
 							section={ section }
-							options={ filters?.krip?.map(item => ({ value: item.value, label: item.value })) || [] }
+							options={ filterData?.krip?.map(item => ({ value: item.value, label: item.value })) || [] }
 						/>
 						<SelectFromTo name='et' nameMin='etMin' nameMax='etMax' minus={ true } from={ -140 } to={ 500 }
 													title={ `ET(${ t('departure') })` } btnTitle={ t('to apply') }/>
@@ -252,14 +251,14 @@ const FilterAlt: FC<Props> = ({ locale, filterData, section, slug, filters, filt
 							label={ t('color') }
 							slug={ slug }
 							section={ section }
-							options={ filters?.colir_abbr?.map(item => ({ value: item.value, label: item.value })) || [] }
+							options={ filterData?.colir_abbr?.map(item => ({ value: item.value, label: item.value })) || [] }
 						/>
 						<MyCheckboxGroup
 							checkboxKey='b-'
 							label={ t('brand') }
 							slug={ slug }
 							section={ section }
-							options={ filters?.brand_disc?.map(item => ({ value: `${ item.alias }`, label: item.label })) || [] }
+							options={ filterData?.brand_disc?.map(item => ({ value: `${ item.alias }`, label: item.label })) || [] }
 							brand={ brand }
 						/>
 					</> }
@@ -276,7 +275,7 @@ const FilterAlt: FC<Props> = ({ locale, filterData, section, slug, filters, filt
 							label={ t('year') }
 							slug={ slug }
 							section={ section }
-							options={ filters?.tyre_year?.map(item => ({
+							options={ filterData?.tyre_year?.map(item => ({
 								value: `${ item.value }`,
 								label: `${ item.label }`
 							})) || [] }
@@ -318,21 +317,21 @@ const FilterAlt: FC<Props> = ({ locale, filterData, section, slug, filters, filt
 							label={ t('load index') }
 							slug={ slug }
 							section={ section }
-							options={ filters?.load.map(item => ({ value: item.value, label: item.value })) || [] }
+							options={ filterData?.load.map(item => ({ value: item.value, label: item.value })) || [] }
 						/>
 						<MyCheckboxGroup
 							checkboxKey='si-'
 							label={ t('speed index') }
 							slug={ slug }
 							section={ section }
-							options={ filters?.speed.map(item => ({ value: item.value, label: item.value })) || [] }
+							options={ filterData?.speed.map(item => ({ value: item.value, label: item.value })) || [] }
 						/>
 						<MyCheckboxGroup
 							checkboxKey='hm-'
 							label={ t('homologation') }
 							slug={ slug }
 							section={ section }
-							options={ filters?.omolog.map(item => ({ value: item.value, label: item.value })) || [] }
+							options={ filterData?.omolog.map(item => ({ value: item.value, label: item.value })) || [] }
 						/>
 						<CheckboxGroup
 							defaultValue={ [slug?.includes('oc-1') ? 'oc-1' : '', slug?.includes('xl-1') ? 'xl-1' : '', slug?.includes('owl-1') ? 'owl-1' : '', slug?.includes('rf-1') ? 'rf-1' : '', slug?.includes('ofr-1') ? 'ofr-1' : ''] }
@@ -459,7 +458,7 @@ const FilterAlt: FC<Props> = ({ locale, filterData, section, slug, filters, filt
 										) }
 									</> }
 								</> }
-								{ subsection === 'byCars' && <ByCar data={ filters }/> }
+								{ subsection === 'byCars' && <ByCar data={ filterData }/> }
 								{ section === Section.Battery && <>
 									{ renderSelect(
 										'jemnist',
@@ -547,7 +546,7 @@ const FilterAlt: FC<Props> = ({ locale, filterData, section, slug, filters, filt
 										'brand',
 										'brand',
 										'white',
-										filters?.brand?.map(item => ({ value: item.value, label: item.label })),
+										filterData?.brand?.map(item => ({ value: item.value, label: item.label })),
 										false,
 										filter?.brand && Number(filter.brand),
 										true,
@@ -558,7 +557,7 @@ const FilterAlt: FC<Props> = ({ locale, filterData, section, slug, filters, filt
 										'krepeg',
 										'fasteners',
 										'white',
-										filters?.krip?.map(item => ({ value: item.value, label: item.value, p: item.p })),
+										filterData?.krip?.map(item => ({ value: item.value, label: item.value, p: item.p })),
 										false,
 										filter?.krepeg,
 										true,
@@ -582,7 +581,7 @@ const FilterAlt: FC<Props> = ({ locale, filterData, section, slug, filters, filt
 										'colir',
 										'color',
 										'white',
-										filters?.colir_abbr?.map(item => ({ value: item.value, label: item.value, p: item.p })),
+										filterData?.colir_abbr?.map(item => ({ value: item.value, label: item.value, p: item.p })),
 										false,
 										filter?.colir,
 										true,
@@ -591,7 +590,7 @@ const FilterAlt: FC<Props> = ({ locale, filterData, section, slug, filters, filt
 										'brand',
 										'brand',
 										'white',
-										filters?.brand_disc?.map(item => ({ value: item.value, label: item.label })),
+										filterData?.brand_disc?.map(item => ({ value: item.value, label: item.label })),
 										false,
 										filter?.brand && Number(filter.brand),
 										true,
@@ -610,7 +609,7 @@ const FilterAlt: FC<Props> = ({ locale, filterData, section, slug, filters, filt
 									'year',
 									'year',
 									'gray',
-									filters?.tyre_year?.map(item => ({ value: item.value, label: item.label })),
+									filterData?.tyre_year?.map(item => ({ value: item.value, label: item.label })),
 									false,
 									filter?.year && (filter.year),
 								) }
@@ -647,7 +646,7 @@ const FilterAlt: FC<Props> = ({ locale, filterData, section, slug, filters, filt
 										'li',
 										'load index',
 										'white',
-										filters?.load.map(item => ({ value: item.value, label: item.value })),
+										filterData?.load.map(item => ({ value: item.value, label: item.value })),
 										false,
 										filter?.li,
 										true,
@@ -656,7 +655,7 @@ const FilterAlt: FC<Props> = ({ locale, filterData, section, slug, filters, filt
 										'si',
 										'speed index',
 										'white',
-										filters?.speed.map(item => ({ value: item.value, label: item.value })),
+										filterData?.speed.map(item => ({ value: item.value, label: item.value })),
 										false,
 										filter?.si,
 										true,
@@ -665,7 +664,7 @@ const FilterAlt: FC<Props> = ({ locale, filterData, section, slug, filters, filt
 										'omolog',
 										'homologation',
 										'white',
-										filters?.omolog.map(item => ({ value: item.value, label: item.value })),
+										filterData?.omolog.map(item => ({ value: item.value, label: item.value })),
 										false,
 										filter?.omolog,
 										true,

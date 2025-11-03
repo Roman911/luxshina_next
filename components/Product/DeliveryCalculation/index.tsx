@@ -1,9 +1,8 @@
 'use client'
-import { FC, useState } from 'react';
+import { FC, useState, Dispatch, SetStateAction } from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import { Button } from '@heroui/react';
-import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure, } from '@heroui/react';
+import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from '@heroui/react';
 import { useAppSelector } from '@/hooks/redux';
 import { NpCitySearch } from '@/components/UI/NpCitySearch';
 import Quantity from '@/components/UI/Quantity';
@@ -11,11 +10,13 @@ import NpDocumentPrice from '@/components/UI/NpDocumentPrice';
 
 interface Props {
 	offer_id?: number
+	quantity: number
+	price: number
+	setQuantity: Dispatch<SetStateAction<number>>
 }
 
-const DeliveryCalculation: FC<Props> = ({ offer_id }) => {
+const DeliveryCalculation: FC<Props> = ({ offer_id, quantity, price, setQuantity }) => {
 	const { isOpen, onOpen, onOpenChange } = useDisclosure();
-	const [ quantity, setQuantity ] = useState(1);
 	const { city } = useAppSelector(state => state.orderReducer);
 	const [ showDescription, setShowDescription ] = useState<boolean>(false);
 	const t = useTranslations('Delivery calculation');
@@ -36,6 +37,10 @@ const DeliveryCalculation: FC<Props> = ({ offer_id }) => {
 		setQuantity(numericValue < 99 ? numericValue : 99);
 	}
 
+	const onReset = () => {
+		setShowDescription(false);
+	}
+
 	return (
 		<>
 			<Button
@@ -49,7 +54,7 @@ const DeliveryCalculation: FC<Props> = ({ offer_id }) => {
 				<Image width={ 48 } height={ 32 } className='mr-2.5' src='/icons/truck.svg' alt=""/>
 				{ t('delivery calculation') }
 			</Button>
-			<Modal isOpen={ isOpen } onOpenChange={ onOpenChange }>
+			<Modal isOpen={ isOpen } onOpenChange={ onOpenChange } placement='top-center'>
 				<ModalContent>
 					{ (onClose) => (
 						<>
@@ -78,11 +83,14 @@ const DeliveryCalculation: FC<Props> = ({ offer_id }) => {
 												setQuantity={ onSetQuantity }
 											/>
 										</> }
-										{ showDescription && city.value.length > 0 && <NpDocumentPrice offer_id={ offer_id } quantity={ quantity } /> }
+										{ showDescription && city.value.length > 0 && <NpDocumentPrice offer_id={ offer_id } quantity={ quantity } price={ price } /> }
 									</div>
 								</div>
 							</ModalBody>
 							<ModalFooter>
+								{ showDescription && <Button color='primary' size='lg' variant='light' className='w-max px-5 uppercase font-bold' onPress={ onReset }>
+									{ t('change') }
+								</Button> }
 								{ showDescription ? <Button onPress={ onClose } color='primary' radius='full' size='lg' className='w-max px-5 uppercase font-bold'>
 									{ t('close') }
 								</Button> : <Button onPress={ handleClick } color='primary' radius='full' size='lg' className='w-max px-5 uppercase font-bold'>

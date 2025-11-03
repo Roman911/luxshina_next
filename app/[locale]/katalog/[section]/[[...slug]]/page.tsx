@@ -10,7 +10,7 @@ import SelectionByCar from '@/components/Catalog/SelectionByCar';
 import FilterActive from '@/components/Catalog/FilterActive';
 import HeaderCatalog from '@/components/Catalog/HeaderCatalog';
 import Pagination from '@/components/Catalog/Pagination';
-import { getFilterData, getFilters, getFiltersAkum, getProducts } from '@/app/api/api';
+import { getFilterData, getFiltersAkum, getProducts } from '@/app/api/api';
 import type { Metadata } from 'next';
 import { Season } from '@/lib/season';
 import { TypeTires } from '@/lib/typeTires';
@@ -33,25 +33,24 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: L
 
 export default async function Catalog({ params }: { params: Promise<{ locale: Language, section: Section, slug: string[] }> }) {
 	const { locale, section, slug } = await params;
-	const filters = await getFilters();
 	const filtersAkum = await getFiltersAkum();
 	const value = slug?.find(item => item.startsWith('p-'));
 	const page = value ? parseInt(value.split('-')[1], 10) : null;
-	const filterData = await getFilterData(`?typeproduct=${section === Section.Disks ? 3 : section === Section.Battery ? 4 : 1}`);
+	const filterData = await getFilterData(`?typeproduct=${section === Section.Disks ? 3 : section === Section.Battery ? 4 : section === Section.Cargo ? 2 : 1}`);
 	const paramsUrl = transformUrl({ section, slug });
 	const found = slug?.find(item => item.startsWith('order-'))?.split('-')[1] as keyof typeof sort;
 	const typeTires = TypeTires(section, slug);
 	const typeDisks = section === Section.Disks ? TypeDisks(slug) : null;
 	const season = section === Section.Tires ? Season(slug) : null;
-	const brand = Brand(section, slug, filters, filtersAkum);
-	const searchParams = `?${paramsUrl || ''}${typeTires || ''}${typeDisks || ''}${season || ''}${found && sort[found] ? sort[found] : ''}${brand ? '&brand=' + brand.value : ''}`;
+	const brand = Brand(section, slug, filterData, filtersAkum);
+	const searchParams = `?${paramsUrl || ''}${ slug?.some(item => item.startsWith('vt-')) ? '' : typeTires || ''}${typeDisks || ''}${season || ''}${found && sort[found] ? sort[found] : ''}${brand ? '&brand=' + brand.value : ''}`;
 	const products = await getProducts(searchParams, page ? (page - 1) * pageItem : 0, pageItem);
 
 	return (
 		<LayoutWrapper>
 			<HeaderCatalog section={ section } slug={ slug } />
 			<div className='py-5 lg:flex lg:gap-6'>
-				<FilterAlt locale={ locale } filterData={ filterData } section={ section } slug={ slug } filters={ filters } filtersAkum={ filtersAkum } brand={ brand } />
+				<FilterAlt locale={ locale } filterData={ filterData } section={ section } slug={ slug } filtersAkum={ filtersAkum } brand={ brand } />
 				<div className='flex-1 -mt-10 lg:-mt-12'>
 					<FilterByCar />
 					<SelectionByCar />

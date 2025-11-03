@@ -56,7 +56,7 @@ const MyCheckboxGroup: FC<Props> = ({ checkboxKey, label, slug, section, options
 						${ section }/
 						${ checkboxKey === 's-' || checkboxKey === 'b-' ? '' : checkboxKey }
 						${ checkboxKey === 'b-' ? 'brand/' : ''}${ value }/
-						${ checkboxKey === 'b-' ? filteredArr.filter(item => item !== (brand ? brand.alias : '') && item !== 'brand').join('/') : checkboxKey === 's-' ? filteredArr.filter(item => item !== 'stud-1' && season ? item !== season[0] : '').join('/') : filteredArr.join('/') }
+						${ checkboxKey === 'b-' ? filteredArr.filter(item => item !== (brand ? brand.alias : '') && item !== 'brand').join('/') : checkboxKey === 's-' ? filteredArr.filter(item => item !== "shipovani").filter(item => item !== 'shipovani' && season ? item !== season[0] : filteredArr.join('/')).join('/') : filteredArr.join('/') }
 						`}
 					>
 						<Checkbox className="-z-10" radius="none" size="lg" value={ value }>

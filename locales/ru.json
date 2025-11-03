@@ -71,6 +71,7 @@
     "capacity": "Емкость",
     "car brand": "Марка авто",
     "car type": "Тип автомобиля",
+    "cargo": "Грузовые",
     "vantazhni": "Грузовые",
     "cast": "Литые",
     "choose disks": "Подобрать диски",
@@ -283,7 +284,8 @@
     "specify city": "Укажите город",
     "specify quantity": "Укажите количество",
     "close": "Закрыть",
-    "calculate": "Рассчитать"
+    "calculate": "Рассчитать",
+    "change": "Изменить"
   },
   "OurAdvantages": {
     "our advantages": "Наши преимущества",
