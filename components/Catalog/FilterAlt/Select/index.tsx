@@ -1,144 +1,157 @@
 'use client';
-import { ChangeEvent, FC, MouseEvent, useCallback, useRef, useState } from 'react';
-import { useTranslations } from 'next-intl';
+import { FC, useCallback, useRef, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
-
-import './index.scss';
+import { Badge, Checkbox, CheckboxGroup } from '@heroui/react';
 import * as Icons from '@/components/UI/Icons';
 import SearchInput from './SearchInput';
-import type { Options } from '@/models/baseData';
+import type { Brand } from '@/models/baseData';
+import { Link } from '@/i18n/routing';
+import { Section } from '@/models/section';
 
 interface SelectProps {
-	label: string
-	name: string
-	variant: 'white' | 'gray'
-	search?: boolean
-	options: Array<Options>
-	focusValue?: string | false
-	onChange: (name: string, value: number | string | undefined | null, element: HTMLElement) => void
-	filterValue?: null | number | string
-	valueStudded?: null | number | string
-	filterOther?: {
-		only_c: string | null | undefined
-		only_xl: string | null | undefined
-		only_owl: string | null | undefined
-		only_run_flat: string | null | undefined
-		only_off_road: string | null | undefined
-	}
+	brand?: Brand | null | undefined
+	checkboxKey: string;
+	filterValue?: string[];
+	focusValue?: string | false;
+	label: string;
+	options: { value: string; label: string }[];
+	section: Section;
+	search?: boolean;
+	slug: string[];
+	variant: 'white' | 'gray';
 }
 
-const Select: FC<SelectProps> = (
+export const Select: FC<SelectProps> = (
 	{
-		name,
-		label,
-		variant,
-		search,
-		options,
-		onChange,
-		focusValue,
+		brand,
+		checkboxKey,
 		filterValue,
-		valueStudded,
-		filterOther
+		focusValue,
+		label,
+		options,
+		section,
+		search,
+		slug,
+		variant
 	}) => {
 	const [ open, setOpen ] = useState(false);
 	const [ eventSearch, setEventSearch ] = useState('');
-	const ref = useRef<HTMLUListElement | null>(null);
-	const t = useTranslations('Filters');
+	const ref = useRef<HTMLDivElement | null>(null);
+	const slugTransform = slug?.map(item => decodeURIComponent(item));
+	const keyPattern = new RegExp(`^${checkboxKey}[\\w\u0400-\u04FF.()]+$`);
+	const filteredArr = slugTransform ? slugTransform.filter(item => !keyPattern.test(item)) : [];
+	const found = slugTransform?.find(item => keyPattern.test(item));
+	let season = undefined;
+	if(slug?.includes('litni')) {
+		season = [ 'litni' ];
+	} else if(slug?.includes('zimovi')) {
+		season = [ 'zimovi' ];
+	} else if(slug?.includes('vsesezonnye')) {
+		season = [ 'vsesezonnye' ];
+	} else if(slug?.includes('shipovani')) {
+		season = [ 'zimovi' ];
+	}
+	const defaultValue = found ? [ found.split('-')[1] ] : [];
+	let checked;
+
+	if(checkboxKey === 's-') {
+		checked = season ? season : defaultValue;
+	} else if(checkboxKey === 'b-') {
+		checked = brand ? [ brand.alias ] : defaultValue;
+	} else {
+		checked = defaultValue;
+	}
 
 	const handleClickOpen = useCallback(() => {
 		setOpen(prev => !prev);
 
 		if(focusValue && ref.current) {
-			const cont = ref.current.querySelectorAll('li');
+			const cont = ref.current.querySelectorAll('label');
 			const elIndex = Array.from(cont).findIndex(el => el.textContent === focusValue);
-
 			if(elIndex !== -1) {
 				setTimeout(() => {
-					ref.current?.scroll(0, elIndex * 41);
+					ref.current?.scroll(0, elIndex * 28);
 				}, 15);
 			}
 		}
 	}, [ focusValue ]);
 
-	const handleClick = (event: MouseEvent<HTMLElement> | ChangeEvent<HTMLElement>, value: number | string | undefined, isStudded?: boolean) => {
-		const newValue = filterValue === value ? null : value;
-		const newValueStudded = valueStudded === value ? null : value;
-		if(name === 'other') {
-			if(typeof value === 'string' && (value === 'only_c' || value === 'only_xl' || value === 'only_owl' || value === 'only_run_flat' || value === 'only_off_road')) {
-				const othersValue = filterOther?.[value] === '1' ? null : '1';
-				onChange(value, othersValue, event.currentTarget);
-			}
-		} else {
-			if(name === 'sezon') {
-				onChange('only_studded', null, event.currentTarget);
-			}
-			onChange(isStudded ? 'only_studded' : name, isStudded ? newValueStudded : newValue, event.currentTarget);
-		}
-	}
-
 	const handleChange = (value: string) => {
 		setEventSearch(value.toLowerCase());
 	}
 
-	return <div className={ twMerge('relative mt-2 rounded-sm bg-white', variant === 'gray' && 'bg-zinc-200') }>
-		<button
-			type='button'
-			onClick={ () => handleClickOpen() }
-			className={ twMerge(
-				'relative w-full cursor-default py-3 pr-10 text-left focus:outline-none pl-1.5',
-				variant === 'white' ? 'font-bold' : 'pl-3.5')
-			}>
-      <span className='flex items-center'>
-        <span className='block truncate'>{ t(label) }</span>
+	return <div
+		className={ twMerge('relative mt-2 rounded-sm bg-white z-10', variant === 'gray' && 'bg-zinc-200') }>
+		<Badge isInvisible={ !filterValue?.length } className='border-white'
+					 classNames={ { base: 'w-full', badge: 'left-[1%]' } } color='primary' content={ filterValue?.length }
+					 placement='top-left'>
+			<button
+				type='button'
+				onClick={ () => handleClickOpen() }
+				className={ twMerge(
+					'relative w-full cursor-default py-2.5 pr-10 text-left focus:outline-none pl-1.5 text-sm',
+					variant === 'gray' ? 'text-black' : '',
+					variant === 'white' ? 'font-bold' : 'pl-3.5')
+				}>
+      <span className='flex items-center m-'>
+        <span className='block truncate'>{ label }</span>
       </span>
-			<span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2.5">
-        <Icons.ChevronDownIcon className={ twMerge('w-3.5 h-3.5 stroke-black', variant === 'gray' && 'stroke-gray-500') }/>
+				<span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2.5">
+        <Icons.ChevronDownIcon
+					className={ twMerge('w-3.5 h-3.5 stroke-black', variant === 'gray' && 'stroke-gray-500') }/>
       </span>
-		</button>
+			</button>
+		</Badge>
 		{ search && open && <SearchInput value={ eventSearch } handleChange={ handleChange }/> }
-		<ul ref={ ref } className={
-			twMerge(
-				'relative item-list max-h-[480px] w-full overflow-auto pb-1 pt-1 text-base ring-black ring-opacity-5 focus:outline-none sm:text-sm',
-				!open && 'hidden'
-			)
-		}>
-			{ options?.filter(i => i.label.toString().toLowerCase().includes(eventSearch)).map(item => {
-				return <li
-					key={ item.value }
-					id='listbox-option-0'
-					className='relative cursor-default select-none py-1 pl-2.5 pr-9 text-gray-900'
+		<CheckboxGroup
+			ref={ ref }
+			defaultValue={ checked }
+			className={ twMerge('relative max-h-[480px] w-full overflow-auto px-2.5 pb-4', !open && 'hidden') }
+			classNames={ { label: 'mt-4 font-bold text-black' } }
+			orientation='vertical'
+		>
+			{ options?.filter(i => i.label.toString().toLowerCase().includes(eventSearch)).map(({ value, label }) => (
+				<Link
+					key={ value }
+					className='w-full flex'
+					href={
+						`/katalog/
+						${ section }/
+						${ checkboxKey === 's-' || checkboxKey === 'b-' ? '' : checkboxKey }
+						${ checkboxKey === 'b-' ? 'brand/' : '' }${ value }/
+						${ checkboxKey === 'b-' ? filteredArr.filter(item => item !== (brand ? brand.alias : '') && item !== 'brand').join('/') : checkboxKey === 's-' ? filteredArr.filter(item => item !== "shipovani").filter(item => item !== 'shipovani' && season ? item !== season[0] : filteredArr.join('/')).join('/') : filteredArr.join('/') }
+						` }
 				>
-					<div className='inline-flex items-center'>
-						<label
-							className='relative flex cursor-pointer items-center rounded-full'
-							htmlFor={ `${ name }-${ item.value }` }
-							data-ripple-dark='true'
-						>
-							<input
-								onChange={ (event) => handleClick(event, item.value) }
-								checked={ name === 'other' ? !!filterOther?.[item.value as keyof typeof filterOther] : filterValue === item.value }
-								id={ `${ name }-${ item.value }` }
-								type='checkbox'
-								className='peer relative h-7 w-7 bg-white appearance-none cursor-pointer rounded-sm border border-[#A9ACB2] transition-all checked:border-primary checked:bg-primary hover:border-primary'
-							/>
-							<div
-								className='pointer-events-none absolute top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 text-white peer-checked:opacity-100'>
-								<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none"
-										 className="h-3.5 w-3.5 fill-white">
-									<path
-										d="M5.4447 8.55578L2.33276 5.44494L0.777344 7.00036L5.4447 11.6677L13.2218 3.88953L11.6675 2.33301L5.4447 8.55578Z"
-									/>
-								</svg>
-							</div>
-						</label>
-						<label className="mt-px cursor-pointer select-none font-medium ml-2.5">
-							{ item.label }
-						</label>
-					</div>
-				</li>
-			}) }
-		</ul>
+					<Checkbox
+						className="-z-10"
+						radius="sm"
+						size="lg"
+						value={ value }
+						classNames={ {
+							label: twMerge('text-black text-base', variant === 'white' && 'dark:text-white'),
+							wrapper: 'bg-white before:-m-[1px]'
+						} }
+					>
+						{ label }
+					</Checkbox>
+				</Link>
+			)) }
+		</CheckboxGroup>
+		{ slug && slug.some(item => ['zimovi', 'shipovani'].includes(item)) && <Link
+			className={ twMerge('ml-8 flex', !open && 'hidden') }
+			href={ `/katalog/${ section }/${ slug ? slug.filter(item => !['zimovi', 'shipovani'].includes(item)).join('/') : '' }/${ slug?.includes('shipovani') ? 'zimovi' : 'shipovani' }` }>
+			<Checkbox
+				className="-z-10"
+				radius="sm"
+				size="lg"
+				isSelected={ slug?.includes('shipovani') }
+				classNames={ {
+					label: twMerge('text-black text-base', variant === 'white' && 'dark:text-white'),
+					wrapper: 'bg-white before:-m-[1px]'
+				} }
+			>
+				Шип
+			</Checkbox>
+		</Link> }
 	</div>
 };
-
-export default Select;

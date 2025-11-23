@@ -1,31 +1,51 @@
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
+import { useRouter } from '@/i18n/routing';
+import { useAppDispatch } from '@/hooks/redux';
+import { setProgress } from '@/store/slices/progressSlice';
 import MySelect from '@/components/UI/Select';
-import { useAppDispatch, useAppSelector } from '@/hooks/redux';
 import type { BaseDataProps } from '@/models/baseData';
-import { setCarFilter } from '@/store/slices/filterCarSlice';
 import { baseDataAPI } from '@/services/baseDataService';
+import { Button } from '@heroui/react';
+import { Section } from '@/models/filter';
 
-interface Auto {
-	label: string
-	value: number
+interface CarFilters {
+	brand: string | number;
+	model: string | number;
+	year: string | number;
+	modification: string | number;
 }
 
 interface Props {
 	data: BaseDataProps | undefined
+	car: string | null
+	section: Section
 }
 
-const ByCar: FC<Props> = ( data ) => {
-	const t = useTranslations('Filters');
+const ByCar: FC<Props> = ({ data, car, section } ) => {
 	const dispatch = useAppDispatch();
-	const { filter } = useAppSelector(state => state.filterCarReducer);
-	const { filter: filterCar } = useAppSelector(state => state.filterCarReducer);
+	const router = useRouter();
+	const t = useTranslations('Filters');
+	const [ filter, setFilter ] = useState<CarFilters>({ brand: 0, model: 0, modification: 0, year: 0 });
 	const { data: model, refetch: modelRefetch } = baseDataAPI.useFetchAutoModelQuery(`${filter.brand}`);
 	const { data: modelYear } = baseDataAPI.useFetchAutoYearQuery(`${filter.model}`);
 	const { data: modelKit, refetch: modelKitRefetch } = baseDataAPI.useFetchAutoModelKitQuery(`${filter.model}/${filter.year}`);
+	const { data: dataModification } = baseDataAPI.useFetchKitTyreSizeQuery(`${ filter.modification }`);
+	const { data: dataDisksModification } = baseDataAPI.useFetchKitDiskSizeQuery(`${ filter.modification }`);
+
+	useEffect(() => {
+		if(car) {
+			const numbers = car.split('-').filter(part => /^\d+$/.test(part)).map(Number);
+			if(numbers.length > 2) {
+				setFilter({ brand: numbers[1], model: numbers[2], modification: numbers[3], year: numbers[0] });
+			} else {
+				setFilter({ brand: numbers[0], model: 0, modification: 0, year: 0 });
+			}
+		}
+	}, [car]);
 
 	const onChangeByCar = (name: string, value: number | string | null) => {
-		dispatch(setCarFilter({ ...filter, [name]: value }));
+		setFilter({ ...filter, [name]: value });
 		if(name === 'model') {
 			modelRefetch();
 		} else if(name === 'modification' || name === 'year') {
@@ -33,16 +53,25 @@ const ByCar: FC<Props> = ( data ) => {
 		}
 	}
 
+	const handleClick = () => {
+		const brandLabel = data?.auto.find(item => item.value == filter.brand)?.label.toLowerCase() ?? '';
+		const link = `car-${ brandLabel } ${ filter.year } ${ filter.brand } ${ filter.model } ${ filter.modification }`;
+		const paramsTires = `/w-${ dataModification?.[0].width }/h-${ dataModification?.[0].height }/d-${ dataModification?.[0].diameter }`;
+		const paramsDisks = `/w-${ dataDisksModification?.[0].width }/d-${ dataDisksModification?.[0].diameter }/kr-${ dataDisksModification?.[0].kits.bolt_count }x${ dataDisksModification?.[0].kits.pcd }/et-${ dataDisksModification?.[0].et }/dia-${ dataDisksModification?.[0].kits.dia }`;
+		router.push(`/katalog/${ section }/${ link.split(' ').join('-') }${ section === Section.Tires ? paramsTires : paramsDisks }`);
+		dispatch(setProgress(true));
+	}
+
 	return (
 		<>
 			<div className='mt-2'>
-				{ <MySelect
+				<MySelect
 					name='brand'
 					label={ t('car brand') }
-					options={ data.data?.auto?.map(item => ({ value: item.value, label: item.label })) }
+					options={ data?.auto?.map(item => ({ value: item.value, label: item.label })) }
 					onChange={ onChangeByCar }
-					defaultValue={ filterCar?.brand ? data.data?.auto?.find((i: Auto) => i.value === filterCar.brand) : undefined }
-				/> }
+					defaultValue={ filter.brand ? filter.brand.toString() : '' }
+				/>
 			</div>
 			<div className='mt-2'>
 				<MySelect
@@ -51,7 +80,7 @@ const ByCar: FC<Props> = ( data ) => {
 					options={ model?.map(item => ({ value: item.value, label: item.label })) }
 					isDisabled={ model?.length === 0 }
 					onChange={ onChangeByCar }
-					defaultValue={ filterCar?.model ? model?.find(i => i.value === filterCar.model) : undefined }
+					defaultValue={ filter.model ? filter.model.toString() : '' }
 				/>
 			</div>
 			<div className='mt-2'>
@@ -61,7 +90,7 @@ const ByCar: FC<Props> = ( data ) => {
 					options={ modelYear?.map(item => ({ value: item, label: `${item}` })) }
 					isDisabled={ modelYear?.length === 0 }
 					onChange={ onChangeByCar }
-					defaultValue={ filterCar?.year ? { value: `${filterCar?.year}`, label: `${filterCar?.year}` } : undefined }
+					defaultValue={ filter.year ? filter.year.toString() : '' }
 				/>
 			</div>
 			<div className='mt-2'>
@@ -71,8 +100,13 @@ const ByCar: FC<Props> = ( data ) => {
 					options={ modelKit?.map(item => ({ value: item.value, label: item.label })) }
 					isDisabled={ modelKit?.length === 0 }
 					onChange={ onChangeByCar }
-					defaultValue={ filterCar?.modification ? modelKit?.find(i => i.value === filterCar.modification) : undefined }
+					defaultValue={ filter.modification ? filter.modification.toString() : '' }
 				/>
+			</div>
+			<div className='mt-4'>
+				<Button color='primary' onPress={ handleClick } size='md' radius='full' className='w-full uppercase font-bold' >
+					{ t('choose') }
+				</Button>
 			</div>
 		</>
 	)

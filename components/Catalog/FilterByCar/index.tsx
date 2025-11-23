@@ -41,7 +41,7 @@ const FilterByCar = () => {
 
 	return (
 		<div className='flex justify-end items-center lg:items-start mb-3'>
-			{ subsection === Subsection.ByParams && section === Section.Tires &&
+			{ subsection === Subsection.ByParams && section !== Section.Battery &&
 				<div className='hidden lg:flex gap-x-3 xl:gap-x-6 mr-3 xl:mr-8'>
 					<TypeCarLinks section='katalog' />
 				</div> }

@@ -45,7 +45,7 @@ interface ActionsBlockProps {
 const ActionsBlock: FC<ActionsBlockProps> = ({ id, className, section, quantity, productName }) => {
 	const t = useTranslations('ActionBlock');
 	const pathname = usePathname();
-	const url = process.env.ACCESS_ORIGIN + pathname;
+	const url = process.env.NEXT_PUBLIC_ACCESS_ORIGIN + pathname;
 	const dispatch = useAppDispatch();
 	const { bookmarksItems } = useAppSelector(state => state.bookmarksReducer);
 	const { comparisonItems } = useAppSelector(state => state.comparisonReducer);

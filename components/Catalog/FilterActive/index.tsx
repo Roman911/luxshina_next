@@ -1,3 +1,4 @@
+'use client';
 import { FC } from 'react';
 import { useTranslations } from 'next-intl';
 import { Language } from '@/models/language';
@@ -9,16 +10,16 @@ import { VehicleTypeTransform } from '@/lib/characteristicsTransform';
 import type { Brand } from '@/models/baseData';
 
 interface FilterActiveProps {
+	brand: Brand | null | undefined
 	locale: Language
 	className: string
 	slug?: string[]
 	section: Section
-	brand: Brand | null | undefined
 }
 
 const validItems = ['litni', 'zimovi', 'vsesezonnye', 'shipovani', 'off-road-4x4', 'legkovi', 'pozashlyahoviki', 'busi', 'liti', 'stalni', 'kovani'];
 
-const FilterActive: FC<FilterActiveProps> = ({ className, slug, section, brand }) => {
+const FilterActive: FC<FilterActiveProps> = ({ brand, className, slug = [], section }) => {
 	const t = useTranslations('Filters');
 	const result = brand ? slug?.filter(item => item !== brand.alias) : slug;
 
@@ -44,6 +45,18 @@ const FilterActive: FC<FilterActiveProps> = ({ className, slug, section, brand }
 			{ brand && renderItem(0, brand.alias, brand.label, true)}
 			{ result && result.length !== 0 && result?.map((item, key) => {
 				const split = item.split('-') || '';
+
+				if(split && split[0] === 'p') {
+					return ;
+				}
+
+				if(split && split[0] === 'pfrom') {
+					return renderItem(key, item, `${t('from')} ${split[1]} грн`);
+				}
+
+				if(split && split[0] === 'pto') {
+					return renderItem(key, item, `${t('to')} ${split[1]} грн`);
+				}
 
 				if(item === 'brand') {
 					return ;

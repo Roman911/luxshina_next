@@ -74,6 +74,7 @@
     "cargo": "Грузовые",
     "vantazhni": "Грузовые",
     "cast": "Литые",
+    "choose": "Подобрать",
     "choose disks": "Подобрать диски",
     "choose tires": "Подобрать шины",
     "color": "Цвет",
@@ -92,7 +93,7 @@
     "from": "От",
     "graduation year": "Год выпуска",
     "height": "Высота",
-    "high-voltage": "напряжение",
+    "high-voltage": "Напряжение",
     "homologation": "Омологация",
     "length": "Длина",
     "light": "Легковые",
@@ -109,6 +110,7 @@
     "reset everything": "Сбросить все",
     "reviews": "Отзывы",
     "season": "Сезон",
+    "special equipment": "Спецтехника",
     "spectehnika": "Спецтехника",
     "speed index": "Индекс скорости",
     "starting current": "Пусковой ток",
@@ -136,7 +138,8 @@
     "busi": "Бусы",
     "liti": "Литые",
     "stalni": "Стальные",
-    "kovani": "Кованые"
+    "kovani": "Кованые",
+    "to": "До"
   },
   "Footer": {
     "accumulators": "Аккумуляторы",

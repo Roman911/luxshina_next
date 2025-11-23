@@ -74,6 +74,7 @@
     "cargo": "Вантажні",
     "vantazhni": "Вантажні",
     "cast": "Литі",
+    "choose": "Підібрати",
     "choose disks": "Підібрати диски",
     "choose tires": "Підібрати шини",
     "color": "Колір",
@@ -92,7 +93,7 @@
     "from": "Від",
     "graduation year": "Рік випуску",
     "height": "Висота",
-    "high-voltage": "напруга",
+    "high-voltage": "Напруга",
     "homologation": "Омологація",
     "length": "Довжина",
     "light": "Легкові",
@@ -110,6 +111,7 @@
     "reset everything": "Скинути все",
     "reviews": "Відгуки",
     "season": "Сезон",
+    "special equipment": "Спецтехніка",
     "spectehnika": "Спецтехніка",
     "speed index": "Індекс швидкості",
     "starting current": "Пусковий струм",
@@ -137,7 +139,8 @@
     "busi": "Буси",
     "liti": "Литі",
     "stalni": "Стальні",
-    "kovani": "Ковані"
+    "kovani": "Ковані",
+    "to": "До"
   },
   "Footer": {
     "accumulators": "Акумулятори",
