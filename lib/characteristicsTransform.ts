@@ -18,15 +18,15 @@ export const VehicleTypeTransform = (type: string): VehicleType | undefined => {
 	const vehicleTypeMap: { [key: string]: VehicleType } = {
 		'1': { icon: 'light', name: 'light', to: '/katalog/avtoshini/vt-1' },
 		'2': { icon: 'pozashlyahoviki', name: 'SUVs', to: '/katalog/avtoshini/vt-2' },
-		'3': { icon: 'cargo', name: 'cargo', to: '/katalog/avtoshini/vt-3' },
-		'4': { icon: 'cargo', name: 'cargo', to: '/katalog/avtoshini/vt-3' },
-		'5': { icon: 'cargo', name: 'cargo', to: '/katalog/avtoshini/vt-3' },
-		'6': { icon: 'cargo', name: 'cargo', to: '/katalog/avtoshini/vt-3' },
+		'3': { icon: 'cargo', name: 'veducha', to: '/katalog/avtoshini/vt-3' },
+		'4': { icon: 'cargo', name: 'rylevaya', to: '/katalog/avtoshini/vt-4' },
+		'5': { icon: 'cargo', name: 'pricepnaya', to: '/katalog/avtoshini/vt-5' },
+		'6': { icon: 'cargo', name: 'universalna', to: '/katalog/avtoshini/vt-6' },
 		'7': { icon: 'motorcycle', name: 'motorcycles', to: '/katalog/avtoshini/vt-7' },
 		'8': { icon: 'busi', name: 'buses', to: '/katalog/avtoshini/vt-8' },
-		'9': { icon: 'special', name: 'special equipment', to: '/katalog/avtoshini/vt-9' },
-		'10': { icon: 'special', name: 'special equipment', to: '/katalog/avtoshini/vt-9' },
-		'11': { icon: 'special', name: 'special equipment', to: '/katalog/avtoshini/vt-9' },
+		'9': { icon: 'special', name: 'sg', to: '/katalog/avtoshini/vt-9' },
+		'10': { icon: 'special', name: 'kirerna', to: '/katalog/avtoshini/vt-10' },
+		'11': { icon: 'special', name: 'industrial', to: '/katalog/avtoshini/vt-11' },
 	};
 
 	return vehicleTypeMap[type];

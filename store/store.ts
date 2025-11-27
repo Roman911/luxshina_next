@@ -4,6 +4,7 @@ import bookmarksReducer from './slices/bookmarksSlice';
 import cartReducer from './slices/cartSlice';
 import comparisonReducer from './slices/comparisonSlice';
 import filterCarReducer from './slices/filterCarSlice';
+import filterIsOpenReducer from './slices/filterIsOpenSlice';
 import filterReducer from './slices/filterSlice';
 import orderReducer from './slices/orderSlice';
 import progressReducer from './slices/progressSlice';
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
 	cartReducer,
 	comparisonReducer,
 	filterCarReducer,
+	filterIsOpenReducer,
 	filterReducer,
 	orderReducer,
 	progressReducer,

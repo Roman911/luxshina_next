@@ -70,7 +70,7 @@ const FilterActive: FC<FilterActiveProps> = ({ brand, className, slug = [], sect
 					return renderItem(key, item, t(VehicleTypeTransform(split[1])?.name || '1'));
 				}
 
-				return renderItem(key, item, split[1]);
+				return renderItem(key, item, decodeURIComponent(split[1]));
 			}) }
 			{ slug && slug.length !== 0 &&
 				<Link href={ `/katalog/${section}` }>

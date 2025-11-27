@@ -1,5 +1,5 @@
 'use client';
-import { FC, useCallback, useRef, useState } from 'react';
+import { FC, useCallback, useEffect, useRef, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { Badge, Checkbox, CheckboxGroup } from '@heroui/react';
 import * as Icons from '@/components/UI/Icons';
@@ -7,8 +7,10 @@ import SearchInput from './SearchInput';
 import type { Brand } from '@/models/baseData';
 import { Link } from '@/i18n/routing';
 import { Section } from '@/models/section';
+import { IOpenFilter } from '@/models/filter';
 
 interface SelectProps {
+	name: string
 	brand?: Brand | null | undefined
 	checkboxKey: string;
 	filterValue?: string[];
@@ -19,10 +21,15 @@ interface SelectProps {
 	search?: boolean;
 	slug: string[];
 	variant: 'white' | 'gray';
+	isOpened?: boolean
+	scroll?: number | null
+	handleScrollAction?: (name: keyof IOpenFilter, value: number) => void
+	handleClickAction: (name: keyof IOpenFilter, value: boolean) => void
 }
 
 export const Select: FC<SelectProps> = (
 	{
+		name,
 		brand,
 		checkboxKey,
 		filterValue,
@@ -32,9 +39,12 @@ export const Select: FC<SelectProps> = (
 		section,
 		search,
 		slug,
-		variant
+		variant,
+		isOpened,
+		scroll,
+		handleScrollAction,
+		handleClickAction,
 	}) => {
-	const [ open, setOpen ] = useState(false);
 	const [ eventSearch, setEventSearch ] = useState('');
 	const ref = useRef<HTMLDivElement | null>(null);
 	const slugTransform = slug?.map(item => decodeURIComponent(item));
@@ -51,6 +61,14 @@ export const Select: FC<SelectProps> = (
 	} else if(slug?.includes('shipovani')) {
 		season = [ 'zimovi' ];
 	}
+	let diskType = undefined;
+	if(slug?.includes('liti')) {
+		diskType = [ 'liti' ];
+	} else if(slug?.includes('stalni')) {
+		diskType = [ 'stalni' ];
+	} else if(slug?.includes('kovani')) {
+		diskType = [ 'kovani' ];
+	}
 	const defaultValue = found ? [ found.split('-')[1] ] : [];
 	let checked;
 
@@ -58,12 +76,22 @@ export const Select: FC<SelectProps> = (
 		checked = season ? season : defaultValue;
 	} else if(checkboxKey === 'b-') {
 		checked = brand ? [ brand.alias ] : defaultValue;
+	} else if(checkboxKey === 'td-') {
+		checked = diskType ? diskType : defaultValue;
 	} else {
 		checked = defaultValue;
 	}
 
+	useEffect(() => {
+		if(ref.current && scroll) {
+			setTimeout(() => {
+				ref.current?.scroll(0, scroll);
+			}, 15);
+		}
+	}, [scroll]);
+
 	const handleClickOpen = useCallback(() => {
-		setOpen(prev => !prev);
+		handleClickAction(name as keyof IOpenFilter, !isOpened);
 
 		if(focusValue && ref.current) {
 			const cont = ref.current.querySelectorAll('label');
@@ -74,7 +102,7 @@ export const Select: FC<SelectProps> = (
 				}, 15);
 			}
 		}
-	}, [ focusValue ]);
+	}, [focusValue, handleClickAction, isOpened, name]);
 
 	const handleChange = (value: string) => {
 		setEventSearch(value.toLowerCase());
@@ -102,11 +130,11 @@ export const Select: FC<SelectProps> = (
       </span>
 			</button>
 		</Badge>
-		{ search && open && <SearchInput value={ eventSearch } handleChange={ handleChange }/> }
+		{ search && isOpened && <SearchInput value={ eventSearch } handleChange={ handleChange }/> }
 		<CheckboxGroup
 			ref={ ref }
 			defaultValue={ checked }
-			className={ twMerge('relative max-h-[480px] w-full overflow-auto px-2.5 pb-4', !open && 'hidden') }
+			className={ twMerge('relative max-h-[480px] w-full overflow-auto px-2.5 pb-4', !isOpened && 'hidden') }
 			classNames={ { label: 'mt-4 font-bold text-black' } }
 			orientation='vertical'
 		>
@@ -114,12 +142,17 @@ export const Select: FC<SelectProps> = (
 				<Link
 					key={ value }
 					className='w-full flex'
+					onClick={ () => {
+						if(handleScrollAction && ref.current) {
+							handleScrollAction(name as keyof IOpenFilter, ref.current ? ref.current.scrollTop : 0);
+						}
+					}}
 					href={
 						`/katalog/
 						${ section }/
-						${ checkboxKey === 's-' || checkboxKey === 'b-' ? '' : checkboxKey }
+						${ (checkboxKey === 's-' || checkboxKey === 'b-' || checkboxKey === 'td-') ? '' : checkboxKey }
 						${ checkboxKey === 'b-' ? 'brand/' : '' }${ value }/
-						${ checkboxKey === 'b-' ? filteredArr.filter(item => item !== (brand ? brand.alias : '') && item !== 'brand').join('/') : checkboxKey === 's-' ? filteredArr.filter(item => item !== "shipovani").filter(item => item !== 'shipovani' && season ? item !== season[0] : filteredArr.join('/')).join('/') : filteredArr.join('/') }
+						${ checkboxKey === 'b-' ? filteredArr.filter(item => item !== (brand ? brand.alias : '') && item !== 'brand').join('/') : checkboxKey === 'td-' ? filteredArr.filter(item => diskType ? item !== diskType[0] : filteredArr.join('/')).join('/') : checkboxKey === 's-' ? filteredArr.filter(item => item !== "shipovani").filter(item => item !== 'shipovani' && season ? item !== season[0] : filteredArr.join('/')).join('/') : filteredArr.join('/') }
 						` }
 				>
 					<Checkbox
@@ -138,7 +171,7 @@ export const Select: FC<SelectProps> = (
 			)) }
 		</CheckboxGroup>
 		{ slug && slug.some(item => ['zimovi', 'shipovani'].includes(item)) && <Link
-			className={ twMerge('ml-8 flex', !open && 'hidden') }
+			className={ twMerge('ml-8 flex', !isOpened && 'hidden') }
 			href={ `/katalog/${ section }/${ slug ? slug.filter(item => !['zimovi', 'shipovani'].includes(item)).join('/') : '' }/${ slug?.includes('shipovani') ? 'zimovi' : 'shipovani' }` }>
 			<Checkbox
 				className="-z-10"

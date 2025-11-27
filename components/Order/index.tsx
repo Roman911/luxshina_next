@@ -71,8 +71,6 @@ const OrderComponent: FC<OrderProps> = (
 				/>
 				<PhoneMaskInput/>
 				<Input
-					isRequired
-					errorMessage={ t('enter valid email') }
 					label={ t('email') }
 					name='email'
 					type='email'

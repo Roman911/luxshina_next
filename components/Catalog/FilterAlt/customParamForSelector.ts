@@ -5,9 +5,9 @@ export const customTireSeason = [
 ];
 
 export const typeDisc = [
-	{ value: '1', name: 'Стальной', name_ua: 'Сталевий' },
-	{ value: '2', name: 'Кованый', name_ua: 'Кований' },
-	{ value: '3', name: 'Литой', name_ua: 'Литий' },
+	{ value: 'stalni', name: 'Стальной', name_ua: 'Сталевий' },
+	{ value: 'kovani', name: 'Кованый', name_ua: 'Кований' },
+	{ value: 'liti', name: 'Литой', name_ua: 'Литий' },
 ];
 
 export const appointmentCargo = [

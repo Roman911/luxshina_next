@@ -139,7 +139,14 @@
     "liti": "Литые",
     "stalni": "Стальные",
     "kovani": "Кованые",
-    "to": "До"
+    "to": "До",
+    "veducha": "Ведущая",
+    "rylevaya": "Рулевая",
+    "pricepnaya": "Прицепная",
+    "universalna": "Универсальная",
+    "sg": "с/х",
+    "kirerna": "Карьерная",
+    "industrial": "Индустріальна"
   },
   "Footer": {
     "accumulators": "Аккумуляторы",

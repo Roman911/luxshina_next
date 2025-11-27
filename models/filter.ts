@@ -54,3 +54,98 @@ export interface IFilter {
 	minDovzina?: null | string
 	maxDovzina?: null | string
 }
+
+export interface IOpenFilter {
+	width: {
+		open: boolean,
+		scrollValue: number | null
+	}
+	height: {
+		open: boolean,
+		scrollValue: number | null
+	}
+	radius: {
+		open: boolean,
+		scrollValue: number | null
+	}
+	sezon: {
+		open: boolean,
+		scrollValue: number | null
+	}
+	brand: {
+		open: boolean,
+		scrollValue: number | null
+	}
+	model_id: {
+		open: boolean,
+		scrollValue: number | null
+	}
+	citys: {
+		open: boolean,
+		scrollValue: number | null
+	}
+	country: {
+		open: boolean,
+		scrollValue: number | null
+	}
+	year: {
+		open: boolean,
+		scrollValue: number | null
+	}
+	omolog: {
+		open: boolean,
+		scrollValue: number | null
+	}
+	krepeg: {
+		open: boolean,
+		scrollValue: number | null
+	}
+	typedisk: {
+		open: boolean,
+		scrollValue: number | null
+	}
+	colir: {
+		open: boolean,
+		scrollValue: number | null
+	}
+	jemnist: {
+		open: boolean,
+		scrollValue: number | null
+	}
+	puskovii_strum: {
+		open: boolean,
+		scrollValue: number | null
+	}
+	tip_elektrolitu: {
+		open: boolean,
+		scrollValue: number | null
+	}
+	tip_korpusu: {
+		open: boolean,
+		scrollValue: number | null
+	}
+	napruga: {
+		open: boolean,
+		scrollValue: number | null
+	}
+	poliarnist: {
+		open: boolean,
+		scrollValue: number | null
+	}
+	vehicle_type: {
+		open: boolean,
+		scrollValue: number | null
+	}
+	li: {
+		open: boolean,
+		scrollValue: number | null
+	}
+	si: {
+		open: boolean,
+		scrollValue: number | null
+	}
+	other: {
+		open: boolean,
+		scrollValue: number | null
+	}
+}
