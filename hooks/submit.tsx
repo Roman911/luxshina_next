@@ -33,8 +33,8 @@ export const useAppSubmit = () => {
 			[ 'am', filter.napruga ], [ 'pl', filter.poliarnist ], [ 'vt', filter.vehicle_type ],
 			[ 'li', filter.li ], [ 'si', filter.si ], [ 'oc', filter.only_c ], [ 'xl', filter.only_xl ],
 			[ 'owl', filter.only_owl ], [ 'rf', filter.only_run_flat ], [ 'ofr', filter.only_off_road ],
-			[ 'pfrom', filter.minPrice ], [ 'pto', filter.maxPrice ], [ 'etfrom', filter.etMin ],
-			[ 'etto', filter.etMax ], [ 'diafrom', filter.diaMin ], [ 'diato', filter.diaMax ],
+			[ 'pfrom', filter.minPrice ], [ 'pto', filter.maxPrice ], [ 'etfrom', filter.etMin ], [ 'et', filter.et ],
+			[ 'etto', filter.etMax ], [ 'dia', filter.dia ], [ 'diafrom', filter.diaMin ], [ 'diato', filter.diaMax ],
 			[ 'wfrom', filter.minShirina ], [ 'wto', filter.maxShirina ], [ 'hfrom', filter.minVisota ],
 			[ 'hto', filter.maxVisota ], [ 'lngfrom', filter.minDovzina ], [ 'lngto', filter.maxDovzina ],
 		];

@@ -58,8 +58,8 @@ export const baseDataAPI = createApi({
 			}),
 		}),
 		fetchKitDiskSize: build.query<KitDiskSize[], string>({
-			query: ([section]) => ({
-				url: `/baseData/getKitDiskSize/${[section]}`,
+			query: (id) => ({
+				url: `/baseData/getKitDiskSize/${id}`,
 			}),
 		}),
 		fetchManufModels: build.query<ManufModels[], string>({

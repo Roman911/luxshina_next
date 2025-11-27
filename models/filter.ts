@@ -43,8 +43,10 @@ export interface IFilter {
 	only_off_road?: null | string
 	minPrice?: null | string
 	maxPrice?: null | string
+	et?: null | string
 	etMin?: null | string
 	etMax?: null | string
+	dia?: null | string
 	diaMin?: null | string
 	diaMax?: null | string
 	minShirina?: null | string

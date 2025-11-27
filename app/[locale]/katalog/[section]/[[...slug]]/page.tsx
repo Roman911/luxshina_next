@@ -37,7 +37,10 @@ export default async function Catalog({ params }: { params: Promise<{ locale: La
 	const filtersAkum = await getFiltersAkum();
 	const value = slug?.find(item => item.startsWith('p-'));
 	const page = value ? parseInt(value.split('-')[1], 10) : null;
-	const filterData = await getFilterData(`?typeproduct=${section === Section.Disks ? 3 : section === Section.Battery ? 4 : section === Section.Cargo ? 2 : 1}`);
+	const widthItem = slug?.find(item => item.startsWith('w-'));
+	const heightItem = slug?.find(item => item.startsWith('h-'));
+	const diameterItem = slug?.find(item => item.startsWith('d-'));
+	const filterData = await getFilterData(`?typeproduct=${section === Section.Disks ? 3 : section === Section.Battery ? 4 : section === Section.Cargo ? 2 : 1}${ widthItem ? `&width=${widthItem.split('-')[1]}` : ''}${ heightItem ? `&height=${heightItem.split('-')[1]}` : ''}${ diameterItem ? `&radius=${diameterItem.split('-')[1]}` : ''}`);
 	const paramsUrl = transformUrl({ section, slug });
 	const found = slug?.find(item => item.startsWith('order-'))?.split('-')[1] as keyof typeof sort;
 	const typeTires = TypeTires(section, slug);

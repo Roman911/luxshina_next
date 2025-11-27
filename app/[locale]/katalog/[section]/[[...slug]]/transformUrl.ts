@@ -7,8 +7,8 @@ const paramKeys: Array<keyof IFilter> = [
 	'width', 'height', 'radius', 'sezon', 'brand', 'model_id', 'country', 'year', 'omolog',
 	'krepeg', 'typedisk', 'colir', 'jemnist', 'puskovii_strum', 'tip_elektrolitu',
 	'tip_korpusu', 'napruga', 'poliarnist', 'vehicle_type', 'li', 'si', 'only_studded',
-	'only_c', 'only_xl', 'only_owl', 'only_run_flat', 'only_off_road', 'minPrice', 'maxPrice',
-	'etMin', 'etMax', 'diaMin', 'diaMax', 'minShirina', 'maxShirina', 'minVisota', 'maxVisota',
+	'only_c', 'only_xl', 'only_owl', 'only_run_flat', 'only_off_road', 'minPrice', 'maxPrice', 'et',
+	'etMin', 'etMax', 'dia', 'diaMin', 'diaMax', 'minShirina', 'maxShirina', 'minVisota', 'maxVisota',
 	'minDovzina', 'maxDovzina'
 ];
 

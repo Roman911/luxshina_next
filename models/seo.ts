@@ -28,8 +28,10 @@ export interface IFilter {
 	only_off_road?: string
 	minPrice?: string
 	maxPrice?: string
+	et?: string
 	etMin?: string
 	etMax?: string
+	dia?: string
 	diaMin?: string
 	diaMax?: string
 	minShirina?: string
@@ -70,8 +72,10 @@ export type OriginalType = {
 	ofr: 'only_off_road',
 	pfrom: 'minPrice',
 	pto: 'maxPrice',
+	et: 'et',
 	etfrom: 'etMin',
 	etto: 'etMax',
+	dia: 'dia',
 	diafrom: 'diaMin',
 	diato: 'diaMax',
 	wfrom: 'minShirina',
