@@ -55,6 +55,9 @@ export const generateUrl = (filter: IFilter): string => {
 		} if(key === 'brand') {
 			acc.push('brand');
 			acc.push(value);
+		} if(key === 'modal') {
+			acc.push('modal');
+			acc.push(value);
 		} else if (value) {
 			const formattedValue = Array.isArray(value) ? value.join(',') : String(value);
 			const urlParamKey = paramsTransForURL[key as keyof IFilter];

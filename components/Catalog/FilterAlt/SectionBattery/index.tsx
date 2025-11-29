@@ -8,6 +8,7 @@ import { Section } from '@/models/section';
 import { SelectFromTo } from '@/components/Catalog/FilterAlt/SelectFromTo';
 import { IOpenFilter } from '@/models/filter';
 import { close, open, setScrollValue } from '@/store/slices/filterIsOpenSlice';
+import { getModel } from '@/lib/brand';
 
 interface Props {
 	brand: Brand | null | undefined
@@ -21,7 +22,8 @@ const SectionBattery: FC<Props> = ({ brand, section, slug }) => {
 	const { filter } = useAppSelector(state => state.filterReducer);
 	const { filterIsOpen } = useAppSelector(state => state.filterIsOpenReducer);
 	const { data: dataAkum } = baseDataAPI.useFetchDataAkumQuery('');
-	const { data: manufModels } = baseDataAPI.useFetchManufModelsQuery(`${ filter.brand }`);
+	const { data: manufModels } = baseDataAPI.useFetchManufModelsQuery(`${ brand?.value }`);
+	const model = getModel(slug, manufModels);
 
 	const handleClickOpen = (name: keyof IOpenFilter, value: boolean) => {
 		if (value) {
@@ -120,12 +122,13 @@ const SectionBattery: FC<Props> = ({ brand, section, slug }) => {
 				name='model_id'
 				label={ t('model') }
 				checkboxKey='m-'
-				options={ manufModels?.map(item => ({ value: `${item.value}`, label: item.label })) || [] }
+				options={ manufModels?.map(item => ({ value: `${item.alias}`, label: item.label })) || [] }
 				variant='white'
-				filterValue={ filter?.model_id ? filter.model_id.split(',') : [] }
+				filterValue={ (slug && slug.includes('model')) ? [ '1' ] : [] }
 				search={ true }
 				section={ section }
 				slug={ slug }
+				model={ model }
 				isOpened={ filterIsOpen.model_id.open }
 				scroll={ filterIsOpen.model_id.scrollValue }
 				handleScrollAction={ handleScroll }

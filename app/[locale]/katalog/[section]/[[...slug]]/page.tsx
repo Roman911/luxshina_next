@@ -47,7 +47,9 @@ export default async function Catalog({ params }: { params: Promise<{ locale: La
 	const typeDisks = section === Section.Disks ? TypeDisks(slug) : null;
 	const season = section === Section.Tires ? Season(slug) : null;
 	const brand = Brand(section, slug, filters, filtersAkum);
-	const searchParams = `?${paramsUrl || ''}${ slug?.some(item => item.startsWith('vt-')) ? '' : typeTires || ''}${typeDisks || ''}${season || ''}${found && sort[found] ? sort[found] : ''}${brand ? '&brand=' + brand.value : ''}`;
+	const index = slug?.indexOf('model');
+	const model = (slug && index !== -1) ? slug[index + 1] : null;
+	const searchParams = `?${paramsUrl || ''}${ slug?.some(item => item.startsWith('vt-')) ? '' : typeTires || ''}${typeDisks || ''}${season || ''}${found && sort[found] ? sort[found] : ''}${brand ? '&brand=' + brand.value : ''}${model ? '&model_id=' + model.split('-').pop() : ''}`;
 	const products = await getProducts(searchParams, page ? (page - 1) * pageItem : 0, pageItem);
 	const car = slug?.find(segment => segment.startsWith('car-')) || null;
 

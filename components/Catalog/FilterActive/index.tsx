@@ -8,6 +8,8 @@ import { Link } from '@/i18n/routing';
 import { twMerge } from 'tailwind-merge';
 import { VehicleTypeTransform } from '@/lib/characteristicsTransform';
 import type { Brand } from '@/models/baseData';
+import { baseDataAPI } from '@/services/baseDataService';
+import { getModel } from '@/lib/brand';
 
 interface FilterActiveProps {
 	brand: Brand | null | undefined
@@ -21,12 +23,38 @@ const validItems = ['litni', 'zimovi', 'vsesezonnye', 'shipovani', 'off-road-4x4
 
 const FilterActive: FC<FilterActiveProps> = ({ brand, className, slug = [], section }) => {
 	const t = useTranslations('Filters');
-	const result = brand ? slug?.filter(item => item !== brand.alias) : slug;
+	const { data: manufModels } = baseDataAPI.useFetchManufModelsQuery(`${ brand?.value }`);
+	const model = getModel(slug, manufModels);
 
-	const renderItem = (key: number, value: string, label: string, isBrand?: boolean) => {
-		const values = isBrand ? slug?.filter(item => item !== 'brand') : slug;
+	function removeKeyAndNextImmutable(arr: string[], keys: string[]) {
+		const result = [];
+		let skip = 0;
+
+		for (let i = 0; i < arr.length; i++) {
+			if (skip > 0) {
+				skip--;
+				continue;
+			}
+
+			if (keys.includes(arr[i])) {
+				skip = 1; // пропускаємо наступний елемент
+				continue;
+			}
+
+			result.push(arr[i]);
+		}
+
+		return result;
+	}
+
+	const result = removeKeyAndNextImmutable(slug, ["model", "brand"]);
+
+	const renderItem = (key: number, value: string, label: string, isBrand?: boolean, isModal?: boolean) => {
+		const id = `${key}-${value}`
+		const values = isBrand ? removeKeyAndNextImmutable(slug, ["model", "brand"]) : isModal ? slug?.filter(item => item !== 'model') : slug;
+
 		return (
-			<div key={ key }
+			<div key={ id }
 					 className="p-1 bg-[#393939] text-white text-sm font-medium rounded-full flex items-center gap-1">
 				<span className="ml-1.5">{ label }</span>
 				<Link href={ `/katalog/${section}/${values?.filter(item => item !== value).join('/')}` } className='bg-[#A8AFB6] rounded-full p-1'>
@@ -43,6 +71,7 @@ const FilterActive: FC<FilterActiveProps> = ({ brand, className, slug = [], sect
 					slug?.length !== 0 && 'bg-blue-50')
 			}>
 			{ brand && renderItem(0, brand.alias, brand.label, true)}
+			{ model && renderItem(1, model.alias, model.label, false, true)}
 			{ result && result.length !== 0 && result?.map((item, key) => {
 				const split = item.split('-') || '';
 
@@ -56,10 +85,6 @@ const FilterActive: FC<FilterActiveProps> = ({ brand, className, slug = [], sect
 
 				if(split && split[0] === 'pto') {
 					return renderItem(key, item, `${t('to')} ${split[1]} грн`);
-				}
-
-				if(item === 'brand') {
-					return ;
 				}
 
 				if(validItems.includes(item)) {

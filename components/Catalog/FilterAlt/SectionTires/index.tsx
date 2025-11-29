@@ -13,6 +13,7 @@ import { Link } from '@/i18n/routing';
 import { setProgress } from '@/store/slices/progressSlice';
 import { Checkbox, CheckboxGroup } from '@heroui/react';
 import { twMerge } from 'tailwind-merge';
+import { getModel } from '@/lib/brand';
 
 interface Props {
 	brand: Brand | null | undefined
@@ -30,6 +31,7 @@ export const SectionTires: FC<Props> = ({ brand, filterData, section, slug }) =>
 	const { filterIsOpen } = useAppSelector(state => state.filterIsOpenReducer);
 	const { data: manufModels } = baseDataAPI.useFetchManufModelsQuery(`${ brand?.value }`);
 	const country = locale === Language.UK ? data?.country : data?.country_ru;
+	const model = getModel(slug, manufModels);
 
 	const handleClickOpen = (name: keyof IOpenFilter, value: boolean) => {
 		if (value) {
@@ -170,12 +172,13 @@ export const SectionTires: FC<Props> = ({ brand, filterData, section, slug }) =>
 				name='model_id'
 				label={ t('model') }
 				checkboxKey='m-'
-				options={ manufModels?.map(item => ({ value: `${ item.value }`, label: item.label })) || [] }
+				options={ manufModels?.map(item => ({ value: `${ item.alias }`, label: item.label })) || [] }
 				variant='white'
-				filterValue={ filter?.model_id ? filter.model_id.split(',') : [] }
+				filterValue={ (slug && slug.includes('model')) ? [ '1' ] : [] }
 				search={ true }
 				section={ section }
 				slug={ slug }
+				model={ model }
 				isOpened={ filterIsOpen.model_id.open }
 				scroll={ filterIsOpen.model_id.scrollValue }
 				handleScrollAction={ handleScroll }

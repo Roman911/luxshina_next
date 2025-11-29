@@ -63,8 +63,8 @@ export const baseDataAPI = createApi({
 			}),
 		}),
 		fetchManufModels: build.query<ManufModels[], string>({
-			query: ([section]) => ({
-				url: `/api/getManufModels/${[section]}`,
+			query: (id) => ({
+				url: `/api/getManufModels/${id}`,
 			}),
 		}),
 		fetchStatiAliasAll: build.query<AliasAll, string>({

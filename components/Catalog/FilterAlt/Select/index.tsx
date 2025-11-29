@@ -4,7 +4,7 @@ import { twMerge } from 'tailwind-merge';
 import { Badge, Checkbox, CheckboxGroup } from '@heroui/react';
 import * as Icons from '@/components/UI/Icons';
 import SearchInput from './SearchInput';
-import type { Brand } from '@/models/baseData';
+import type { Brand, ManufModels } from '@/models/baseData';
 import { Link } from '@/i18n/routing';
 import { Section } from '@/models/section';
 import { IOpenFilter } from '@/models/filter';
@@ -12,6 +12,7 @@ import { IOpenFilter } from '@/models/filter';
 interface SelectProps {
 	name: string
 	brand?: Brand | null | undefined
+	model?: ManufModels | null | undefined
 	checkboxKey: string;
 	filterValue?: string[];
 	focusValue?: string | false;
@@ -31,6 +32,7 @@ export const Select: FC<SelectProps> = (
 	{
 		name,
 		brand,
+		model,
 		checkboxKey,
 		filterValue,
 		focusValue,
@@ -76,6 +78,8 @@ export const Select: FC<SelectProps> = (
 		checked = season ? season : defaultValue;
 	} else if(checkboxKey === 'b-') {
 		checked = brand ? [ brand.alias ] : defaultValue;
+	} else if(checkboxKey === 'm-') {
+		checked = model ? [ model.alias ] : defaultValue;
 	} else if(checkboxKey === 'td-') {
 		checked = diskType ? diskType : defaultValue;
 	} else {
@@ -88,7 +92,7 @@ export const Select: FC<SelectProps> = (
 				ref.current?.scroll(0, scroll);
 			}, 15);
 		}
-	}, [scroll]);
+	}, [ scroll ]);
 
 	const handleClickOpen = useCallback(() => {
 		handleClickAction(name as keyof IOpenFilter, !isOpened);
@@ -102,7 +106,7 @@ export const Select: FC<SelectProps> = (
 				}, 15);
 			}
 		}
-	}, [focusValue, handleClickAction, isOpened, name]);
+	}, [ focusValue, handleClickAction, isOpened, name ]);
 
 	const handleChange = (value: string) => {
 		setEventSearch(value.toLowerCase());
@@ -146,13 +150,17 @@ export const Select: FC<SelectProps> = (
 						if(handleScrollAction && ref.current) {
 							handleScrollAction(name as keyof IOpenFilter, ref.current ? ref.current.scrollTop : 0);
 						}
-					}}
+					} }
 					href={
 						`/katalog/
 						${ section }/
-						${ (checkboxKey === 's-' || checkboxKey === 'b-' || checkboxKey === 'td-') ? '' : checkboxKey }
-						${ checkboxKey === 'b-' ? 'brand/' : '' }${ value }/
-						${ checkboxKey === 'b-' ? filteredArr.filter(item => item !== (brand ? brand.alias : '') && item !== 'brand').join('/') : checkboxKey === 'td-' ? filteredArr.filter(item => diskType ? item !== diskType[0] : filteredArr.join('/')).join('/') : checkboxKey === 's-' ? filteredArr.filter(item => item !== "shipovani").filter(item => item !== 'shipovani' && season ? item !== season[0] : filteredArr.join('/')).join('/') : filteredArr.join('/') }
+						${ (checkboxKey === 's-' || checkboxKey === 'b-' || checkboxKey === 'm-' || checkboxKey === 'td-') ? '' : checkboxKey }
+						${ checkboxKey === 'b-' ? 'brand/' : checkboxKey === 'm-' ? 'model/' : '' }${ value }/
+						${ checkboxKey === 'b-' ? filteredArr.filter(item => item !== (brand ? brand.alias : '') && item !== 'brand').join('/')
+							: checkboxKey === 'm-' ? filteredArr.filter(item => item !== (model ? model.alias : '') && item !== 'model').join('/')
+								: checkboxKey === 'td-' ? filteredArr.filter(item => diskType ? item !== diskType[0] : filteredArr.join('/')).join('/')
+									: checkboxKey === 's-' ? filteredArr.filter(item => item !== "shipovani").filter(item => item !== 'shipovani' && season ? item !== season[0]
+										: filteredArr.join('/')).join('/') : filteredArr.join('/') }
 						` }
 				>
 					<Checkbox
@@ -170,9 +178,9 @@ export const Select: FC<SelectProps> = (
 				</Link>
 			)) }
 		</CheckboxGroup>
-		{ slug && slug.some(item => ['zimovi', 'shipovani'].includes(item)) && <Link
+		{ slug && slug.some(item => [ 'zimovi', 'shipovani' ].includes(item)) && <Link
 			className={ twMerge('ml-8 flex', !isOpened && 'hidden') }
-			href={ `/katalog/${ section }/${ slug ? slug.filter(item => !['zimovi', 'shipovani'].includes(item)).join('/') : '' }/${ slug?.includes('shipovani') ? 'zimovi' : 'shipovani' }` }>
+			href={ `/katalog/${ section }/${ slug ? slug.filter(item => ![ 'zimovi', 'shipovani' ].includes(item)).join('/') : '' }/${ slug?.includes('shipovani') ? 'zimovi' : 'shipovani' }` }>
 			<Checkbox
 				className="-z-10"
 				radius="sm"
