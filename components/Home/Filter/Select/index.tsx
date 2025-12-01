@@ -7,7 +7,7 @@ import { Section } from '@/models/filter';
 import type { Options } from '@/models/baseData';
 import { POPULAR_SIZE } from '@/etc/const';
 
-const popularSize = ['width', 'height', 'radius'];
+const popularSize = [ 'width', 'height', 'radius' ];
 
 interface SelectProps {
 	name: string

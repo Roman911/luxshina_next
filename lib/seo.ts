@@ -52,10 +52,10 @@ export const generateUrl = (filter: IFilter): string => {
 	const parts = Object.entries(filter).reduce<string[]>((acc, [key, value]) => {
 		if(key === 'sezon') {
 			acc.push(value);
-		} if(key === 'brand') {
+		} else if(key === 'brand') {
 			acc.push('brand');
 			acc.push(value);
-		} if(key === 'modal') {
+		} else if(key === 'modal') {
 			acc.push('modal');
 			acc.push(value);
 		} else if (value) {

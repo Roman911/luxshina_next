@@ -55,6 +55,7 @@ export interface OfferGroup {
 	silent: boolean
 	et: string
 	dia: string
+	color: string
 }
 
 interface Model {

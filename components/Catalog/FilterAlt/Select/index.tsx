@@ -178,7 +178,7 @@ export const Select: FC<SelectProps> = (
 				</Link>
 			)) }
 		</CheckboxGroup>
-		{ slug && slug.some(item => [ 'zimovi', 'shipovani' ].includes(item)) && <Link
+		{ checkboxKey === 's-' && slug && slug.some(item => [ 'zimovi', 'shipovani' ].includes(item)) && <Link
 			className={ twMerge('ml-8 flex', !isOpened && 'hidden') }
 			href={ `/katalog/${ section }/${ slug ? slug.filter(item => ![ 'zimovi', 'shipovani' ].includes(item)).join('/') : '' }/${ slug?.includes('shipovani') ? 'zimovi' : 'shipovani' }` }>
 			<Checkbox

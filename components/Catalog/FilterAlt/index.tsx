@@ -1,10 +1,10 @@
 'use client'
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { useAppSelector } from '@/hooks/redux';
+import { useAppDispatch, useAppSelector } from '@/hooks/redux';
 import SwitchTabs from './SwitchTabs';
 import SwitchTabsByParams from './SwitchTabsByParams';
-import { Section } from '@/models/filter';
+import { Section, Subsection } from '@/models/filter';
 import type { BaseDataProps, Brand } from '@/models/baseData';
 import ByCar from '@/components/Catalog/FilterAlt/ByCar';
 import { SelectFromTo } from '@/components/Catalog/FilterAlt/SelectFromTo';
@@ -15,6 +15,7 @@ import { SectionTires } from './SectionTires';
 import SectionDisks from '@/components/Catalog/FilterAlt/SectionDisks';
 import SectionBattery from '@/components/Catalog/FilterAlt/SectionBattery';
 import * as Icons from '@/components/UI/Icons';
+import { changeSubsection } from '@/store/slices/filterSlice';
 
 interface Props {
 	filterData: BaseDataProps | undefined
@@ -25,14 +26,19 @@ interface Props {
 }
 
 const FilterAlt: FC<Props> = ({ brand, filterData, section, slug, car }) => {
+	const dispatch = useAppDispatch();
 	const [ menuIsOpen, setMenuOpen ] = useState(false);
 	const t = useTranslations('Filters');
 	const { subsection } = useAppSelector(state => state.filterReducer);
 	const { data } = baseDataAPI.useFetchBaseDataQuery('');
 
+	useEffect(() => {
+		dispatch(changeSubsection(Subsection.ByParams));
+	}, [dispatch])
+
 	const renderFilterContent = () => (
 		<>
-			{ section !== Section.Battery && <SwitchTabs section={ section } /> }
+			{ section !== Section.Battery && <SwitchTabs section={ section } car={ car } /> }
 			<div
 				className={ twMerge('relative pb-32 lg:pb-4 px-4 pt-4 bg-white border border-gray-200 z-10 overflow-y-auto lg:overflow-y-visible dark:border-[#333333] dark:bg-[#333333]', section === Section.Battery && 'pt-10 md:pt-4') }>
 				{ (section === Section.Tires || section === Section.Disks) && <SwitchTabsByParams subsection={ subsection }/> }

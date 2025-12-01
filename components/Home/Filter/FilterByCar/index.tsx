@@ -1,107 +1,122 @@
 'use client'
-import { Dispatch, SetStateAction, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useCallback, useMemo, useState } from 'react';
+import { useRouter } from '@/i18n/routing';
 import { useTranslations } from 'next-intl';
 import { baseDataAPI } from '@/services/baseDataService';
-import { useAppDispatch, useAppSelector } from '@/hooks/redux';
-import { setCarFilter, setSend } from '@/store/slices/filterCarSlice';
-import { changeSubsection } from '@/store/slices/filterSlice';
-import Select from '../Select';
-import { Language } from '@/models/language';
-import { Subsection } from '@/models/section';
+import MySelect from '../Select';
 import { Section } from '@/models/filter';
 import { Button } from '@heroui/react';
 
-const FilterByCar = ({ locale }: { locale: Language }) => {
-	const router = useRouter();
-	const [ isLoadingTires, setIsLoadingTires ] = useState(false);
-	const [ isLoadingDisks, setIsLoadingDisks ] = useState(false);
-	const t = useTranslations('Filters');
-	const { filter } = useAppSelector((state) => state.filterCarReducer);
-	const dispatch = useAppDispatch();
-	const { data } = baseDataAPI.useFetchBaseDataQuery('');
-	const { data: model, refetch: modelRefetch } = baseDataAPI.useFetchAutoModelQuery(`${ filter.brand }`);
-	const { data: modelYear } = baseDataAPI.useFetchAutoYearQuery(`${ filter.model }`);
-	const {
-		data: modelKit,
-		refetch: modelKitRefetch
-	} = baseDataAPI.useFetchAutoModelKitQuery(`${ filter.model }/${ filter.year }`);
+interface CarFilters {
+	brand?: string | number;
+	model?: string | number;
+	year?: string | number;
+	modification?: string | number;
+}
 
-	const filters = [
+interface FilterConfig {
+	label: string;
+	name: keyof typeof filterNames;
+	options?: Array<{ value: string | number; label: string }>;
+	isDisabled?: boolean;
+}
+
+const filterNames = {
+	brand: 'brand',
+	model: 'model',
+	year: 'graduation year',
+	modification: 'modification',
+} as const;
+
+const FilterByCar = () => {
+	const [ isLoadingTires, setLoadingTires ] = useState(false);
+	const [ isLoadingDisks, setLoadingDisks ] = useState(false);
+	const [ carFilters, setCarFilters ] = useState<CarFilters>({ brand: 0, model: 0, modification: 0, year: 0 });
+	const router = useRouter();
+	const t = useTranslations('Filters');
+	const { data: baseData } = baseDataAPI.useFetchBaseDataQuery('');
+	const { data: model, refetch: modelRefetch } = baseDataAPI.useFetchAutoModelQuery(carFilters.brand?.toString() ?? '');
+	const { data: modelYear } = baseDataAPI.useFetchAutoYearQuery(carFilters.model?.toString() ?? '');
+	const { data: modelKit, refetch: modelKitRefetch } = baseDataAPI.useFetchAutoModelKitQuery(
+		`${ carFilters.model }/${ carFilters.year }`
+	);
+	const { data: dataModification } = baseDataAPI.useFetchKitTyreSizeQuery(`${ carFilters.modification }`);
+	const { data: dataDisksModification } = baseDataAPI.useFetchKitDiskSizeQuery(`${ carFilters.modification }`);
+
+	const filters: FilterConfig[] = useMemo(() => [
 		{
-			label: 'car brand',
+			label: filterNames.brand,
 			name: 'brand',
-			options: data?.auto?.map(item => ({ value: item.value, label: item.label }))
+			options: baseData?.auto?.map(item => ({ value: item.value, label: item.label }))
 		},
 		{
-			label: 'model',
+			label: filterNames.model,
 			name: 'model',
 			options: model?.map(item => ({ value: item.value, label: item.label })),
-			isDisabled: model?.length === 0,
+			isDisabled: !model?.length,
 		},
 		{
-			label: 'graduation year',
+			label: filterNames.year,
 			name: 'year',
-			options: modelYear?.map(item => ({ value: item, label: `${ item }` })),
-			isDisabled: modelYear?.length === 0,
+			options: modelYear?.map(item => ({ value: item, label: String(item) })),
+			isDisabled: !modelYear?.length,
 		},
 		{
-			label: 'modification',
+			label: filterNames.modification,
 			name: 'modification',
 			options: modelKit?.map(item => ({ value: item.value, label: item.label })),
-			isDisabled: modelKit?.length === 0,
+			isDisabled: !modelKit?.length,
 		}
-	];
+	], [ baseData?.auto, model, modelYear, modelKit ]);
 
-	const onChange = (name: string, value: number | string | null) => {
-		dispatch(setCarFilter({ ...filter, [name]: value }));
+	const handleChange = useCallback((name: string, value: number | string | null) => {
+		setCarFilters({ ...carFilters, [name]: value })
 		if(name === 'model') {
 			modelRefetch();
-		} else if(name === 'modification' || name === 'year') {
+		} else if([ 'modification', 'year' ].includes(name)) {
 			modelKitRefetch();
 		}
-	}
+	}, [ carFilters, modelRefetch, modelKitRefetch ]);
 
-	const onClick = (type: Section, setIsLoading: Dispatch<SetStateAction<boolean>>) => {
-		setIsLoading(true)
-		dispatch(changeSubsection(Subsection.ByCars));
-		dispatch(setSend());
-		router.push(`/${ locale }/katalog/${ type }`);
-	}
+	const handleSubmit = useCallback((selectedSection: Section) => {
+		const brandLabel = baseData?.auto.find(item => item.value == carFilters.brand)?.label.toLowerCase() ?? '';
+		const link = `car-${ brandLabel } ${ carFilters.year } ${ carFilters.brand } ${ carFilters.model } ${ carFilters.modification }`;
+		const paramsTires = `/w-${ dataModification?.[0].width }/h-${ dataModification?.[0].height }/d-${ dataModification?.[0].diameter }`;
+		const paramsDisks = `/w-${ dataDisksModification?.[0].width }/d-${ dataDisksModification?.[0].diameter }/kr-${ dataDisksModification?.[0].kits.bolt_count }x${ dataDisksModification?.[0].kits.pcd }/et-${ dataDisksModification?.[0].et }/dia-${ dataDisksModification?.[0].kits.dia }`;
+		(selectedSection === Section.Disks ? setLoadingDisks : setLoadingTires)(true);
+		router.push(`/katalog/${ selectedSection }/${ link.split(' ').join('-') }${ selectedSection === Section.Tires ? paramsTires : paramsDisks }`);
+	}, [baseData?.auto, carFilters, dataDisksModification, dataModification, router]);
 
 	return (
 		<>
 			<div className='grid grid-cols-1 md:grid-cols-2 gap-2.5 md:mt-7'>
-				{ filters.map(item => {
-					return <Select
-						key={ item.name }
-						name={ item.name }
-						label={ item.label }
-						options={ item.options }
-						onChange={ onChange }
-						isDisabled={ item.isDisabled }
+				{ filters.map(({ name, label, options, isDisabled }) => (
+					<MySelect
+						key={ name }
+						name={ name }
+						label={ label }
+						options={ options }
+						onChange={ handleChange }
+						isDisabled={ isDisabled }
 					/>
-				}) }
+				)) }
 			</div>
 			<div className='mt-4 md:mt-10 flex gap-4 flex-col md:flex-row justify-center'>
-				<Button
-					radius='full' size='lg'
-					isDisabled={ filter.modification === 0 }
-					isLoading={ isLoadingTires }
-					onPress={ () => onClick(Section.Tires, setIsLoadingTires) }
-					className='w-full md:w-56 uppercase'
-				>
-					{ t('choose tires') }
-				</Button>
-				<Button
-					radius='full' size='lg'
-					isDisabled={ filter.modification === 0 }
-					isLoading={ isLoadingDisks }
-					onPress={ () => onClick(Section.Disks, setIsLoadingDisks) }
-					className='w-full md:w-56 uppercase'
-				>
-					{ t('choose disks') }
-				</Button>
+				{ [
+					{ section: Section.Tires, label: 'choose tires', isLoading: isLoadingTires },
+					{ section: Section.Disks, label: 'choose disks', isLoading: isLoadingDisks }
+				].map(({ section: btnSection, label, isLoading }) => (
+					<Button
+						key={ btnSection }
+						radius='full' size='lg'
+						isDisabled={ !carFilters.modification }
+						isLoading={ isLoading }
+						onPress={ () => handleSubmit(btnSection) }
+						className='w-full md:w-56 uppercase'
+					>
+						{ t(label) }
+					</Button>
+				)) }
 			</div>
 		</>
 	)

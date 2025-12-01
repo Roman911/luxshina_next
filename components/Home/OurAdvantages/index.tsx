@@ -18,8 +18,7 @@ const items = [
 		subtitle: 'luxshina tm',
 	},
 	{
-		title: 'fast delivery in ukraine',
-		subtitle: 'year',
+		title: 'fast delivery'
 	}
 ];
 
@@ -30,7 +29,7 @@ interface OurAdvantagesProps {
 const OurAdvantages: FC<OurAdvantagesProps> = ({ size }) => {
 	const t = useTranslations('OurAdvantages');
 
-	const Item = ({ title, subtitle, index }: { title: string, subtitle: string, index: number }) => {
+	const Item = ({ title, subtitle, index }: { title: string, subtitle?: string, index: number }) => {
 		return (
 			<div className='flex items-center'>
 				<Image
@@ -40,8 +39,8 @@ const OurAdvantages: FC<OurAdvantagesProps> = ({ size }) => {
 					src={`/images/our_advantages/item-oa-${index+1}.svg`}
 					alt=""
 				/>
-				{ index === 1 ? <h4><span className='font-bold'>{t(title)} </span>{t(subtitle)}</h4> :
-				<h4>{t(title)} <span className='font-bold'>{t(subtitle)}</span></h4> }
+				{ index === 1 ? <h4><span className='font-bold'>{ t(title) } </span>{ subtitle && t(subtitle) }</h4> :
+				<h4>{ t(title) } <span className='font-bold'>{ subtitle && t(subtitle) }</span></h4> }
 			</div>
 		)
 	}

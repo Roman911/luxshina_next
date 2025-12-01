@@ -8,10 +8,6 @@ export const linksCatalog = [
 		title: 'cardiscs',
 	},
 	{
-		link: '/katalog/diski',
-		title: 'diski',
-	},
-	{
 		link: '/katalog/vantazhni',
 		title: 'cargo tires',
 	},

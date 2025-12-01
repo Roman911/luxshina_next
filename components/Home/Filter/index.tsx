@@ -54,7 +54,7 @@ const Filter = ({ locale }: { locale: Language }) => {
 			case Section.Disks:
 				return <DisksFilter filters={ filters } onChange={ onChange } onSubmit={ submit } />;
 			case Section.Car:
-				return <FilterByCar locale={ locale } />;
+				return <FilterByCar />;
 			default:
 				return <TiresFilter filters={ filters } onChange={ onChange } onSubmit={ submit } />;
 		}
@@ -74,7 +74,7 @@ const Filter = ({ locale }: { locale: Language }) => {
 					<DisksFilter filters={ filters } onChange={ onChange } onSubmit={ submit } />
 				</Tab>
 				<Tab name={ Section.Car } section={ section } isOpen={ isOpen } handleClick={ handleClick } label={ t('selection by car') }>
-					<FilterByCar locale={ locale } />
+					<FilterByCar />
 				</Tab>
 			</div>
 			<div className="hidden md:block">{ renderFilter() }</div>
