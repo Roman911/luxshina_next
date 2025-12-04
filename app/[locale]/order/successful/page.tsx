@@ -7,7 +7,7 @@ export default function SuccessfulOrder() {
 	return (
 		<div className='mt-8 mb-16 text-center py-5 px-4'>
 			<h3 className='font-bold mb-4 text-3xl'>
-				{ t('thanks for your order') }!
+				{ t('thanks for your order') }
 			</h3>
 			<svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 20 20" className="mx-auto fill-primary" height="150" width="150" xmlns="http://www.w3.org/2000/svg">
 				<path fillRule="evenodd"
