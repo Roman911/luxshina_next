@@ -169,7 +169,7 @@ const CharacteristicsBlock: FC<CharacteristicsBlockProps> = ({ locale, data }) =
 				{ data?.data.offer_group.color && <div className='flex my-4 text-sm font-medium'>
 					<div
 						className='w-full flex items-center text-[#575C66] after:flex-1 after:min-w-6 after:border-b after:border-dashed after:border-[#AEB6C2] after:h-px after:mt-3 after:mx-2'>
-						{ t('speed index') }
+						{ t('color') }
 					</div>
 					<Link href={ link(`/clr-${ data?.data.offer_group.color }`) }
 								className='text-black max-w-max w-full hover:underline'>
