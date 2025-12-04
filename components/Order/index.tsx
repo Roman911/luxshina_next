@@ -1,5 +1,5 @@
 'use client'
-import { FC } from 'react';
+import { Dispatch, FC, SetStateAction } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { Input, Textarea } from '@heroui/react';
 import Summary from './Summary';
@@ -20,6 +20,8 @@ interface OrderProps {
 	cartItems: { id: number; quantity: number }[]
 	onChange: (name: string, value: number | string | null) => void
 	dataOrdersParam: OrdersParamProps | undefined
+	phoneErrorMessage: string | null
+	setPhoneErrorMessage: Dispatch<SetStateAction<string | null>>
 }
 
 const OrderComponent: FC<OrderProps> = (
@@ -32,6 +34,8 @@ const OrderComponent: FC<OrderProps> = (
 		shippingMethod,
 		dataOrdersParam,
 		showNpWarehouses,
+		phoneErrorMessage,
+		setPhoneErrorMessage
 	}) => {
 	const locale = useLocale();
 	const t = useTranslations('Order');
@@ -69,7 +73,7 @@ const OrderComponent: FC<OrderProps> = (
 					name='surname'
 					type='text'
 				/>
-				<PhoneMaskInput/>
+				<PhoneMaskInput phoneErrorMessage={ phoneErrorMessage } setPhoneErrorMessage={ setPhoneErrorMessage }/>
 				<Input
 					label={ t('email') }
 					name='email'

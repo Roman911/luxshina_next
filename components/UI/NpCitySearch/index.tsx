@@ -9,9 +9,9 @@ export const NpCitySearch = () => {
 	const t = useTranslations('Select');
 	const [city, setCityState] = useState<string | undefined>('');
 	const dispatch = useAppDispatch();
-	const { data } = baseDataAPI.useFetchNpSearchQuery(city);
+	const { data } = baseDataAPI.useFetchNpAllCityQuery(city);
 
-	const cityOptions = data?.[0].Addresses?.map((item: { MainDescription: string, Ref: string }) => ({
+	const cityOptions = data?.original[0].Addresses?.map((item: { MainDescription: string, Ref: string }) => ({
 		value: item.Ref,
 		label: item.MainDescription,
 	}));

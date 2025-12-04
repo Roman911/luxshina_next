@@ -184,8 +184,7 @@ const ProductComponent: FC<Props> = ({ idProduct, locale, data, section, setting
 								{ t('buy') }
 							</Button>
 						}
-						<QuickOrder locale={ locale } offerId={ offerId } quantity={ quantity } section={ section }
-												fullName={ full_name } brand={ data?.data?.brand.name } model={ model.name }
+						<QuickOrder offerId={ offerId } quantity={ quantity } section={ section }
 												offerItem={ data?.data?.offers?.find(item => item.offer_id === offerId) }
 						/>
 						<OnlineInstallment locale={ locale } settings={ settings } />

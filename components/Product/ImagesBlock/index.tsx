@@ -35,13 +35,13 @@ const ImagesBlock: FC<Props> = ({ locale, labels, images, photo, full_name, vehi
 	const seasonTransform = season && SeasonTransform(season)?.icon;
 
 	return (
-		<div className={ twMerge('gallery relative mb-7 pt-10 pb-5') }>
-			<div className='-mt-10 mb-2 w-full flex justify-between items-start'>
+		<div className={ twMerge('gallery relative mb-2 md:mb-7 pt-10 pb-2 md:pb-5 rounded-lg max-w-full md:max-w-72') }>
+			<div className='-mt-8 px-4 mb-2 w-full flex justify-between items-start'>
 				<div>
 					{ labels?.length !== 0 && labels?.map(item => {
 						return <div
 							key={ item.label_id }
-							className='text-center text-xs font-semibold text-white uppercase py-1.5 px-2.5 max-w-max rounded-sm my-1'
+							className='text-center text-xs font-semibold text-white uppercase py-1.5 px-2.5 max-w-max rounded-full my-1'
 							style={ { backgroundColor: item.label.color } }
 						>
 							{ locale === Language.UK ? item.label.name : item.label.name_ru }

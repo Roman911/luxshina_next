@@ -1,52 +1,53 @@
 'use client'
-import { useRouter } from 'next/navigation';
-import { FC, FormEvent } from 'react';
+import { FC, FormEvent, useEffect, useRef, useState } from 'react';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { SerializedError } from '@reduxjs/toolkit';
 import { Button } from '@heroui/react';
 import { Form } from '@heroui/react';
 import { Modal, ModalBody, ModalContent, ModalHeader, useDisclosure, } from '@heroui/react';
-import { Language } from '@/models/language';
 import { useTranslations } from 'next-intl';
 import { Section } from '@/models/filter';
 import { Offers } from '@/models/product';
 import { baseDataAPI } from '@/services/baseDataService';
 import PhoneMaskInput from '@/components/UI/PhoneMaskInput';
 import { formatPhoneNumber } from '@/lib/formatPhoneNumber';
-import { onOrderBuy1click } from '@/event';
+import { addToast } from '@heroui/toast';
 
 interface Props {
-	locale: Language
 	offerId: number
 	quantity: number
 	section: Section
-	model: string | undefined
-	brand: string | undefined
-	fullName: string | undefined
 	offerItem: Offers | undefined
 }
 
 const QuickOrder: FC<Props> = (
 	{
-		locale,
 		offerId,
 		quantity,
 		offerItem,
-		brand,
-		model,
-		fullName,
-		section
 	}
 ) => {
-	const router = useRouter();
-	const { isOpen, onOpen, onOpenChange } = useDisclosure();
+	const [ phoneErrorMessage, setPhoneErrorMessage ] = useState<string | null>(null);
+	const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
 	const [ createOrder, { isLoading } ] = baseDataAPI.useCreateOrderMutation();
 	const t = useTranslations('QuickOrder');
+	const phoneInputRef = useRef<HTMLInputElement>(null);
+
+	useEffect(() => {
+		if(isOpen) {
+			const timeout = setTimeout(() => {
+				phoneInputRef.current?.focus();
+			}, 100);
+
+			return () => clearTimeout(timeout);
+		}
+	}, [ isOpen ]);
 
 	const onSubmit = async(event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		const formData = new FormData(event.currentTarget);
 		const phone = formData.get('phone') as string;
+		const phoneTransform = formatPhoneNumber(phone);
 
 		const product = {
 			product_id: offerItem?.product_id,
@@ -55,41 +56,48 @@ const QuickOrder: FC<Props> = (
 			quantity,
 		};
 
-		await createOrder({
-			fast: 1,
-			firstname: '',
-			lastname: '',
-			surname: '',
-			email: '',
-			telephone: formatPhoneNumber(phone),
-			total: Number(offerItem?.price) * quantity,
-			comment: 'null',
-			payment_method: 1,
-			shipping_method: 1,
-			payment_address_1: 'null',
-			payment_address_2: 'null',
-			payment_city: '',
-			ref_wirehouse: '',
-			ref_city: '',
-			products: [ product ],
-		}).then((response: {
-			data?: { result: boolean, linkpay: string, order_id: number };
-			error?: FetchBaseQueryError | SerializedError
-		}) => {
-			const data = response?.data;
-			if(data) {
-				if(data?.linkpay?.length > 0) {
-					window.open(data?.linkpay, "_blank")
+		if(phoneTransform.length < 13) {
+			setPhoneErrorMessage('enter your phone number');
+		} else {
+			await createOrder({
+				fast: 1,
+				firstname: '',
+				lastname: '',
+				surname: '',
+				email: '',
+				telephone: formatPhoneNumber(phone),
+				total: Number(offerItem?.price) * quantity,
+				comment: 'null',
+				payment_method: 1,
+				shipping_method: 1,
+				payment_address_1: 'null',
+				payment_address_2: 'null',
+				payment_city: '',
+				ref_wirehouse: '',
+				ref_city: '',
+				products: [ product ],
+			}).then((response: {
+				data?: { result: boolean, linkpay: string, order_id: number };
+				error?: FetchBaseQueryError | SerializedError
+			}) => {
+				const data = response?.data;
+				if(data) {
+					addToast({
+						title: t('sent order'),
+						description: t('our manager'),
+						classNames: { base: 'text-black dark:text-gray-50', title: 'text-black dark:text-gray-50' },
+					});
+					if(data?.linkpay?.length > 0) {
+						window.open(data?.linkpay, "_blank")
+					}
+					if(data?.result) {
+						onClose();
+					}
+				} else if(response.error) {
+					console.error('An error occurred:', response.error);
 				}
-				if(data?.result) {
-					onOrderBuy1click(offerItem, fullName, brand, section, model, quantity, data?.order_id);
-					event.currentTarget.reset(); // Reset form fields
-					router.push(`/${ locale }/order/successful`)
-				}
-			} else if(response.error) {
-				console.error('An error occurred:', response.error);
-			}
-		});
+			});
+		}
 	}
 
 	return (
@@ -119,7 +127,7 @@ const QuickOrder: FC<Props> = (
 									className='mt-2 mb-8 flex flex-col gap-4'
 									onSubmit={ onSubmit }
 								>
-									<PhoneMaskInput/>
+									<PhoneMaskInput phoneErrorMessage={ phoneErrorMessage } ref={ phoneInputRef } setPhoneErrorMessage={ setPhoneErrorMessage } />
 									<Button type='submit' color='primary' radius='full' size='lg' className='uppercase ml-auto mt-2 font-bold'
 													isLoading={ isLoading }>
 										{ t('send') }

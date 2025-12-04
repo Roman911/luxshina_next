@@ -14,7 +14,8 @@
     "send": "Отправить",
     "your comment": "Ваш комментарий",
     "enter valid email": "Введите правильный email",
-    "this field is required": "Это поле обязательно"
+    "this field is required": "Это поле обязательно",
+    "sent message": "Сообщение отправлено"
   },
   "CarType": {
     "buses": "Бусы",
@@ -256,9 +257,9 @@
     "sorting": "Сортировка"
   },
   "SuccessfulOrder": {
-    "manager will contact you shortly": "В ближайшее время с Вами свяжется менеджер",
+    "manager will contact you shortly": "С Вами свяжется наш менеджер в течение двух часов в рабочее время. Если Вам не перезвонят – Вы можете набрать директора магазина по номеру +380509055810 (Максим Александрович).",
     "return to home page": "Вернуться на главную",
-    "thanks for your order": "Спасибо за заказ"
+    "thanks for your order": "Спасибо за ваш заказ!"
   },
   "HeaderOffer": {
     "free battery delivery": "Бесплатная доставка аккумуляторов"
@@ -307,6 +308,10 @@
     "luxshina tm": "LuxShina TM",
     "fast delivery in ukraine": "Быстрая доставка",
     "delivery": "(Новая почта, Meest)"
+  },
+  "PhoneMask": {
+    "phone number": "Номер телефона",
+    "enter your phone number": "Введите номер телефона"
   },
   "Cart": {
     "total payable": "Итого к оплате",

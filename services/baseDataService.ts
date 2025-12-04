@@ -131,6 +131,15 @@ export const baseDataAPI = createApi({
 				url: `/api/getOrdersParam`,
 			}),
 		}),
+		fetchNpAllCity: build.query({
+			query: (name) => ({
+				url: '/api/np/allcity',
+				method: 'POST',
+				body: {
+					name: name
+				}
+			}),
+		}),
 		fetchNpSearch: build.query({
 			query: (name) => ({
 				url: `/api/np/search`,
