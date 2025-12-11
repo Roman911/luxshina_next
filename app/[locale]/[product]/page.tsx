@@ -27,8 +27,6 @@ export default async function Product({ params }: { params: Promise<{ locale: La
 	const searchParams = section === Section.Tires ? `?radius=${tiresParams?.diameter}&height=${tiresParams?.height}&width=${tiresParams?.width}` : section === Section.Disks ? '?typeproduct=3& ' : '';
 	const products = await getProducts(searchParams, 0, 4 );
 
-	console.log(productResponse);
-
 	const path = [
 		{
 			title: section,

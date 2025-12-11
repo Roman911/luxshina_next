@@ -1,6 +1,6 @@
 import { ImageResponse } from 'next/og';
-import { join } from 'node:path';
-import { readFile } from 'node:fs/promises';
+import { join } from 'node:path'
+import { readFile } from 'node:fs/promises'
 import { getProduct } from '@/app/api/api';
 
 // Image metadata
@@ -9,6 +9,8 @@ export const size = {
 	height: 630,
 }
 
+export const contentType = 'image/png';
+
 // Image generation
 export default async function Image({ params }: { params: Promise<{ product: string }> }) {
 	const { product } = await params;
@@ -16,7 +18,7 @@ export default async function Image({ params }: { params: Promise<{ product: str
 	const id = match ? match[1] : '';
 
 	const response = await getProduct(id);
-	const logoData = await readFile(join(process.cwd(), 'banner.jpg'), 'base64')
+	const logoData = await readFile(join(process.cwd(), 'logo.png'), 'base64')
 	const logoSrc = `data:image/jpg;base64,${logoData}`
 
 	if(!response) {
@@ -66,9 +68,5 @@ export default async function Image({ params }: { params: Promise<{ product: str
 				<div style={ { fontSize: 32, color: '#888' } }>{ response.data.min_price } ₴</div>
 			</div>
 		),
-		{
-			width: size.width,
-			height: size.height,
-		}
 	)
 }
