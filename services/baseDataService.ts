@@ -14,10 +14,10 @@ import type { AliasAll } from '@/models/alias';
 export const baseDataAPI = createApi({
 	reducerPath: 'dataAPI',
 	baseQuery: fetchBaseQuery({
-		baseUrl: process.env.SERVER_URL,
+		baseUrl: process.env.NEXT_PUBLIC_API_URL,
 		headers: {
 			'Access-Control-Allow-Credentials': 'true',
-			'Access-Control-Allow-Origin': process.env.ACCESS_ORIGIN || '',
+			'Access-Control-Allow-Origin': process.env.NEXT_PUBLIC_ACCESS_ORIGIN || '',
 		},
 	}),
 	tagTypes: ['baseDataAPI', 'Product'],

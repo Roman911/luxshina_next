@@ -19,7 +19,7 @@ const SearchInput: FC<SearchInputProps> = ({ value, handleChange }) => {
 				autoFocus={ true }
 				onChange={ event => handleChange(event.target.value) }
 				placeholder={ t('search') }
-				className='py-2 pl-10 pr-2 w-full border border-[#A9ACB2] rounded-sm bg-white focus:border-blue-300'
+				className='py-2 pl-10 pr-2 w-full border border-[#A9ACB2] rounded-sm bg-white focus:border-blue-300 outline-0'
 			/>
 		</label>
 	</div>

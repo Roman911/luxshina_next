@@ -117,6 +117,22 @@ export const SectionTires: FC<Props> = ({ brand, filterData, section, slug }) =>
 					isOpened={ filterIsOpen.sezon.open }
 					handleClickAction={ handleClickOpen }
 				/>
+				{/*{ slug && slug.some(item => [ 'zimovi', 'shipovani' ].includes(item)) && <Link*/}
+				{/*	className={ twMerge('ml-8 flex', !filterIsOpen.sezon.open && 'hidden') }*/}
+				{/*	href={ `/katalog/${ section }/${ slug ? slug.filter(item => ![ 'zimovi', 'shipovani' ].includes(item)).join('/') : '' }/${ slug?.includes('shipovani') ? 'zimovi' : 'shipovani' }` }>*/}
+				{/*	<Checkbox*/}
+				{/*		className="-z-10"*/}
+				{/*		radius="sm"*/}
+				{/*		size="lg"*/}
+				{/*		isSelected={ slug?.includes('shipovani') }*/}
+				{/*		classNames={ {*/}
+				{/*			label: 'text-black text-base white',*/}
+				{/*			wrapper: 'bg-white before:-m-[1px]'*/}
+				{/*		} }*/}
+				{/*	>*/}
+				{/*		Шип*/}
+				{/*	</Checkbox>*/}
+				{/*</Link> }*/}
 			</> }
 			{ (section === Section.Cargo) && <>
 				<Select

@@ -1,7 +1,7 @@
 'use client';
-import { FC, useCallback, useEffect, useRef, useState } from 'react';
+import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
-import { Badge, Checkbox, CheckboxGroup } from '@heroui/react';
+import { Badge, Checkbox, CheckboxGroup, Spinner } from '@heroui/react';
 import * as Icons from '@/components/UI/Icons';
 import SearchInput from './SearchInput';
 import type { Brand, ManufModels } from '@/models/baseData';
@@ -48,6 +48,7 @@ export const Select: FC<SelectProps> = (
 		handleClickAction,
 	}) => {
 	const [ eventSearch, setEventSearch ] = useState('');
+	const [ loading, setLoading ] = useState(false);
 	const ref = useRef<HTMLDivElement | null>(null);
 	const slugTransform = slug?.map(item => decodeURIComponent(item));
 	const keyPattern = new RegExp(`^${checkboxKey}[\\w\u0400-\u04FF.()]+$`);
@@ -72,20 +73,23 @@ export const Select: FC<SelectProps> = (
 		diskType = [ 'kovani' ];
 	}
 	const defaultValue = found ? [ found.split('-')[1] ] : [];
-	let checked;
 
-	if(checkboxKey === 's-') {
-		checked = season ? season : defaultValue;
-	} else if(checkboxKey === 'b-') {
-		checked = brand ? [ brand.alias ] : defaultValue;
-	} else if(checkboxKey === 'm-') {
-		checked = model ? [ model.alias ] : defaultValue;
-	} else if(checkboxKey === 'td-') {
-		checked = diskType ? diskType : defaultValue;
-	} else {
-		checked = defaultValue;
-	}
+	const checked = useMemo(() => {
+		switch(checkboxKey) {
+			case 's-':
+				return season ? season : defaultValue;
+			case 'b-':
+				return brand ? [ brand.alias ] : defaultValue;
+			case 'm-':
+				return model ? [ model.alias ] : defaultValue;
+			case 'td-':
+				return diskType ? diskType : defaultValue;
+			default:
+				return defaultValue;
+		}
+	}, [ checkboxKey, season, brand, model, diskType, defaultValue ]);
 
+	// scroll restore
 	useEffect(() => {
 		if(ref.current && scroll) {
 			setTimeout(() => {
@@ -98,11 +102,11 @@ export const Select: FC<SelectProps> = (
 		handleClickAction(name as keyof IOpenFilter, !isOpened);
 
 		if(focusValue && ref.current) {
-			const cont = ref.current.querySelectorAll('label');
-			const elIndex = Array.from(cont).findIndex(el => el.textContent === focusValue);
-			if(elIndex !== -1) {
+			const labels = Array.from(ref.current.querySelectorAll('label'));
+			const i = labels.findIndex(el => el.textContent === focusValue);
+			if(i !== -1) {
 				setTimeout(() => {
-					ref.current?.scroll(0, elIndex * 28);
+					ref.current?.scroll(0, i * 28);
 				}, 15);
 			}
 		}
@@ -111,6 +115,37 @@ export const Select: FC<SelectProps> = (
 	const handleChange = (value: string) => {
 		setEventSearch(value.toLowerCase());
 	}
+
+	const urlSuffix = () => {
+		if(checkboxKey === 'b-') {
+			return filteredArr.filter(item => item !== (brand ? brand.alias : '') && item !== 'brand').join('/');
+		}
+		if(checkboxKey === 'm-') {
+			return filteredArr.filter(item => item !== (model ? model.alias : '') && item !== 'model').join('/');
+		}
+		if(checkboxKey === 'td-') {
+			return (diskType ? filteredArr.filter(item => item !== diskType[0]) : filteredArr).join('/');
+		}
+		if(checkboxKey === 's-') {
+			return filteredArr
+				.filter(item => item !== 'shipovani')
+				.filter(item => (season ? item !== season[0] : true))
+				.join('/');
+		}
+		return filteredArr.join('/');
+	};
+
+	const createHref = (value: string) => {
+		const base = `/katalog/${section}/`;
+		const key = [ 's-', 'b-', 'm-', 'td-' ].includes(checkboxKey) ? '' : checkboxKey;
+		const currentKeyFull = `${key}${value}`;
+
+		if (slugTransform?.includes(currentKeyFull)) {
+			return `${base}${urlSuffix()}`;
+		}
+
+		return `${ base }${ key }${ checkboxKey === 'b-' ? 'brand/' : checkboxKey === 'm-' ? 'model/' : '' }${ value }/${ urlSuffix() }`;
+	};
 
 	return <div
 		className={ twMerge('relative mt-2 rounded-sm bg-white z-10', variant === 'gray' && 'bg-zinc-200') }>
@@ -147,21 +182,12 @@ export const Select: FC<SelectProps> = (
 					key={ value }
 					className='w-full flex'
 					onClick={ () => {
+						setLoading(true);
 						if(handleScrollAction && ref.current) {
 							handleScrollAction(name as keyof IOpenFilter, ref.current ? ref.current.scrollTop : 0);
 						}
 					} }
-					href={
-						`/katalog/
-						${ section }/
-						${ (checkboxKey === 's-' || checkboxKey === 'b-' || checkboxKey === 'm-' || checkboxKey === 'td-') ? '' : checkboxKey }
-						${ checkboxKey === 'b-' ? 'brand/' : checkboxKey === 'm-' ? 'model/' : '' }${ value }/
-						${ checkboxKey === 'b-' ? filteredArr.filter(item => item !== (brand ? brand.alias : '') && item !== 'brand').join('/')
-							: checkboxKey === 'm-' ? filteredArr.filter(item => item !== (model ? model.alias : '') && item !== 'model').join('/')
-								: checkboxKey === 'td-' ? filteredArr.filter(item => diskType ? item !== diskType[0] : filteredArr.join('/')).join('/')
-									: checkboxKey === 's-' ? filteredArr.filter(item => item !== "shipovani").filter(item => item !== 'shipovani' && season ? item !== season[0]
-										: filteredArr.join('/')).join('/') : filteredArr.join('/') }
-						` }
+					href={ createHref(value) }
 				>
 					<Checkbox
 						className="-z-10"
@@ -194,5 +220,8 @@ export const Select: FC<SelectProps> = (
 				Шип
 			</Checkbox>
 		</Link> }
+		{ loading && <div className={ twMerge('absolute top-0 left-0 right-0 bottom-0 bg-gray-100/80 flex items-center justify-center') }>
+			<Spinner/>
+		</div> }
 	</div>
 };
