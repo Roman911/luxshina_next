@@ -156,7 +156,7 @@ export const Select: FC<SelectProps> = (
 				type='button'
 				onClick={ () => handleClickOpen() }
 				className={ twMerge(
-					'relative w-full cursor-default py-2.5 pr-10 text-left focus:outline-none pl-1.5 text-sm',
+					'relative w-full cursor-pointer py-2.5 pr-10 text-left focus:outline-none pl-1.5 text-sm',
 					variant === 'gray' ? 'text-black' : '',
 					variant === 'white' ? 'font-bold' : 'pl-3.5')
 				}>
