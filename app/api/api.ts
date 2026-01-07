@@ -33,6 +33,17 @@ export async function getSettings() {
 	return await res.json();
 }
 
+export async function getSliderData() {
+	const res = await fetch(`${ API_URL }${ baseEndpoints.banner }`, {
+		method: API_CONSTANTS.METHODS.GET,
+		headers: DEFAULT_HEADERS
+	});
+
+	if (!res.ok) throw new Error('Failed to fetch products');
+
+	return await res.json();
+}
+
 export async function getProducts(id: string, start: number, length: number) {
 	const res = await fetch(`${ API_URL }${ productEndpoints.products(id) }`, {
 		method: API_CONSTANTS.METHODS.POST,

@@ -50,7 +50,7 @@ export default async function RootLayout(
 	return (
 		<html lang={ locale }>
 		<head>
-			<Script id="my-script">
+			<Script strategy='afterInteractive' id="my-script">
 				{response[0].head_html}
 			</Script>
 		</head>

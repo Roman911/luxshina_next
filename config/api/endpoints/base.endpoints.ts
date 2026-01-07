@@ -15,6 +15,7 @@ export const baseEndpoints = {
 	kitDiskSize: (section: string) => `${BASE_DATA}/getKitDiskSize/${section}`,
 	manufModels: (section: string) => `${API}/getManufModels/${section}`,
 	brands: (id: string) => `${API}/catalog-map/${id}`,
+	banner: `${API}/banner`,
 	menu: `${API}/menu`,
 	seo: `${API}/getSeo`,
 	statiAlias: {

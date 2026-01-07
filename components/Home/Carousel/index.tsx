@@ -1,7 +1,9 @@
-'use client'
+'use client';
+
 import { FC } from 'react';
 import dynamic from "next/dynamic";
 import "yet-another-react-lightbox/plugins/thumbnails.css";
+
 import { Banner } from '@/models/banners';
 
 const Lightbox = dynamic(() => import("./LightboxComponent"), { ssr: false });
@@ -11,7 +13,7 @@ const inline = {
 		width: "100%",
 		maxWidth: "1520px",
 		height: '100%',
-		maxHeight: '600px',
+		maxHeight: '500px',
 		aspectRatio: "1",
 		margin: "0 auto",
 	},
@@ -23,7 +25,7 @@ interface Props {
 
 const Carousel: FC<Props> = ({ sliderData }) => {
 	const slides = sliderData.map(item => {
-		return { src: item.image, width: 1520, height: 600 }
+		return { src: item.image, width: 1520, height: 500 }
 	});
 
 	return (
