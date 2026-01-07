@@ -9,8 +9,6 @@ import { useAppDispatch } from '@/hooks/redux';
 import { addCart } from '@/store/slices/cartSlice';
 import type { Product } from '@/models/products';
 import { Language } from '@/models/language';
-import noPhoto from '@/public/images/no-photo.jpg';
-import noPhotoRu from '@/public/images/no-photo-ru.jpg';
 import { addToStorage, getFromStorage } from '@/lib/localeStorage';
 import { Section } from '@/models/filter';
 import Rating from '@/components/UI/Rating';
@@ -65,7 +63,7 @@ const ProductCard: FC<Props> = ({ item }) => {
 					{ !hasMatch && <ActionsBlock sectionNew={ sectionNew } group={ group } className='hidden group-hover:flex'/> }
 					<Image
 						className='mx-auto'
-						src={ default_photo || (locale === Language.UK ? noPhoto : noPhotoRu) }
+						src={ default_photo || '/images/no-photo.jpg' }
 						alt={ full_name }
 						width={ 220 }
 						height={ 220 }
