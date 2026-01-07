@@ -5,7 +5,7 @@ import { Badge, Checkbox, CheckboxGroup, Spinner } from '@heroui/react';
 import * as Icons from '@/components/UI/Icons';
 import SearchInput from './SearchInput';
 import type { Brand, ManufModels } from '@/models/baseData';
-import { Link } from '@/i18n/routing';
+import { Link, useRouter } from '@/i18n/routing';
 import { Section } from '@/models/section';
 import { IOpenFilter } from '@/models/filter';
 
@@ -47,6 +47,7 @@ export const Select: FC<SelectProps> = (
 		handleScrollAction,
 		handleClickAction,
 	}) => {
+	const router = useRouter();
 	const [ eventSearch, setEventSearch ] = useState('');
 	const [ loading, setLoading ] = useState(false);
 	const ref = useRef<HTMLDivElement | null>(null);
@@ -147,6 +148,10 @@ export const Select: FC<SelectProps> = (
 		return `${ base }${ key }${ checkboxKey === 'b-' ? 'brand/' : checkboxKey === 'm-' ? 'model/' : '' }${ value }/${ urlSuffix() }`;
 	};
 
+	const handleClick = (value: string) => {
+		router.push(createHref(value));
+	}
+
 	return <div
 		className={ twMerge('relative mt-2 rounded-sm bg-white z-10', variant === 'gray' && 'bg-zinc-200') }>
 		<Badge isInvisible={ !filterValue?.length } className='border-white'
@@ -178,16 +183,16 @@ export const Select: FC<SelectProps> = (
 			orientation='vertical'
 		>
 			{ options?.filter(i => i.label.toString().toLowerCase().includes(eventSearch)).map(({ value, label }) => (
-				<Link
+				<span
 					key={ value }
-					className='w-full flex'
+					className='w-full flex cursor-pointer'
 					onClick={ () => {
 						setLoading(true);
 						if(handleScrollAction && ref.current) {
 							handleScrollAction(name as keyof IOpenFilter, ref.current ? ref.current.scrollTop : 0);
 						}
+						handleClick(value);
 					} }
-					href={ createHref(value) }
 				>
 					<Checkbox
 						className="-z-10"
@@ -201,7 +206,7 @@ export const Select: FC<SelectProps> = (
 					>
 						{ label }
 					</Checkbox>
-				</Link>
+				</span>
 			)) }
 		</CheckboxGroup>
 		{ checkboxKey === 's-' && slug && slug.some(item => [ 'zimovi', 'shipovani' ].includes(item)) && <Link
