@@ -83,7 +83,7 @@ const CharacteristicsBlock: FC<CharacteristicsBlockProps> = ({ locale, data }) =
 			</button>
 			<div
 				className={
-				twMerge('absolute left-0 z-10 w-full border border-[#CDD0D9] bg-white shadow-lg rounded-sm', !showOptions && 'hidden') }
+				twMerge('absolute left-0 z-20 w-full border border-[#CDD0D9] bg-white shadow-lg rounded-sm', !showOptions && 'hidden') }
 				tabIndex={ -1 }>
 				<div className="text-black px-3.5 py-2">
 					{ tabs.map((item, index) => {
