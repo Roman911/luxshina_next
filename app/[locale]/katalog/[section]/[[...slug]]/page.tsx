@@ -2,21 +2,19 @@ import LayoutWrapper from '@/components/Layout/LayoutWrapper';
 import { Language } from '@/models/language';
 import FilterAlt from '@/components/Catalog/FilterAlt';
 import { Section } from '@/models/filter';
-import ProductList from '@/components/ProductList';
-import NoResult from '@/components/UI/NoResult';
 import FilterByCar from '@/components/Catalog/FilterByCar';
 import { transformUrl } from './transformUrl';
 import SelectionByCar from '@/components/Catalog/SelectionByCar';
 import FilterActive from '@/components/Catalog/FilterActive';
 import HeaderCatalog from '@/components/Catalog/HeaderCatalog';
-import Pagination from '@/components/Catalog/Pagination';
-import { getFilterData, getFilters, getFiltersAkum, getProducts } from '@/app/api/api';
+import { getFilterData, getFilters, getFiltersAkum } from '@/app/api/api';
 import type { Metadata } from 'next';
 import { Season } from '@/lib/season';
 import { TypeTires } from '@/lib/typeTires';
 import { Brand } from '@/lib/brand';
 import { TypeDisks } from '@/lib/typeDisks';
 import { generateCatalogMetadata } from '@/utils/metadata';
+import { GetProducts } from '@/components/Catalog/GetProducts';
 
 const pageItem = 12;
 const sort = {
@@ -50,7 +48,6 @@ export default async function Catalog({ params }: { params: Promise<{ locale: La
 	const index = slug?.indexOf('model');
 	const model = (slug && index !== -1) ? slug[index + 1] : null;
 	const searchParams = `?${paramsUrl || ''}${ slug?.some(item => item.startsWith('vt-')) ? '' : typeTires || ''}${typeDisks || ''}${season || ''}${found && sort[found] ? sort[found] : ''}${brand ? '&brand=' + brand.value : ''}${model ? '&model_id=' + model.split('-').pop() : ''}`;
-	const products = await getProducts(searchParams, page ? (page - 1) * pageItem : 0, pageItem);
 	const car = slug?.find(segment => segment.startsWith('car-')) || null;
 
 	return (
@@ -62,13 +59,7 @@ export default async function Catalog({ params }: { params: Promise<{ locale: La
 					<FilterByCar />
 					<SelectionByCar car={ car } section={ section } />
 					<FilterActive brand={ brand } locale={ locale } className='hidden lg:flex' slug={ slug } section={ section } />
-					{ products.result ? <ProductList
-						classnames='grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
-						data={ products.data }
-					/> : <NoResult noResultText='no result' /> }
-					{ products.result && products.data.total_count > pageItem && <div className='mt-10 flex justify-center'>
-						<Pagination initialPage={ page || 1 } slug={ slug } total={ Math.ceil(products.data.total_count/pageItem) } section={ section } />
-					</div> }
+					<GetProducts searchParams={ searchParams } section={ section } pageFrom={ page } pageTo={ null } pageItem={ pageItem } />
 				</div>
 			</div>
 		</LayoutWrapper>

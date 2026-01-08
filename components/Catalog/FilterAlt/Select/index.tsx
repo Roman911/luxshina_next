@@ -5,7 +5,7 @@ import { Badge, Checkbox, CheckboxGroup, Spinner } from '@heroui/react';
 import * as Icons from '@/components/UI/Icons';
 import SearchInput from './SearchInput';
 import type { Brand, ManufModels } from '@/models/baseData';
-import { Link, useRouter } from '@/i18n/routing';
+import { useRouter } from '@/i18n/routing';
 import { Section } from '@/models/section';
 import { IOpenFilter } from '@/models/filter';
 
@@ -178,7 +178,7 @@ export const Select: FC<SelectProps> = (
 		<CheckboxGroup
 			ref={ ref }
 			defaultValue={ checked }
-			className={ twMerge('relative max-h-[480px] w-full overflow-auto px-2.5 pb-4', !isOpened && 'hidden') }
+			className={ twMerge('relative max-h-[480] w-full overflow-auto px-2.5 pb-4', !isOpened && 'hidden') }
 			classNames={ { label: 'mt-4 font-bold text-black' } }
 			orientation='vertical'
 		>
@@ -209,9 +209,15 @@ export const Select: FC<SelectProps> = (
 				</span>
 			)) }
 		</CheckboxGroup>
-		{ checkboxKey === 's-' && slug && slug.some(item => [ 'zimovi', 'shipovani' ].includes(item)) && <Link
+		{ checkboxKey === 's-' && slug && slug.some(item => [ 'zimovi', 'shipovani' ].includes(item)) && <span
 			className={ twMerge('ml-8 flex', !isOpened && 'hidden') }
-			href={ `/katalog/${ section }/${ slug ? slug.filter(item => ![ 'zimovi', 'shipovani' ].includes(item)).join('/') : '' }/${ slug?.includes('shipovani') ? 'zimovi' : 'shipovani' }` }>
+			onClick={ () => {
+				setLoading(true);
+				if(handleScrollAction && ref.current) {
+					handleScrollAction(name as keyof IOpenFilter, ref.current ? ref.current.scrollTop : 0);
+				}
+				router.push(`/katalog/${ section }/${ slug ? slug.filter(item => ![ 'zimovi', 'shipovani' ].includes(item)).join('/') : '' }/${ slug?.includes('shipovani') ? 'zimovi' : 'shipovani' }`);
+			} }>
 			<Checkbox
 				className="-z-10"
 				radius="sm"
@@ -224,7 +230,7 @@ export const Select: FC<SelectProps> = (
 			>
 				Шип
 			</Checkbox>
-		</Link> }
+		</span> }
 		{ loading && <div className={ twMerge('absolute top-0 left-0 right-0 bottom-0 bg-gray-100/80 flex items-center justify-center') }>
 			<Spinner/>
 		</div> }

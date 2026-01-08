@@ -225,7 +225,7 @@ const CharacteristicsBlock: FC<CharacteristicsBlockProps> = ({ locale, data }) =
 						className='w-full flex items-center text-[#575C66] after:flex-1 after:min-w-6 after:border-b after:border-dashed after:border-[#AEB6C2] after:h-px after:mt-3 after:mx-2'>
 						{ t('appointment') }
 					</div>
-					<Link href={ `/vt-${ vehicleType }` } className='text-black'>
+					<Link href={ link(`/vt-${ vehicleType }`) } className='text-black'>
 						{ t(vehicleTransform?.name || '') }
 					</Link>
 				</div> }
