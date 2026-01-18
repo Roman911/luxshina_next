@@ -1,10 +1,14 @@
 'use client'
-import { Link } from '@/i18n/routing';
+
 import { FC, useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Button } from '@heroui/react';
-import ImagesBlock from './ImagesBlock';
+
 import { useAppDispatch, useAppSelector } from '@/hooks/redux';
+import { Link } from '@/i18n/routing';
+import { onAddToCart, onItemView } from '@/event';
+import * as Icons from '@/components/UI/Icons';
+
 import { changeSection } from '@/store/slices/filterSlice';
 import { Language } from '@/models/language';
 import { ProductProps } from '@/models/product';
@@ -21,9 +25,10 @@ import QuickOrder from '@/components/Product/QuickOrder';
 import CharacteristicsBlock from '@/components/Product/CharacteristicsBlock';
 import InfoBlock from '@/components/Product/InfoBlock';
 import { SettingsProps } from '@/models/settings';
+
 import OnlineInstallment from './OnlineInstallment';
+import ImagesBlock from './ImagesBlock';
 import './index.scss';
-import { onAddToCart, onItemView } from '@/event';
 
 interface Props {
 	idProduct: string
@@ -96,7 +101,7 @@ const ProductComponent: FC<Props> = ({ idProduct, locale, data, section, setting
 
 	return (
 		<section className='product-page flex flex-col lg:flex-row justify-between gap-1 xl:gap-x-6 mt-4 md:mt-6'>
-			<div className='max-w-[900px] flex-1 pr-3 xl:pr-5'>
+			<div className='max-w-[900] flex-1 pr-3 xl:pr-5'>
 				{ data.result &&
 					<div className='flex flex-col md:flex-row items-center md:items-start md:border-b border-gray-200'>
 						<ImagesBlock
@@ -138,7 +143,7 @@ const ProductComponent: FC<Props> = ({ idProduct, locale, data, section, setting
 									return <div
 										key={ item.offer_id }
 										onClick={ () => handleClick(item.offer_id) }
-										className='offers__item cursor-pointer grid-cols-3 grid md:grid-cols-7 gap-1 md:gap-4 items-center mt-3 py-2.5 md:py-0 px-2.5 md:px-0 bg-white md:bg-transparent border md:border-0 rounded-full'
+										className='offers__item cursor-pointer grid md:grid-cols-10 gap-0.5 md:gap-4 items-center mt-3 py-2.5 md:py-0 px-1.5 md:px-0 bg-white md:bg-transparent border md:border-0 rounded-full'
 									>
 										<div className='input flex flex-row md:col-span-2 relative'>
 											<input
@@ -150,7 +155,7 @@ const ProductComponent: FC<Props> = ({ idProduct, locale, data, section, setting
 											<div
 												className='h-4 w-4 absolute inset-1 rounded-full peer-checked:border-primary peer-checked:bg-primary'
 											/>
-											<label className='flex ml-1.5 md:ml-7 flex-col justify-center font-medium cursor-pointer'>
+											<label className='flex ml-1.5 md:ml-7 text-sm md:text-base flex-col justify-center font-medium cursor-pointer'>
 												{ item.quantity } шт.
 											</label>
 										</div>
@@ -161,7 +166,13 @@ const ProductComponent: FC<Props> = ({ idProduct, locale, data, section, setting
 												mobileHidden={ true }
 											/>
 										</div>
-										<div className='price md:col-span-2 font-bold content-center'>
+										<div className='storage lg:col-span-3 text-sm content-center flex items-center gap-x-1 lg:gap-x-2'>
+											<Icons.MarkerIcon className='fill-primary w-6' />
+											<span className='max-w-20 overflow-hidden whitespace-nowrap text-ellipsis'>
+												{ locale === Language.UK ? item.posts.city : item.posts.city_ru }
+											</span>
+										</div>
+										<div className='price md:col-span-2 font-bold content-center text-sm md:text-base'>
 											{ item.price } грн
 										</div>
 									</div>
