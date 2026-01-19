@@ -7,11 +7,12 @@ export async function generateCatalogMetadata({ locale, urlPath }: {
 	locale: Language;
 	urlPath: string;
 }): Promise<Metadata> {
+	const url = `${process.env.NEXT_PUBLIC_ACCESS_ORIGIN}/${locale}/${urlPath}`;
 	const response = await fetch(`${process.env.SERVER_URL}/api/getSeo`, {
 		method: 'POST',
 		headers: DEFAULT_HEADERS,
 		body: JSON.stringify({
-			url: `${process.env.NEXT_PUBLIC_ACCESS_ORIGIN}/${locale}/${urlPath}`,
+			url,
 		})
 	});
 
@@ -49,7 +50,9 @@ export async function generateCatalogMetadata({ locale, urlPath }: {
 	}
 
 	if (data.redirect) {
-		redirect(data.redirect);
+		if(url !== data.redirect) {
+			redirect(data.redirect);
+		}
 	}
 
 	return {
