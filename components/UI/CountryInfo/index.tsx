@@ -10,6 +10,7 @@ interface CountryInfoProps {
 }
 
 const CountryInfo: FC<CountryInfoProps> = ({ country, countryCode, year, mobileHidden }) => {
+	console.log(country,year)
 	return <div className='flex items-center'>
 		{ countryCode && <div className='group relative'>
 			<div
@@ -25,7 +26,7 @@ const CountryInfo: FC<CountryInfoProps> = ({ country, countryCode, year, mobileH
 		</div> }
 		<p className='ml-2.5 font-medium text-gray-400'>
 			<span className={ twMerge( mobileHidden && 'hidden sm:inline') }>
-				{ country + (country && year && ', ') }
+				{ country + (country && year > 0 ? ', ' : '') }
 			</span>{ year > 0 && year }
 		</p>
 	</div>
