@@ -10,7 +10,6 @@ interface CountryInfoProps {
 }
 
 const CountryInfo: FC<CountryInfoProps> = ({ country, countryCode, year, mobileHidden }) => {
-	console.log(country,year)
 	return <div className='flex items-center'>
 		{ countryCode && <div className='group relative'>
 			<div
