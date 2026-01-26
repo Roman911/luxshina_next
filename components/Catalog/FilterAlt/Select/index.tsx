@@ -53,7 +53,7 @@ export const Select: FC<SelectProps> = (
 	const ref = useRef<HTMLDivElement | null>(null);
 	const slugTransform = slug?.map(item => decodeURIComponent(item));
 	const keyPattern = new RegExp(`^${checkboxKey}[\\w\u0400-\u04FF.()]+$`);
-	const filteredArr = slugTransform ? slugTransform.filter(item => !keyPattern.test(item)) : [];
+	const filteredArr = slugTransform ? slugTransform.filter(item => !keyPattern.test(item)).filter(item => !item.startsWith('p-')) : [];
 	const found = slugTransform?.find(item => keyPattern.test(item));
 	let season = undefined;
 	if(slug?.includes('litni')) {

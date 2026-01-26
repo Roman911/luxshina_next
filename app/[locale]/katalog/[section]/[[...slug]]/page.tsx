@@ -59,7 +59,7 @@ export default async function Catalog({ params }: { params: Promise<{ locale: La
 					<FilterByCar />
 					<SelectionByCar car={ car } section={ section } />
 					<FilterActive brand={ brand } locale={ locale } className='hidden lg:flex' slug={ slug } section={ section } />
-					<GetProducts searchParams={ searchParams } section={ section } pageFrom={ page } pageTo={ null } pageItem={ pageItem } />
+					<GetProducts searchParams={ searchParams } section={ section } pageFrom={ page } pageTo={ null } pageItem={ pageItem } slug={ slug } />
 				</div>
 			</div>
 		</LayoutWrapper>

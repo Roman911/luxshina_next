@@ -7,6 +7,7 @@ import { Section } from '@/models/filter';
 import Pagination from '@/components/Catalog/Pagination';
 import { Button, Spinner } from '@heroui/react';
 import ProductList from '@/components/ProductList';
+import NoResult from '@/components/UI/NoResult';
 
 interface Props {
 	searchParams: string;
@@ -38,7 +39,7 @@ export function GetProducts(
 		length: pageItem,
 	});
 
-	const totalCount = data?.data.total_count ?? 0;
+	const totalCount = data?.data?.total_count ?? 0;
 	const totalPages = useMemo(() => Math.ceil(totalCount / pageItem), [ totalCount, pageItem ]);
 
 	const handleScroll = () => {
@@ -59,6 +60,7 @@ export function GetProducts(
 				</div>
 			</div> }
 			<div ref={ ref }></div>
+			{ !data?.result && !isLoading && !isFetching && !data?.data && <NoResult noResultText='no result' /> }
 			{ data?.result && <ProductList
 				classnames='grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
 				data={ data.data }

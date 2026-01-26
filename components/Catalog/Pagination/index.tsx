@@ -31,7 +31,7 @@ const MyPagination: FC<Props> = ({ initialPage, total, section, slug }) => {
 			<button
 				className={twMerge(
 					className,
-					'border',
+					'border cursor-pointer',
 					isActive && "text-white bg-primary font-bold",
 				)}
 			>

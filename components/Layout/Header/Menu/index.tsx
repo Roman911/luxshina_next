@@ -31,6 +31,8 @@ const Navbar: FC<Props> = ({ menu }) => {
 	const ButtonMeu = ({ sectionItem, label }: { sectionItem: string, label: string }) => (
 		<div className='group'>
 			<Button
+				as={ Link }
+				href={ `/katalog/${sectionItem}` }
 				variant='light'
 				size='lg'
 				radius='none'
