@@ -12,9 +12,9 @@ export const TypeTires = (section: Section, slug: string[]) => {
 			return '&vehicle_type=1';
 		}
 	} else if(section === Section.Cargo) {
-		return '&vehicle_type=3';
+		return '&vehicle_type=3,4,5,6';
 	} else if(section === Section.Spectehnika) {
-		return '&vehicle_type=9';
+		return '&vehicle_type=9,10,11';
 	} else if(section === Section.Moto) {
 		return '&vehicle_type=7';
 	} else {
