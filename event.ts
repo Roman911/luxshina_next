@@ -123,7 +123,7 @@ export const onOrderMakeEnd = (data: ProductsProps | undefined, cartItem: {id: n
 			transaction_id: orderId,
 			affiliation: 'main',
 			value: totalSum,
-			currency: 'UAN',
+			currency: 'UAH',
 			items: items
 		},
 	};
@@ -161,7 +161,7 @@ export const onOrderBuy1click = (
 			transaction_id: orderId,
 			affiliation: 'buy1click',
 			value: +offerItem.price * quantity,
-			currency: 'UAN',
+			currency: 'UAH',
 			items: items
 		},
 	};
