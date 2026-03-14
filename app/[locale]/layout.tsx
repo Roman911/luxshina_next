@@ -53,6 +53,7 @@ export default async function RootLayout(
 			<Script strategy='afterInteractive' id="my-script">
 				{response[0].head_html}
 			</Script>
+			<meta name="google-site-verification" content="VaP7Hs_zCZI_eJ_hcfuxLXXDveXpiOflxV-YyAiLNYw" />
 		</head>
 		<body className={ twMerge('bg-[#F5F7FA]', gilroy.className) }>
 		<StoreProvider>
