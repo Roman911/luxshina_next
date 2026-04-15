@@ -66,6 +66,19 @@ export default async function RootLayout(
 			</NextIntlClientProvider>
 			<ToastProvider placement='top-right' />
 		</StoreProvider>
+		<Script id="binotel-widget" strategy="afterInteractive">
+			{`
+      (function(d, w, s) {
+          var widgetHash = 'VRxb6ydDuBInXTRkz8jl',
+              bch = d.createElement(s);
+          bch.type = 'text/javascript';
+          bch.async = true;
+          bch.src = '//widgets.binotel.com/chat/widgets/' + widgetHash + '.js';
+          var sn = d.getElementsByTagName(s)[0];
+          sn.parentNode.insertBefore(bch, sn);
+      })(document, window, 'script');
+    `}
+		</Script>
 		</body>
 		<GoogleAnalytics gaId="GTM-PDGTR8" />
 		</html>
